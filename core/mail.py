@@ -110,6 +110,33 @@ def send_subscription_status_email(to_email: str, company_name: str, plan_name: 
     return _send_email(to_email, f"Nexus Pro | Suscripción {status}", html)
 
 
+def send_password_reset_email(to_email: str, full_name: str, reset_url: str) -> MailResult:
+    html = _wrap_html(
+        title="Recupera el acceso a tu cuenta",
+        intro=f"{full_name}, recibimos una solicitud para restablecer la contraseña de tu cuenta en Nexus Pro.",
+        bullets=[
+            "Este enlace te permitirá definir una nueva contraseña.",
+            "Por seguridad, el enlace expira pronto y solo sirve una vez.",
+            f"Enlace de recuperación: {reset_url}",
+        ],
+        closing="Si no fuiste tú, puedes ignorar este correo y tu contraseña actual seguirá intacta.",
+    )
+    return _send_email(to_email, "Nexus Pro | Recuperación de contraseña", html)
+
+
+def send_password_changed_email(to_email: str, full_name: str) -> MailResult:
+    html = _wrap_html(
+        title="Tu contraseña fue actualizada",
+        intro=f"{full_name}, confirmamos que la contraseña de tu cuenta fue cambiada correctamente.",
+        bullets=[
+            "Si reconoces este cambio, ya puedes iniciar sesión con la nueva clave.",
+            "Si no fuiste tú, responde este correo lo antes posible.",
+        ],
+        closing="Queremos que tengas visibilidad total sobre la seguridad de tu acceso.",
+    )
+    return _send_email(to_email, "Nexus Pro | Contraseña actualizada", html)
+
+
 def send_support_ticket_created_to_customer(to_email: str, requester_name: str, ticket_id: int, subject: str) -> MailResult:
     html = _wrap_html(
         title="Recibimos tu solicitud de ayuda",
@@ -162,3 +189,42 @@ def send_support_ticket_reply_to_customer(
         closing="Si necesitas ampliar información, responde este correo o vuelve a tu espacio en Nexus Pro.",
     )
     return _send_email(to_email, f"Nexus Pro | Respuesta ticket #{ticket_id}", html)
+
+
+def send_support_ticket_status_email(
+    to_email: str,
+    requester_name: str,
+    ticket_id: int,
+    subject: str,
+    status: str,
+) -> MailResult:
+    html = _wrap_html(
+        title=f"El estado de tu ticket #{ticket_id} cambió",
+        intro=f"{requester_name}, tu caso '{subject}' ahora está en estado {status}.",
+        bullets=[
+            "Puedes revisar el historial desde tu espacio en Nexus Pro.",
+            "Si necesitas ampliar el caso, responde el ticket desde la plataforma o por correo.",
+        ],
+        closing="Queremos mantenerte informado en cada cambio relevante del soporte.",
+    )
+    return _send_email(to_email, f"Nexus Pro | Estado ticket #{ticket_id}: {status}", html)
+
+
+def send_support_ticket_reply_to_operator(
+    to_email: str,
+    ticket_id: int,
+    requester_name: str,
+    requester_email: str,
+    subject: str,
+    reply_body: str,
+) -> MailResult:
+    html = _wrap_html(
+        title=f"Nueva respuesta del cliente en ticket #{ticket_id}",
+        intro=f"{requester_name} respondió sobre el caso '{subject}'.",
+        bullets=[
+            f"Email del cliente: {requester_email}",
+            f"Mensaje: {reply_body}",
+        ],
+        closing="Revisa el ticket y continúa la gestión operativa desde Nexus Pro.",
+    )
+    return _send_email(to_email, f"Nexus Pro | Cliente respondió ticket #{ticket_id}", html)

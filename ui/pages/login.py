@@ -7,9 +7,22 @@ from textwrap import dedent
 
 import streamlit as st
 
-from core.auth import authenticate, login, register_tenant
+from core.auth import (
+        authenticate,
+        create_password_reset_request,
+        login,
+        register_tenant,
+        reset_password_with_token,
+        validate_password_reset_token,
+)
 from core.billing import PLAN_CATALOG
-from core.mail import send_account_created_email, send_login_notice_email
+from core.config import get_settings
+from core.mail import (
+        send_account_created_email,
+        send_login_notice_email,
+        send_password_changed_email,
+        send_password_reset_email,
+)
 from core.support import create_support_ticket
 
 
@@ -403,7 +416,24 @@ def _render_public_support_form() -> None:
                                                 st.success(f"Ticket #{ticket['id']} enviado. También enviamos confirmación al correo que registraste.")
 
 
+def _get_reset_token() -> str:
+                try:
+                                return str(st.query_params.get("reset_token", "") or "")
+                except Exception:
+                                return st.experimental_get_query_params().get("reset_token", [""])[0]
+
+
+def _clear_reset_token() -> None:
+                try:
+                                if "reset_token" in st.query_params:
+                                                del st.query_params["reset_token"]
+                except Exception:
+                                st.experimental_set_query_params()
+
+
 def render() -> None:
+                settings = get_settings()
+                reset_token = _get_reset_token().strip()
                 st.markdown(
                                 "<div class='of-landing-canvas'><div class='of-glow orb-a'></div><div class='of-glow orb-b'></div><div class='of-glow orb-c'></div>",
                                 unsafe_allow_html=True,
@@ -420,47 +450,86 @@ def render() -> None:
 
                 with form_col:
                                 _render_form_shell()
-                                tabs = st.tabs(["Iniciar sesión", "Crear cuenta"])
+                                if reset_token:
+                                                token_data = validate_password_reset_token(reset_token)
+                                                st.markdown("### Recupera tu <span class='of-shimmer-text'>acceso</span>", unsafe_allow_html=True)
+                                                if not token_data:
+                                                                st.error("El enlace de recuperación ya no es válido o expiró.")
+                                                else:
+                                                                st.caption(f"Restableciendo acceso para {token_data['email']}")
+                                                                with st.form("password_reset_form", clear_on_submit=True):
+                                                                                new_password = st.text_input("Nueva contraseña", type="password")
+                                                                                confirm_password = st.text_input("Confirma la nueva contraseña", type="password")
+                                                                                submitted_reset = st.form_submit_button("Actualizar contraseña", use_container_width=True)
+                                                                if submitted_reset:
+                                                                                if len(new_password) < 8:
+                                                                                                st.error("La nueva contraseña debe tener al menos 8 caracteres.")
+                                                                                elif new_password != confirm_password:
+                                                                                                st.error("Las contraseñas no coinciden.")
+                                                                                else:
+                                                                                                result = reset_password_with_token(reset_token, new_password)
+                                                                                                if not result:
+                                                                                                                st.error("No fue posible actualizar la contraseña. Solicita un nuevo enlace.")
+                                                                                                else:
+                                                                                                                send_password_changed_email(result["email"], result["full_name"])
+                                                                                                                _clear_reset_token()
+                                                                                                                st.success("Contraseña actualizada. Ya puedes iniciar sesión con la nueva clave.")
+                                else:
+                                                tabs = st.tabs(["Iniciar sesión", "Crear cuenta", "Recuperar acceso"])
 
-                                with tabs[0]:
-                                                with st.form("login_form", clear_on_submit=False):
-                                                                email = st.text_input("Email corporativo", placeholder="tu@empresa.com")
-                                                                password = st.text_input("Contraseña", type="password")
-                                                                submitted = st.form_submit_button("Entrar", use_container_width=True)
-                                                if submitted:
-                                                                data = authenticate(email, password)
-                                                                if data:
-                                                                                login(data)
-                                                                                send_login_notice_email(data["email"], data["full_name"], data["company_name"])
-                                                                                st.success(f"Bienvenido, {data['full_name']}")
-                                                                                st.rerun()
-                                                                else:
-                                                                                st.error("Credenciales inválidas.")
+                                                with tabs[0]:
+                                                                with st.form("login_form", clear_on_submit=False):
+                                                                                email = st.text_input("Email corporativo", placeholder="tu@empresa.com")
+                                                                                password = st.text_input("Contraseña", type="password")
+                                                                                submitted = st.form_submit_button("Entrar", use_container_width=True)
+                                                                if submitted:
+                                                                                data = authenticate(email, password)
+                                                                                if data:
+                                                                                                login(data)
+                                                                                                send_login_notice_email(data["email"], data["full_name"], data["company_name"])
+                                                                                                st.success(f"Bienvenido, {data['full_name']}")
+                                                                                                st.rerun()
+                                                                                else:
+                                                                                                st.error("Credenciales inválidas.")
 
-                                with tabs[1]:
-                                                with st.form("signup_form", clear_on_submit=False):
-                                                                company = st.text_input("Nombre de la empresa")
-                                                                full_name = st.text_input("Tu nombre completo")
-                                                                email = st.text_input("Email corporativo", key="signup_email")
-                                                                password = st.text_input("Contraseña segura (min. 8)", type="password", key="signup_pwd")
-                                                                accept = st.checkbox("Acepto términos, política de privacidad y tratamiento de datos.")
-                                                                submitted = st.form_submit_button("Activar mi prueba gratis", use_container_width=True)
-                                                if submitted:
-                                                                if not all([company, full_name, email, password]) or len(password) < 8:
-                                                                                st.error("Completa todos los campos. La contraseña debe tener al menos 8 caracteres.")
-                                                                elif not accept:
-                                                                                st.error("Debes aceptar los términos.")
-                                                                else:
-                                                                                try:
-                                                                                                register_tenant(company, email, password, full_name)
-                                                                                                data = authenticate(email, password)
-                                                                                                if data:
-                                                                                                                login(data)
-                                                                                                                send_account_created_email(data["email"], data["full_name"], data["company_name"])
-                                                                                                                st.success("Cuenta creada. Tu prueba de 14 días ya está activa.")
-                                                                                                                st.rerun()
-                                                                                except Exception as exc:  # pragma: no cover
-                                                                                                st.error(f"No fue posible crear la cuenta: {exc}")
+                                                with tabs[1]:
+                                                                with st.form("signup_form", clear_on_submit=False):
+                                                                                company = st.text_input("Nombre de la empresa")
+                                                                                full_name = st.text_input("Tu nombre completo")
+                                                                                email = st.text_input("Email corporativo", key="signup_email")
+                                                                                password = st.text_input("Contraseña segura (min. 8)", type="password", key="signup_pwd")
+                                                                                accept = st.checkbox("Acepto términos, política de privacidad y tratamiento de datos.")
+                                                                                submitted = st.form_submit_button("Activar mi prueba gratis", use_container_width=True)
+                                                                if submitted:
+                                                                                if not all([company, full_name, email, password]) or len(password) < 8:
+                                                                                                st.error("Completa todos los campos. La contraseña debe tener al menos 8 caracteres.")
+                                                                                elif not accept:
+                                                                                                st.error("Debes aceptar los términos.")
+                                                                                else:
+                                                                                                try:
+                                                                                                                register_tenant(company, email, password, full_name)
+                                                                                                                data = authenticate(email, password)
+                                                                                                                if data:
+                                                                                                                                login(data)
+                                                                                                                                send_account_created_email(data["email"], data["full_name"], data["company_name"])
+                                                                                                                                st.success("Cuenta creada. Tu prueba de 14 días ya está activa.")
+                                                                                                                                st.rerun()
+                                                                                                except Exception as exc:  # pragma: no cover
+                                                                                                                st.error(f"No fue posible crear la cuenta: {exc}")
+
+                                                with tabs[2]:
+                                                                with st.form("password_reset_request", clear_on_submit=True):
+                                                                                recovery_email = st.text_input("Email de tu cuenta", placeholder="tu@empresa.com")
+                                                                                submitted_recovery = st.form_submit_button("Enviar enlace de recuperación", use_container_width=True)
+                                                                if submitted_recovery:
+                                                                                if not recovery_email.strip():
+                                                                                                st.error("Indica el correo con el que accedes a tu cuenta.")
+                                                                                else:
+                                                                                                reset_data = create_password_reset_request(recovery_email)
+                                                                                                if reset_data:
+                                                                                                                reset_url = f"{settings.base_url}/?reset_token={reset_data['token']}"
+                                                                                                                send_password_reset_email(reset_data["email"], reset_data["full_name"], reset_url)
+                                                                                                st.success("Si el correo existe en el sistema, enviamos un enlace de recuperación.")
 
                                 st.caption(
                                                 "Sin instalación local. Sin integración ERP obligatoria al inicio. Empiezas con archivos y escalas cuando el valor esté comprobado."

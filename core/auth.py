@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import re
+import secrets
 from datetime import datetime, timedelta
 from typing import Optional
 
@@ -10,9 +11,10 @@ from passlib.hash import pbkdf2_sha256
 from sqlalchemy import select
 
 from core.database import session_scope
-from core.models import Subscription, Tenant, User
+from core.models import PasswordResetToken, Subscription, Tenant, User
 
 _SLUG_RE = re.compile(r"[^a-z0-9]+")
+_PASSWORD_RESET_HOURS = 2
 
 
 def _slugify(value: str) -> str:
@@ -83,6 +85,77 @@ def authenticate(email: str, password: str) -> Optional[dict]:
             "tenant_id": tenant.id,
             "tenant_slug": tenant.slug,
             "company_name": tenant.company_name,
+        }
+
+
+def create_password_reset_request(email: str) -> Optional[dict]:
+    normalized = email.lower().strip()
+    with session_scope() as db:
+        user = db.scalar(select(User).where(User.email == normalized, User.is_active.is_(True)))
+        if not user:
+            return None
+
+        active_tokens = db.scalars(
+            select(PasswordResetToken).where(
+                PasswordResetToken.user_id == user.id,
+                PasswordResetToken.used_at.is_(None),
+            )
+        ).all()
+        now = datetime.utcnow()
+        for token_row in active_tokens:
+            token_row.used_at = now
+
+        token = secrets.token_urlsafe(32)
+        row = PasswordResetToken(
+            user_id=user.id,
+            token=token,
+            expires_at=now + timedelta(hours=_PASSWORD_RESET_HOURS),
+        )
+        db.add(row)
+        tenant = db.get(Tenant, user.tenant_id)
+        return {
+            "token": token,
+            "email": user.email,
+            "full_name": user.full_name,
+            "company_name": tenant.company_name if tenant else "tu empresa",
+            "expires_at": row.expires_at,
+        }
+
+
+def validate_password_reset_token(token: str) -> Optional[dict]:
+    with session_scope() as db:
+        row = db.scalar(select(PasswordResetToken).where(PasswordResetToken.token == token.strip()))
+        if not row or row.used_at is not None or row.expires_at < datetime.utcnow():
+            return None
+        user = db.get(User, row.user_id)
+        if not user or not user.is_active:
+            return None
+        tenant = db.get(Tenant, user.tenant_id)
+        return {
+            "email": user.email,
+            "full_name": user.full_name,
+            "company_name": tenant.company_name if tenant else "tu empresa",
+            "expires_at": row.expires_at,
+        }
+
+
+def reset_password_with_token(token: str, new_password: str) -> Optional[dict]:
+    with session_scope() as db:
+        row = db.scalar(select(PasswordResetToken).where(PasswordResetToken.token == token.strip()))
+        if not row or row.used_at is not None or row.expires_at < datetime.utcnow():
+            return None
+
+        user = db.get(User, row.user_id)
+        if not user or not user.is_active:
+            return None
+
+        user.password_hash = hash_password(new_password)
+        row.used_at = datetime.utcnow()
+        tenant = db.get(Tenant, user.tenant_id)
+        return {
+            "email": user.email,
+            "full_name": user.full_name,
+            "company_name": tenant.company_name if tenant else "tu empresa",
         }
 
 

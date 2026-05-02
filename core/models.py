@@ -130,3 +130,14 @@ class SupportTicketMessage(Base):
     created_at: Mapped[datetime] = mapped_column(DateTime, server_default=func.now())
 
     ticket: Mapped[SupportTicket] = relationship(back_populates="messages")
+
+
+class PasswordResetToken(Base):
+    __tablename__ = "password_reset_tokens"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    user_id: Mapped[int] = mapped_column(ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
+    token: Mapped[str] = mapped_column(String(255), unique=True, index=True)
+    expires_at: Mapped[datetime] = mapped_column(DateTime, nullable=False)
+    used_at: Mapped[Optional[datetime]] = mapped_column(DateTime, nullable=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime, server_default=func.now())

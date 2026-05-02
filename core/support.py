@@ -9,6 +9,8 @@ from core.mail import (
     send_support_ticket_created_to_customer,
     send_support_ticket_created_to_operator,
     send_support_ticket_reply_to_customer,
+    send_support_ticket_reply_to_operator,
+    send_support_ticket_status_email,
 )
 from core.models import SupportTicket, SupportTicketMessage
 
@@ -84,10 +86,15 @@ def add_ticket_message(
     new_status: str | None = None,
 ) -> None:
     customer_payload: dict | None = None
+    operator_payload: dict | None = None
+    status_changed = False
     with session_scope() as db:
         ticket = db.get(SupportTicket, ticket_id)
         if not ticket:
             raise ValueError(f"Ticket no encontrado: {ticket_id}")
+
+        requester_email = ticket.requester_email.lower().strip()
+        author_is_requester = author_email.lower().strip() == requester_email
 
         message = SupportTicketMessage(
             ticket_id=ticket_id,
@@ -97,23 +104,82 @@ def add_ticket_message(
             is_internal=is_internal,
         )
         db.add(message)
-        if new_status:
+        if new_status and new_status != ticket.status:
             ticket.status = new_status
+            status_changed = True
 
         customer_payload = {
             "email": ticket.requester_email,
             "name": ticket.requester_name,
             "subject": ticket.subject,
             "body": body.strip(),
+            "status": ticket.status,
+        }
+        operator_payload = {
+            "requester_name": ticket.requester_name,
+            "requester_email": ticket.requester_email,
+            "subject": ticket.subject,
+            "body": body.strip(),
         }
 
-    if notify_customer and customer_payload:
+    if notify_customer and customer_payload and not author_is_requester and not is_internal:
         send_support_ticket_reply_to_customer(
             customer_payload["email"],
             customer_payload["name"],
             ticket_id,
             customer_payload["subject"],
             customer_payload["body"],
+        )
+    if notify_customer and customer_payload and status_changed and not author_is_requester:
+        send_support_ticket_status_email(
+            customer_payload["email"],
+            customer_payload["name"],
+            ticket_id,
+            customer_payload["subject"],
+            customer_payload["status"],
+        )
+    if operator_payload and author_is_requester and not is_internal:
+        settings = get_settings()
+        send_support_ticket_reply_to_operator(
+            settings.support_email,
+            ticket_id,
+            operator_payload["requester_name"],
+            operator_payload["requester_email"],
+            operator_payload["subject"],
+            operator_payload["body"],
+        )
+
+
+def update_ticket_status(
+    ticket_id: int,
+    new_status: str,
+    *,
+    actor_name: str,
+    actor_email: str,
+    notify_customer: bool = False,
+) -> None:
+    payload: dict | None = None
+    with session_scope() as db:
+        ticket = db.get(SupportTicket, ticket_id)
+        if not ticket:
+            raise ValueError(f"Ticket no encontrado: {ticket_id}")
+        if ticket.status == new_status:
+            return
+        ticket.status = new_status
+        payload = {
+            "email": ticket.requester_email,
+            "name": ticket.requester_name,
+            "subject": ticket.subject,
+            "status": ticket.status,
+        }
+
+    if notify_customer and payload:
+        send_support_ticket_status_email(
+            payload["email"],
+            payload["name"],
+            ticket_id,
+            payload["subject"],
+            payload["status"],
         )
 
 

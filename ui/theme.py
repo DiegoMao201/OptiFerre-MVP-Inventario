@@ -375,7 +375,7 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
         box-shadow: 0 10px 24px rgba(8, 17, 31, 0.1);
       }}
       .of-stage-title {{
-        font-size: clamp(2.4rem, 4.8vw, 5rem);
+        font-size: clamp(2.05rem, 4.1vw, 4.35rem);
         line-height: .96;
         margin: 10px 0 0 0;
         letter-spacing: -0.04em;
@@ -391,11 +391,11 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
         animation: of-shimmer 5s linear infinite;
       }}
       .of-stage-lead {{
-        margin: 16px 0 0 0;
+        margin: 14px 0 0 0;
         max-width: 560px;
         color: rgba(227,237,248,0.92);
-        font-size: 1.04rem;
-        line-height: 1.72;
+        font-size: .98rem;
+        line-height: 1.64;
         font-weight: 500;
         text-shadow: 0 8px 20px rgba(8, 17, 31, 0.12);
       }}
@@ -407,14 +407,14 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
           linear-gradient(180deg, rgba(28,53,87,0.96), rgba(11,23,42,0.98));
         border: 1px solid rgba(255,255,255,0.12);
         border-radius: 24px;
-        padding: 28px 26px 26px 26px;
-        margin-bottom: 22px;
+        padding: 24px 24px 22px 24px;
+        margin-bottom: 18px;
         box-shadow: 0 24px 46px rgba(8, 17, 31, 0.22);
       }}
       .of-hero-v2 h2 {{
-        font-size: clamp(2.35rem, 4vw, 4.4rem);
+        font-size: clamp(2rem, 3.45vw, 3.7rem);
         line-height: .98;
-        margin: 14px 0 16px 0;
+        margin: 12px 0 14px 0;
         max-width: 760px;
         letter-spacing: -0.04em;
         color: #F5FAFF;
@@ -435,6 +435,12 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
       }}
       .of-proof-v2 .number {{ font-size: 1.7rem; font-weight: 800; letter-spacing: -0.03em; }}
       .of-proof-v2 .caption {{ color: rgba(231,241,250,0.86); font-size: .9rem; margin-top: 6px; line-height: 1.5; }}
+      .of-actionable-intro {{
+        color: rgba(235,243,251,0.92);
+        font-size: .9rem;
+        line-height: 1.55;
+        margin: 2px 0 12px 0;
+      }}
       .of-stat-grid {{
         display: grid;
         grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -461,6 +467,34 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
         animation: of-shimmer 5s linear infinite;
       }}
       .of-stat-card .caption {{ color: rgba(18,49,84,0.92); font-size: .82rem; line-height: 1.45; margin-top: 6px; font-weight: 600; }}
+      .of-stat-caption-card {{
+        margin-top: 10px;
+        min-height: 94px;
+        padding: 14px 14px;
+        border-radius: 16px;
+        background: linear-gradient(180deg, rgba(248,251,255,0.9), rgba(229,239,249,0.74));
+        border: 1px solid rgba(16,33,59,0.16);
+        color: #163557;
+        font-size: .84rem;
+        line-height: 1.45;
+        font-weight: 700;
+        box-shadow: 0 12px 24px rgba(8,17,31,0.08);
+      }}
+      .of-stat-popover-kicker {{
+        color: #0A7A89;
+        font-size: .74rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: .12em;
+      }}
+      .of-stat-popover-title {{
+        margin-top: 6px;
+        color: #102C49;
+        font-size: 1.65rem;
+        font-weight: 900;
+        line-height: 1.04;
+        letter-spacing: -0.03em;
+      }}
       .of-feature-grid-v2 {{
         display: grid;
         grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -601,7 +635,7 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
       .of-price-card:focus-visible .of-price-list li {{ color: #102C49; }}
       .of-final-cta {{
         margin-top: 22px;
-        padding: 32px 28px;
+        padding: 28px 26px;
         border-radius: 28px;
         border: 1px solid rgba(255,255,255,0.18);
         background: linear-gradient(180deg, rgba(230,241,251,0.58), rgba(19,41,70,0.9));
@@ -609,13 +643,54 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
         box-shadow: 0 24px 48px rgba(8, 17, 31, 0.18);
       }}
       .of-final-cta h3 {{
-        font-size: clamp(2rem, 3vw, 3.35rem);
+        font-size: clamp(1.8rem, 2.7vw, 3rem);
         line-height: .98;
         letter-spacing: -0.04em;
         margin: 12px 0;
       }}
       .of-final-cta .of-eyebrow {{ color: #10B7C4; }}
       .of-final-cta p {{ color: rgba(234,242,251,0.86); }}
+      .of-contact-panel {{
+        margin-top: 16px;
+        padding: 24px 26px;
+        border-radius: 24px;
+        border: 1px solid rgba(167,204,233,0.2);
+        background:
+          radial-gradient(circle at top right, rgba(16,183,196,0.14), transparent 34%),
+          linear-gradient(180deg, rgba(26,48,76,0.98), rgba(9,18,32,0.99));
+        box-shadow: 0 22px 42px rgba(8,17,31,0.2);
+      }}
+      .of-contact-name {{
+        margin-top: 10px;
+        color: #F6FAFF;
+        font-size: clamp(1.35rem, 2vw, 2rem);
+        font-weight: 900;
+        line-height: 1.05;
+        letter-spacing: -0.03em;
+      }}
+      .of-contact-meta {{
+        margin-top: 6px;
+        color: rgba(214,236,249,0.9);
+        font-size: .95rem;
+        font-weight: 600;
+      }}
+      .of-contact-link {{
+        display: inline-flex;
+        margin-top: 12px;
+        align-items: center;
+        justify-content: center;
+        padding: 12px 16px;
+        border-radius: 999px;
+        background: rgba(232,249,251,0.94);
+        color: #10304E;
+        font-weight: 800;
+        text-decoration: none;
+        box-shadow: 0 14px 28px rgba(8,17,31,0.14);
+      }}
+      .of-contact-link:hover {{
+        background: #FFFFFF;
+        color: #0B2742;
+      }}
 
       div[data-testid="stPopover"] {{ width: 100%; }}
       div[data-testid="stPopover"] > button,

@@ -11,6 +11,58 @@ from core.auth import authenticate, login, register_tenant
 from core.billing import PLAN_CATALOG
 
 
+ACTIONABLE_PILLARS = [
+        {
+                "title": "14 días",
+                "caption": "Prueba real para validar valor sin fricción técnica.",
+                "eyebrow": "Prueba guiada",
+                "summary": "Activas una prueba de 14 días para cargar archivos, revisar el diagnóstico y entender el retorno antes de pagar.",
+                "benefits": [
+                        "Te deja ver rápidamente caja atrapada, quiebres y sugerencias de compra.",
+                        "Sirve para demostrar valor interno antes de comprometer presupuesto.",
+                        "Empiezas con archivos sin depender de una integración compleja desde el día uno.",
+                ],
+                "cta": "Crea tu cuenta para activar la prueba y ver beneficios reales con tus datos o con la demo guiada.",
+        },
+        {
+                "title": "ABC/XYZ",
+                "caption": "Clasificación para ordenar foco, caja y riesgo.",
+                "eyebrow": "Prioridad operativa",
+                "summary": "ABC/XYZ te ayuda a separar lo más importante por valor e identificar qué referencias tienen demanda más estable o más impredecible.",
+                "benefits": [
+                        "Te enfoca en los productos que más afectan caja y disponibilidad.",
+                        "Facilita reuniones más claras entre compras, finanzas y operaciones.",
+                        "Permite definir políticas distintas según criticidad y variabilidad.",
+                ],
+                "cta": "Ingresa para ver cómo la clasificación aterriza decisiones concretas en tu inventario.",
+        },
+        {
+                "title": "ROP + SS",
+                "caption": "Reposición basada en demanda y lead time.",
+                "eyebrow": "Compra con criterio",
+                "summary": "ROP y stock de seguridad convierten la intuición en una regla clara de reposición para reducir quiebres y evitar compras infladas.",
+                "benefits": [
+                        "Da una referencia concreta de cuándo comprar y cuánto proteger.",
+                        "Reduce la dependencia de decisiones urgentes de último minuto.",
+                        "Mejora equilibrio entre nivel de servicio y capital inmovilizado.",
+                ],
+                "cta": "Activa tu acceso para ver la sugerencia calculada con tus propias referencias y movimientos.",
+        },
+        {
+                "title": "ROI mensual",
+                "caption": "Costo de oportunidad sobre capital inmovilizado.",
+                "eyebrow": "Impacto financiero",
+                "summary": "Este indicador muestra cuánto dinero podrías liberar o dejar de castigar cada mes si corriges sobrestock, rotación y abastecimiento.",
+                "benefits": [
+                        "Aterriza el problema de inventario en lenguaje financiero y gerencial.",
+                        "Ayuda a priorizar acciones por impacto económico, no solo por percepción.",
+                        "Sirve para justificar decisiones frente a dirección o socios.",
+                ],
+                "cta": "Entra a la prueba para convertir el problema operativo en una conversación clara de retorno y caja.",
+        },
+]
+
+
 def _build_logo_markup() -> str:
                 logo_path = Path("logo_nexus.png")
                 if not logo_path.exists():
@@ -82,30 +134,30 @@ def _render_value_stage() -> None:
 
 def _render_stats_bar() -> None:
                 st.markdown(
-                                dedent(
-                                                """
-                                                <div class="of-stat-grid">
-                                                        <div class="of-stat-card">
-                                                                <div class="value">14 días</div>
-                                                                <div class="caption">Prueba real para validar valor sin fricción técnica.</div>
-                                                        </div>
-                                                        <div class="of-stat-card">
-                                                                <div class="value">ABC/XYZ</div>
-                                                                <div class="caption">Clasificación para ordenar foco, caja y riesgo.</div>
-                                                        </div>
-                                                        <div class="of-stat-card">
-                                                                <div class="value">ROP + SS</div>
-                                                                <div class="caption">Reposición basada en demanda y lead time.</div>
-                                                        </div>
-                                                        <div class="of-stat-card">
-                                                                <div class="value">ROI mensual</div>
-                                                                <div class="caption">Costo de oportunidad sobre capital inmovilizado.</div>
-                                                        </div>
-                                                </div>
-                                                """
-                                ),
+                                "<p class='of-actionable-intro'>Haz clic en cada bloque para entender qué resuelve, cómo se aplica y por qué conviene iniciar la prueba.</p>",
                                 unsafe_allow_html=True,
                 )
+                cols = st.columns(4)
+                for col, item in zip(cols, ACTIONABLE_PILLARS):
+                                with col:
+                                                with st.popover(item["title"], use_container_width=True):
+                                                                st.markdown(
+                                                                                dedent(
+                                                                                                f"""
+                                                                                                <div class="of-stat-popover-kicker">{item['eyebrow']}</div>
+                                                                                                <div class="of-stat-popover-title">{item['title']}</div>
+                                                                                                <p class="of-mini-note" style="margin-top:8px; margin-bottom:10px; color:#102C49;">{item['summary']}</p>
+                                                                                                """
+                                                                                ),
+                                                                                unsafe_allow_html=True,
+                                                                )
+                                                                for benefit in item["benefits"]:
+                                                                                st.write(f"- {benefit}")
+                                                                st.info(item["cta"])
+                                                st.markdown(
+                                                                f"<div class='of-stat-caption-card'>{item['caption']}</div>",
+                                                                unsafe_allow_html=True,
+                                                )
 
 
 def _render_feature_grid() -> None:
@@ -299,6 +351,23 @@ def _render_final_cta() -> None:
                 )
 
 
+def _render_contact_section() -> None:
+                st.markdown(
+                                dedent(
+                                                """
+                                                <div class="of-contact-panel">
+                                                        <div class="of-eyebrow">Contacto directo</div>
+                                                        <div class="of-contact-name">DIEGO MAURICIO GARCIA</div>
+                                                        <div class="of-contact-meta">Arquitecto y desarrollador de OptiFerre</div>
+                                                        <p class="of-mini-note">Si quieres revisar integración, despliegue, demo guiada, automatización o una implementación más potente, este es el punto de contacto directo.</p>
+                                                        <a class="of-contact-link" href="mailto:diegomao.201@gmail.com">diegomao.201@gmail.com</a>
+                                                </div>
+                                                """
+                                ),
+                                unsafe_allow_html=True,
+                )
+
+
 def render() -> None:
                 st.markdown(
                                 "<div class='of-landing-canvas'><div class='of-glow orb-a'></div><div class='of-glow orb-b'></div><div class='of-glow orb-c'></div>",
@@ -364,4 +433,5 @@ def render() -> None:
                 _render_plan_strip()
                 _render_faq()
                 _render_final_cta()
+                _render_contact_section()
                 st.markdown("</div>", unsafe_allow_html=True)

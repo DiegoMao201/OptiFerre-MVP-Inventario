@@ -98,6 +98,30 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
       .of-banner h4 {{ margin: 0 0 4px 0; color: var(--primary); }}
       .of-banner p {{ margin: 0; color: var(--text); opacity: 0.92; }}
       .of-section-shell {{ margin: 0 0 14px 0; }}
+      .of-page-block {{ margin: 0 0 24px 0; }}
+      .of-soft-panel {{
+        background: linear-gradient(180deg, rgba(255,255,255,0.94), rgba(236,247,255,0.9));
+        border: 1px solid rgba(19,62,97,0.12);
+        border-radius: 22px;
+        padding: 22px 24px;
+        box-shadow: 0 16px 30px rgba(87, 137, 173, 0.08);
+      }}
+      .of-helper-line {{
+        color: #55718B;
+        font-size: .9rem;
+        line-height: 1.6;
+        margin: 8px 0 0 0;
+      }}
+      .of-action-note {{
+        margin: 12px 0 0 0;
+        padding: 12px 14px;
+        border-radius: 14px;
+        background: rgba(226,246,255,0.86);
+        border: 1px solid rgba(16,183,196,0.18);
+        color: #35546F;
+        font-size: .88rem;
+        line-height: 1.55;
+      }}
       .of-exec-shell {{
         background:
           radial-gradient(circle at top right, rgba(16,183,196,0.18), transparent 36%),
@@ -702,6 +726,26 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
         background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(233,247,255,0.95));
         box-shadow: 0 20px 40px rgba(87,137,173,0.1);
       }}
+      .of-support-hero {{
+        display: grid;
+        grid-template-columns: minmax(0, 1.15fr) minmax(320px, .85fr);
+        gap: 18px;
+        margin-bottom: 24px;
+      }}
+      .of-support-guide {{
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 12px;
+        margin-top: 18px;
+      }}
+      .of-support-guide-card {{
+        border: 1px solid rgba(19,62,97,0.12);
+        border-radius: 18px;
+        padding: 16px;
+        background: rgba(255,255,255,0.78);
+      }}
+      .of-support-guide-card strong {{ display:block; color:#16314D; margin-bottom:8px; }}
+      .of-support-guide-card p {{ margin:0; color:#55718B; font-size:.9rem; line-height:1.55; }}
       .of-operator-banner {{
         margin: 10px 0 18px 0;
         padding: 14px 16px;
@@ -711,6 +755,47 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
         color: #0F5273;
         box-shadow: 0 12px 24px rgba(87,137,173,0.08);
       }}
+      .of-ticket-meta-grid {{
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+        margin-bottom: 14px;
+      }}
+      .of-ticket-meta {{
+        border: 1px solid rgba(19,62,97,0.1);
+        border-radius: 16px;
+        background: rgba(255,255,255,0.78);
+        padding: 12px 14px;
+      }}
+      .of-ticket-meta span {{ display:block; color:#6A849E; font-size:.76rem; letter-spacing:.08em; text-transform:uppercase; margin-bottom:5px; font-weight:800; }}
+      .of-ticket-meta strong {{ color:#16314D; font-size:.94rem; }}
+      .of-thread-stack {{ display:grid; gap:12px; margin:14px 0 18px 0; }}
+      .of-thread-item {{
+        border: 1px solid rgba(19,62,97,0.1);
+        border-radius: 18px;
+        padding: 15px 16px;
+        background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(239,248,255,0.88));
+      }}
+      .of-thread-item.internal {{
+        background: linear-gradient(180deg, rgba(233,248,243,0.96), rgba(223,244,239,0.92));
+        border-color: rgba(16,183,196,0.22);
+      }}
+      .of-thread-head {{ display:flex; justify-content:space-between; gap:12px; align-items:baseline; margin-bottom:8px; }}
+      .of-thread-head strong {{ color:#16314D; font-size:.95rem; }}
+      .of-thread-head span {{ color:#6A849E; font-size:.82rem; }}
+      .of-thread-body {{ color:#35546F; line-height:1.65; white-space:pre-wrap; }}
+
+      details[data-testid="stExpander"] {{
+        border: 1px solid rgba(19,62,97,0.12) !important;
+        border-radius: 20px !important;
+        background: linear-gradient(180deg, rgba(255,255,255,0.94), rgba(238,248,255,0.92)) !important;
+        box-shadow: 0 14px 28px rgba(87,137,173,0.08);
+        overflow: hidden;
+      }}
+      details[data-testid="stExpander"] + details[data-testid="stExpander"] {{ margin-top: 14px; }}
+      details[data-testid="stExpander"] summary {{ padding: 14px 18px !important; }}
+      details[data-testid="stExpander"] summary p {{ color:#16314D !important; font-weight:700 !important; }}
+      details[data-testid="stExpander"] [data-testid="stExpanderDetails"] {{ padding: 0 18px 18px 18px !important; }}
 
       div[data-testid="stPopover"] {{ width: 100%; }}
       div[data-testid="stPopover"] > button,
@@ -762,6 +847,7 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
         .of-grid, .of-proof, .of-plan-strip, .of-trust-grid {{ grid-template-columns: 1fr; }}
         .of-public-topbar {{ flex-direction: column; align-items: flex-start; }}
         .of-exec-grid, .of-metric-strip, .of-upload-promo-grid {{ grid-template-columns: 1fr; }}
+        .of-support-hero, .of-support-guide, .of-ticket-meta-grid {{ grid-template-columns: 1fr; }}
         .of-stage-title-wrap {{ margin-left: 0; max-width: 100%; }}
         .of-chip-row {{ grid-template-columns: 1fr; width: 100%; }}
         .of-stat-grid, .of-proof-v2, .of-feature-grid-v2, .of-proof-grid-v2, .of-price-grid {{ grid-template-columns: 1fr; }}
@@ -803,31 +889,46 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
       }}
 
       /* Inputs */
-      .stTextInput input, .stNumberInput input, .stSelectbox div[data-baseweb="select"] {{
+      .stTextInput input, .stNumberInput input, .stTextArea textarea, .stSelectbox div[data-baseweb="select"] {{
         border-radius: 14px !important;
         background: linear-gradient(180deg, rgba(255,255,255,0.99), rgba(240,246,252,0.96)) !important;
         border: 1px solid rgba(84,120,153,0.28) !important;
         color: #123154 !important;
         box-shadow: 0 12px 24px rgba(8, 17, 31, 0.1) !important;
       }}
-      .stTextInput input:focus, .stNumberInput input:focus {{
+      .stTextInput input:focus, .stNumberInput input:focus, .stTextArea textarea:focus {{
         border-color: rgba(16,183,196,0.68) !important;
         box-shadow: 0 0 0 1px rgba(16,183,196,0.28), 0 14px 26px rgba(8, 17, 31, 0.14) !important;
       }}
-      .stTextInput label p, .stNumberInput label p, .stCheckbox label p {{
+      .stTextInput label p, .stNumberInput label p, .stTextArea label p, .stSelectbox label p, .stCheckbox label p {{
         color: #486785 !important;
         font-weight: 700 !important;
         letter-spacing: .01em;
       }}
       .stCaption {{ color: #5F7993 !important; }}
-      .stTextInput input::placeholder, .stNumberInput input::placeholder {{
+      .stTextInput input::placeholder, .stNumberInput input::placeholder, .stTextArea textarea::placeholder {{
         color: rgba(18,49,84,0.62) !important;
       }}
       .stCheckbox label span, .stCheckbox p {{
         color: #486785 !important;
       }}
+      .stTextArea textarea {{ min-height: 128px !important; line-height: 1.6 !important; }}
+      .stSelectbox div[data-baseweb="select"] * {{ color: #123154 !important; }}
+      div[data-baseweb="popover"] ul, div[role="listbox"] {{
+        background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(239,247,255,0.96)) !important;
+        border: 1px solid rgba(19,62,97,0.12) !important;
+        border-radius: 16px !important;
+      }}
+      div[data-baseweb="popover"] li, div[role="option"] {{ color: #123154 !important; }}
       .stForm {{
         background: transparent !important;
+      }}
+      div[data-testid="stForm"] {{
+        border: 1px solid rgba(19,62,97,0.1);
+        border-radius: 22px;
+        padding: 20px 20px 14px 20px;
+        background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(239,248,255,0.88));
+        box-shadow: 0 14px 28px rgba(87,137,173,0.06);
       }}
 
       /* DataFrame */

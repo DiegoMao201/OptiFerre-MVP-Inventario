@@ -124,7 +124,7 @@ def render() -> None:
     st.markdown(
         f"""
         <div class='of-exec-shell'>
-            <div class='of-eyebrow'>{'Demo industrial activa' if st.session_state.get('demo_mode') else 'Diagnóstico con datos del tenant'}</div>
+            <div class='of-eyebrow'>{'Demo guiada activa' if st.session_state.get('demo_mode') else 'Diagnóstico con datos del tenant'}</div>
             <div class='of-exec-grid'>
                 <div>
                     <h2 style='margin:8px 0 0 0'>{summary_title}</h2>

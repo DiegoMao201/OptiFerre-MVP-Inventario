@@ -37,7 +37,7 @@ PLAN_CATALOG = {
         "features": [
             "Hasta 25.000 SKUs",
             "Multi-bodega",
-            "Catalizadores químicos",
+            "Reglas de compra avanzadas",
             "Soporte prioritario",
         ],
     },

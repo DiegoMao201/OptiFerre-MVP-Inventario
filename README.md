@@ -1,6 +1,6 @@
 # OptiFerre SaaS
 
-Plataforma SaaS B2B para análisis y optimización masiva de inventarios ferreteros e industriales. El producto está diseñado para operar en modo multitenant, cobrar suscripciones con Stripe, soportar marca blanca por cliente y entregar decisiones accionables de abastecimiento con lógica de ingeniería de inventarios.
+Plataforma SaaS B2B para análisis y optimización masiva de inventarios para cualquier empresa que gestione stock. El producto está diseñado para operar en modo multitenant, cobrar suscripciones con Stripe, soportar marca blanca por cliente y entregar decisiones accionables de abastecimiento con lógica de ingeniería de inventarios.
 
 Frontend productivo previsto: https://optiferre.datovatenexuspro.com
 
@@ -19,7 +19,7 @@ OptiFerre SaaS resuelve cuatro problemas operativos críticos:
 - Registro e inicio de sesión con trial automático de 14 días.
 - Landing pública rediseñada con propuesta de valor, prueba guiada, FAQ y mensajes de confianza.
 - Smart Importer con aliases y fuzzy matching para columnas ERP heterogéneas.
-- Demo Mode con dataset industrial precargado para reducir time-to-value comercial.
+- Demo Mode con dataset guiado precargado para reducir time-to-value comercial.
 - Paywall por suscripción activa.
 - Descarga de plantillas oficiales de Inventario, Ventas y Catálogo.
 - Validación estructural al subir archivos.

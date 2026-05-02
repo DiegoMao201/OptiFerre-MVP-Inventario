@@ -282,7 +282,7 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
         font-size: .9rem;
         font-weight: 600;
       }}
-      .of-mini-note {{ color: var(--muted); font-size: .86rem; line-height: 1.55; }}
+      .of-mini-note {{ color: rgba(235,243,251,0.92); font-size: .88rem; line-height: 1.6; }}
       .of-trust-grid {{
         display: grid;
         grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -366,6 +366,14 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
         max-width: 620px;
         margin-left: auto;
       }}
+      .of-stage-title-wrap .of-eyebrow {{
+        display: inline-flex;
+        align-items: center;
+        padding: 6px 12px;
+        border-radius: 999px;
+        background: rgba(16,183,196,0.14);
+        box-shadow: 0 10px 24px rgba(8, 17, 31, 0.1);
+      }}
       .of-stage-title {{
         font-size: clamp(2.4rem, 4.8vw, 5rem);
         line-height: .96;
@@ -409,8 +417,10 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
         margin: 14px 0 16px 0;
         max-width: 760px;
         letter-spacing: -0.04em;
+        color: #F5FAFF;
+        text-shadow: 0 10px 24px rgba(8, 17, 31, 0.14);
       }}
-      .of-hero-v2 p {{ color: var(--muted); line-height: 1.7; max-width: 860px; margin: 0; }}
+      .of-hero-v2 p {{ color: rgba(232,241,250,0.9); line-height: 1.72; max-width: 860px; margin: 0; }}
       .of-proof-v2 {{
         display: grid;
         grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -424,7 +434,7 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
         padding: 16px;
       }}
       .of-proof-v2 .number {{ font-size: 1.7rem; font-weight: 800; letter-spacing: -0.03em; }}
-      .of-proof-v2 .caption {{ color: var(--muted); font-size: .88rem; margin-top: 6px; line-height: 1.45; }}
+      .of-proof-v2 .caption {{ color: rgba(231,241,250,0.86); font-size: .9rem; margin-top: 6px; line-height: 1.5; }}
       .of-stat-grid {{
         display: grid;
         grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -432,8 +442,8 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
         margin: 18px 0 22px 0;
       }}
       .of-stat-card {{
-        background: linear-gradient(180deg, rgba(255,255,255,0.28), rgba(255,255,255,0.1));
-        border: 1px solid rgba(16,33,59,0.12);
+        background: linear-gradient(180deg, rgba(255,255,255,0.42), rgba(214,228,244,0.22));
+        border: 1px solid rgba(16,33,59,0.16);
         border-radius: 18px;
         padding: 18px 16px;
         box-shadow: 0 12px 28px rgba(8, 17, 31, 0.08);
@@ -446,8 +456,8 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
         gap: 16px;
       }}
       .of-feature-card-v2 {{
-        background: linear-gradient(180deg, rgba(255,255,255,0.18), rgba(255,255,255,0.06));
-        border: 1px solid rgba(16,33,59,0.12);
+        background: linear-gradient(180deg, rgba(255,255,255,0.34), rgba(220,233,247,0.14));
+        border: 1px solid rgba(16,33,59,0.16);
         border-radius: 18px;
         padding: 18px;
         box-shadow: 0 14px 28px rgba(8, 17, 31, 0.08);
@@ -461,7 +471,7 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
         box-shadow: 0 22px 36px rgba(8, 17, 31, 0.12);
       }}
       .of-feature-card-v2 h4 {{ margin: 12px 0 8px 0; font-size: 1.05rem; color: #123154; }}
-      .of-feature-card-v2 p {{ margin: 0; color: rgba(18,49,84,0.78); font-size: .92rem; line-height: 1.55; }}
+      .of-feature-card-v2 p {{ margin: 0; color: rgba(18,49,84,0.92); font-size: .94rem; line-height: 1.58; }}
       .of-feature-icon {{
         width: 42px;
         height: 42px;
@@ -474,18 +484,23 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
         font-weight: 800;
       }}
       .of-auth-card {{
-        background: linear-gradient(180deg, rgba(255,255,255,0.14), rgba(15,28,50,0.96));
-        border: 1px solid rgba(255,255,255,0.12);
+        background: linear-gradient(180deg, rgba(248,251,255,0.34), rgba(26,43,70,0.98));
+        border: 1px solid rgba(255,255,255,0.18);
         border-radius: 22px;
         padding: 22px;
         margin-bottom: 14px;
         box-shadow: 0 22px 44px rgba(8, 17, 31, 0.2);
       }}
+      .of-auth-card .of-eyebrow {{ color: #6EF0FF; }}
       .of-auth-card h3 {{
         margin: 10px 0 10px 0;
         font-size: clamp(1.7rem, 2.2vw, 2.45rem);
         line-height: 1.06;
         letter-spacing: -0.03em;
+        color: #F6FAFF;
+      }}
+      .of-auth-card .of-mini-note {{
+        color: rgba(235,243,251,0.9);
       }}
       .of-proof-grid-v2 {{
         display: grid;
@@ -495,8 +510,8 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
         margin-bottom: 12px;
       }}
       .of-proof-card-v2 {{
-        background: linear-gradient(180deg, rgba(255,255,255,0.18), rgba(255,255,255,0.06));
-        border: 1px solid rgba(16,33,59,0.12);
+        background: linear-gradient(180deg, rgba(255,255,255,0.34), rgba(223,235,248,0.12));
+        border: 1px solid rgba(16,33,59,0.16);
         border-radius: 20px;
         padding: 22px;
         box-shadow: 0 16px 34px rgba(8, 17, 31, 0.08);
@@ -516,11 +531,11 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
       }}
       .of-price-card {{
         position: relative;
-        background: linear-gradient(180deg, rgba(255,255,255,0.18), rgba(255,255,255,0.08));
-        border: 1px solid rgba(16,33,59,0.12);
+        background: linear-gradient(180deg, rgba(247,251,255,0.82), rgba(209,225,242,0.34));
+        border: 1px solid rgba(16,33,59,0.2);
         border-radius: 22px;
         padding: 22px 20px;
-        box-shadow: 0 16px 34px rgba(8, 17, 31, 0.08);
+        box-shadow: 0 18px 36px rgba(8, 17, 31, 0.1);
         transition: transform .28s ease, box-shadow .28s ease, border-color .28s ease, background .28s ease;
         cursor: pointer;
       }}
@@ -534,7 +549,7 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
         outline: none;
       }}
       .of-price-popular {{
-        background: linear-gradient(180deg, rgba(16,183,196,0.09), rgba(255,255,255,0.03));
+        background: linear-gradient(180deg, rgba(207,248,252,0.9), rgba(196,230,245,0.34));
         border-color: rgba(16,183,196,0.55);
         box-shadow: 0 0 0 1px rgba(16,183,196,0.12) inset;
       }}
@@ -558,9 +573,10 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
         letter-spacing: .12em;
         text-transform: uppercase;
       }}
-      .of-price-main {{ margin: 14px 0 14px 0; font-size: 2.3rem; font-weight: 900; letter-spacing: -0.04em; }}
-      .of-price-main span {{ color: rgba(18,49,84,0.7); font-size: .95rem; font-weight: 500; margin-left: 2px; }}
-      .of-price-list {{ margin: 0; padding-left: 18px; color: rgba(18,49,84,0.82); }}
+      .of-price-card .of-pill {{ background: rgba(16,183,196,0.14); color: #0F5E69; font-weight: 700; }}
+      .of-price-main {{ margin: 14px 0 14px 0; font-size: 2.3rem; font-weight: 900; letter-spacing: -0.04em; color: #0E2A48; }}
+      .of-price-main span {{ color: rgba(18,49,84,0.82); font-size: .95rem; font-weight: 500; margin-left: 2px; }}
+      .of-price-list {{ margin: 0; padding-left: 18px; color: rgba(18,49,84,0.98); }}
       .of-price-list li {{ margin-bottom: 8px; line-height: 1.45; }}
       .of-final-cta {{
         margin-top: 22px;
@@ -645,6 +661,10 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
       }}
 
       /* Tabs */
+      .stTabs [data-baseweb="tab-list"] button {{
+        color: rgba(232,241,250,0.82) !important;
+        font-weight: 700 !important;
+      }}
       .stTabs [data-baseweb="tab-list"] button[aria-selected="true"] {{
         color: var(--primary) !important;
         border-bottom-color: var(--primary) !important;
@@ -652,7 +672,23 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
 
       /* Inputs */
       .stTextInput input, .stNumberInput input, .stSelectbox div[data-baseweb="select"] {{
-        border-radius: 10px !important;
+        border-radius: 14px !important;
+        background: linear-gradient(180deg, rgba(248,251,255,0.96), rgba(230,239,250,0.92)) !important;
+        border: 1px solid rgba(16,33,59,0.16) !important;
+        color: #123154 !important;
+        box-shadow: 0 10px 20px rgba(8, 17, 31, 0.08) !important;
+      }}
+      .stTextInput label p, .stCheckbox label p, .stCaption, .stMarkdown p {{
+        color: inherit;
+      }}
+      .stTextInput input::placeholder, .stNumberInput input::placeholder {{
+        color: rgba(18,49,84,0.52) !important;
+      }}
+      .stCheckbox label span, .stCheckbox p {{
+        color: rgba(236,243,251,0.94) !important;
+      }}
+      .stForm {{
+        background: transparent !important;
       }}
 
       /* DataFrame */

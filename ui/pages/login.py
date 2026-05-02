@@ -23,7 +23,7 @@ def _render_top_stage() -> None:
                 logo_col, title_col = st.columns([1, 1], gap="large")
                 with logo_col:
                                 st.markdown(
-                                                f"<div class='of-stage-logo-wrap'><div class='of-logo-panel'>{_build_logo_markup()}<div class='of-logo-caption'>Analítica industrial con identidad clara, contraste limpio y presencia comercial.</div></div></div>",
+                                                f"<div class='of-stage-logo-wrap'><div class='of-logo-panel'>{_build_logo_markup()}<div class='of-logo-caption'>Analítica de inventarios con visibilidad clara, contraste limpio y presencia comercial.</div></div></div>",
                                                 unsafe_allow_html=True,
                                 )
 
@@ -33,12 +33,12 @@ def _render_top_stage() -> None:
                                                                 """
                                                                 <div class="of-stage-title-wrap">
                                                                         <div class="of-eyebrow">OptiFerre SaaS</div>
-                                                                        <h1 class="of-stage-title">Diagnóstico <span class="of-shimmer-text">ejecutivo</span> de inventarios para empresas ferreteras e industriales</h1>
-                                                                        <p class="of-stage-lead">Sube inventario y ventas, obtén lectura ejecutiva de caja atrapada, riesgo de quiebre y compra sugerida con una puesta en escena mucho más clara y premium.</p>
+                                                                        <h1 class="of-stage-title">Diagnóstico <span class="of-shimmer-text">ejecutivo</span> de inventarios para empresas que gestionan stock</h1>
+                                                                        <p class="of-stage-lead">Sube inventario y movimientos, obtén lectura ejecutiva de caja atrapada, riesgo de quiebre y compra sugerida con una experiencia más clara, visible y tecnológica.</p>
                                                                         <div class="of-chip-row">
                                                                                 <span class="of-chip">14 días gratis</span>
                                                                                 <span class="of-chip">Cero integración ERP</span>
-                                                                                <span class="of-chip">Ferretería e industria</span>
+                                                                                <span class="of-chip">Cualquier tipo de inventario</span>
                                                                         </div>
                                                                 </div>
                                                                 """
@@ -52,10 +52,10 @@ def _render_value_stage() -> None:
                                 dedent(
                                                 """
                                                 <div class="of-hero-v2 card-hover">
-                                                        <div class="of-eyebrow">Optimización B2B para ferretería e industria</div>
-                                                        <h2>Reduce capital inmovilizado y repone con criterio técnico.</h2>
+                                                        <div class="of-eyebrow">Optimización B2B para cualquier operación con inventario</div>
+                                                        <h2>Reduce capital inmovilizado y repone con <span class="of-shimmer-text">criterio</span>.</h2>
                                                         <p>
-                                                                OptiFerre SaaS convierte archivos de inventario y ventas en una lectura ejecutiva de riesgo,
+                                                                OptiFerre SaaS convierte archivos de inventario y movimientos en una lectura ejecutiva de riesgo,
                                                                 rotación y abastecimiento. En pocos minutos sabes dónde tienes dinero atrapado,
                                                                 qué referencias están por quebrarse y cuánto deberías comprar realmente.
                                                         </p>
@@ -109,7 +109,7 @@ def _render_stats_bar() -> None:
 
 
 def _render_feature_grid() -> None:
-                st.markdown("### ¿Por qué OptiFerre?")
+                st.markdown("### ¿Por qué <span class='of-shimmer-text'>OptiFerre</span>?", unsafe_allow_html=True)
                 st.markdown(
                                 "<p class='of-mini-note' style='margin-bottom:18px'>Todo lo necesario para pasar de archivos desordenados a decisiones concretas de abastecimiento.</p>",
                                 unsafe_allow_html=True,
@@ -125,8 +125,8 @@ def _render_feature_grid() -> None:
                                                         </div>
                                                         <div class="of-feature-card-v2 card-hover">
                                                                 <div class="of-feature-icon">02</div>
-                                                                <h4>Motor industrial</h4>
-                                                                <p>Incluye guardarraíles para empaques mínimos, químicos y referencias sensibles.</p>
+                                                                <h4>Motor adaptable</h4>
+                                                                <p>Se ajusta a distintos tipos de inventario, políticas de compra y estructuras de catálogo.</p>
                                                         </div>
                                                         <div class="of-feature-card-v2 card-hover">
                                                                 <div class="of-feature-icon">03</div>
@@ -140,13 +140,13 @@ def _render_feature_grid() -> None:
                                                         </div>
                                                         <div class="of-feature-card-v2 card-hover">
                                                                 <div class="of-feature-icon">05</div>
-                                                                <h4>Demo Mode</h4>
+                                                                <h4>Demo guiada</h4>
                                                                 <p>Demuestra valor comercial sin esperar la data real del cliente en la primera reunión.</p>
                                                         </div>
                                                         <div class="of-feature-card-v2 card-hover">
                                                                 <div class="of-feature-icon">06</div>
                                                                 <h4>Modelo SaaS claro</h4>
-                                                                <p>Suscripción para el SaaS e integraciones avanzadas como servicio premium separado.</p>
+                                                                <p>Suscripción para el SaaS e integraciones o automatizaciones avanzadas como servicio premium separado.</p>
                                                         </div>
                                                 </div>
                                                 """
@@ -162,7 +162,7 @@ def _render_form_shell() -> None:
                                                 <div class="of-auth-card card-hover">
                                                         <div class="of-eyebrow">Empieza hoy</div>
                                                         <h3>Crea tu cuenta o entra a tu tenant</h3>
-                                                        <p class="of-mini-note">La prueba incluye dashboard ejecutivo, clasificación ABC/XYZ, stock de seguridad, punto de reorden y exportación de resultados.</p>
+                                                        <p class="of-mini-note">La prueba incluye dashboard ejecutivo, clasificación ABC/XYZ, stock de seguridad, punto de reorden y exportación de resultados con mejor contraste y lectura.</p>
                                                 </div>
                                                 """
                                 ),
@@ -171,7 +171,7 @@ def _render_form_shell() -> None:
 
 
 def _render_trust_and_proof() -> None:
-                st.markdown("### Confianza y claridad")
+                st.markdown("### Confianza y <span class='of-shimmer-text'>claridad</span>", unsafe_allow_html=True)
                 st.markdown(
                                 dedent(
                                                 """
@@ -179,7 +179,7 @@ def _render_trust_and_proof() -> None:
                                                         <div class="of-proof-card-v2 testimonial-card">
                                                                 <div class="of-eyebrow">Qué resuelve</div>
                                                                 <p>"Pasas de hojas dispersas a una lectura accionable de quiebres, sobrestock, ROP y compra sugerida."</p>
-                                                                <div class="of-proof-person">Pensado para gerencia comercial, compras y operaciones.</div>
+                                                                <div class="of-proof-person">Pensado para equipos de compras, operaciones, finanzas y gerencia.</div>
                                                         </div>
                                                         <div class="of-proof-card-v2 testimonial-card">
                                                                 <div class="of-eyebrow">Cómo tratamos tu información</div>
@@ -213,7 +213,7 @@ def _render_plan_strip() -> None:
                         ).strip()
                 )
 
-        st.markdown("### Planes claros, sin letra pequeña")
+        st.markdown("### Planes <span class='of-shimmer-text'>claros</span>, sin letra pequeña", unsafe_allow_html=True)
         st.markdown(
                 "<p class='of-mini-note' style='margin-bottom:18px'>Empieza con trial, comprueba valor y escala a servicios avanzados solo cuando tenga sentido.</p>",
                 unsafe_allow_html=True,
@@ -225,7 +225,7 @@ def _render_plan_strip() -> None:
 
 
 def _render_faq() -> None:
-                st.markdown("### Preguntas frecuentes")
+                st.markdown("### Preguntas <span class='of-shimmer-text'>frecuentes</span>", unsafe_allow_html=True)
                 st.markdown(
                                 "<div class='of-faq-shell'><p class='of-mini-note'>Abre cada respuesta y entiende qué hace la app, cómo procesa la información y cómo evolucionas a suscripción sin sorpresas.</p></div>",
                                 unsafe_allow_html=True,
@@ -290,7 +290,7 @@ def _render_final_cta() -> None:
                                                 """
                                                 <div class="of-final-cta">
                                                         <div class="of-eyebrow">OptiFerre SaaS</div>
-                                                        <h3>Empieza con archivos. Escala a plataforma.</h3>
+                                                        <h3>Empieza con <span class="of-shimmer-text">archivos</span>. Escala a plataforma.</h3>
                                                         <p class="of-mini-note">Primero validas valor con la prueba y el dashboard. Luego decides si activas suscripción, integración ERP o automatización avanzada.</p>
                                                 </div>
                                                 """

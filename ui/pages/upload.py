@@ -28,7 +28,7 @@ def _read_any(uploaded) -> pd.DataFrame | None:
 def render() -> None:
     section_shell(
         "Onboarding de datos",
-        "Carga archivos reales o activa una demo industrial y obtén un diagnóstico ejecutivo en minutos.",
+        "Carga archivos reales o activa una demo guiada y obtén un diagnóstico ejecutivo en minutos.",
         eyebrow="Smart Importer + Demo Mode",
     )
     st.markdown(
@@ -37,7 +37,7 @@ def render() -> None:
             <div class='of-upload-promo-grid'>
                 <div>
                     <h3 style='margin:0 0 8px 0'>Menos fricción, más tiempo a valor</h3>
-                    <p class='of-mini-note' style='margin:0'>El Smart Importer reconoce aliases comunes de ERP y la demo industrial te deja mostrar valor comercial sin esperar la data del cliente.</p>
+                    <p class='of-mini-note' style='margin:0'>El Smart Importer reconoce aliases comunes de ERP y la demo guiada te deja mostrar valor comercial sin esperar la data del cliente.</p>
                     <div class='of-chip-row'>
                         <span class='of-chip'>Reconoce columnas ERP</span>
                         <span class='of-chip'>Corrige estructura antes del análisis</span>
@@ -105,13 +105,13 @@ def render() -> None:
     cols = st.columns(2)
     with cols[0]:
         st.markdown("### 1) Inventario maestro")
-        if st.button("Cargar demo industrial", use_container_width=True, key="load_demo_inventory"):
+        if st.button("Cargar demo guiada", use_container_width=True, key="load_demo_inventory"):
             demo_inventory, demo_sales = get_demo_dataset()
             st.session_state["uploaded_inventory"] = demo_inventory
             st.session_state["uploaded_sales"] = demo_sales
             st.session_state.pop("analysis_result", None)
             st.session_state["demo_mode"] = True
-            st.success("Demo industrial cargada. Ya puedes ir a Dashboard o Análisis.")
+            st.success("Demo guiada cargada. Ya puedes ir a Dashboard o Análisis.")
         inv_file = st.file_uploader(
             "Inventario (CSV o XLSX)", type=["csv", "xlsx", "xls"], key="inv_uploader"
         )

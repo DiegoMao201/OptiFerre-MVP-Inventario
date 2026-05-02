@@ -14,7 +14,7 @@ def _hex_to_rgb(hex_color: str) -> tuple[int, int, int]:
         return (255, 107, 26)
 
 
-def inject_brand_css(primary_color: str = "#FF6B1A", theme_mode: str = "dark") -> None:
+def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -> None:
     r, g, b = _hex_to_rgb(primary_color)
     primary_soft = f"rgba({r},{g},{b},0.15)"
 
@@ -25,10 +25,10 @@ def inject_brand_css(primary_color: str = "#FF6B1A", theme_mode: str = "dark") -
         muted = "#5b6479"
         card_border = "rgba(0,0,0,0.08)"
     else:
-        bg = "#0E1117"
-        bg2 = "#1A1F2B"
-        text = "#FAFAFA"
-        muted = "#9aa3b2"
+        bg = "#08111F"
+        bg2 = "#101C32"
+        text = "#F7FAFC"
+        muted = "#AAB7CC"
         card_border = "rgba(255,255,255,0.08)"
 
     css = f"""
@@ -42,8 +42,16 @@ def inject_brand_css(primary_color: str = "#FF6B1A", theme_mode: str = "dark") -
         --muted: {muted};
         --card-border: {card_border};
       }}
-      .stApp {{ background-color: var(--bg); color: var(--text); }}
-      section[data-testid="stSidebar"] {{ background-color: var(--bg2); }}
+      .stApp {{
+        background:
+          radial-gradient(circle at top left, rgba(16,183,196,0.12), transparent 28%),
+          radial-gradient(circle at top right, rgba(25,74,145,0.18), transparent 32%),
+          linear-gradient(180deg, #08111F 0%, #0A1526 36%, #07101B 100%);
+        color: var(--text);
+      }}
+      section[data-testid="stSidebar"] {{
+        background: linear-gradient(180deg, rgba(16,28,50,0.98), rgba(8,17,31,0.98));
+      }}
       .block-container {{ max-width: 1320px; padding-top: 2rem; padding-bottom: 3rem; }}
       h1, h2, h3, h4 {{ color: var(--text); letter-spacing: -0.01em; }}
 
@@ -89,8 +97,9 @@ def inject_brand_css(primary_color: str = "#FF6B1A", theme_mode: str = "dark") -
       /* Landing */
       .of-hero {{
         background:
-          radial-gradient(circle at top right, var(--primary-soft), transparent 35%),
-          linear-gradient(180deg, rgba(255,255,255,0.02), transparent),
+          radial-gradient(circle at top right, rgba(16,183,196,0.18), transparent 35%),
+          radial-gradient(circle at bottom left, rgba(25,74,145,0.14), transparent 35%),
+          linear-gradient(180deg, rgba(255,255,255,0.03), transparent),
           var(--bg2);
         border: 1px solid var(--card-border);
         border-radius: 20px;
@@ -245,10 +254,13 @@ def render_brand_header(company_name: str, logo_url: str | None = None,
         if logo_url:
             st.image(logo_url, width=72)
         else:
-            st.markdown(
-                "<div style='font-size:42px; line-height:1;'>🛠️</div>",
-                unsafe_allow_html=True,
-            )
+            try:
+                st.image("logo_nexus.png", width=86)
+            except Exception:
+                st.markdown(
+                    "<div style='font-size:42px; line-height:1;'>🛠️</div>",
+                    unsafe_allow_html=True,
+                )
     with cols[1]:
         st.markdown(
             f"<h2 style='margin-bottom:0'>{company_name}</h2>"

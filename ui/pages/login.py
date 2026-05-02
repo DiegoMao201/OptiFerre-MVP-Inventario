@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 from textwrap import dedent
+from pathlib import Path
 
 import streamlit as st
 
@@ -193,22 +194,28 @@ def _render_trust_and_faq() -> None:
 
 
 def render() -> None:
-        st.markdown(
-                dedent(
-                        """
-                        <div class="of-public-shell">
-                          <div class="of-public-topbar">
-                                <div>
-                                  <div class="of-eyebrow">OptiFerre SaaS</div>
-                                  <h2 style="margin:6px 0 0 0">Diagnostico ejecutivo de inventarios para empresas ferreteras e industriales</h2>
+        top_left, top_right = st.columns([1.2, 1], gap="large")
+        with top_left:
+                logo_path = Path("logo_nexus.png")
+                if logo_path.exists():
+                        st.image(str(logo_path), width=190)
+        with top_right:
+                st.markdown(
+                        dedent(
+                                """
+                                <div class="of-public-shell">
+                                  <div class="of-public-topbar">
+                                        <div>
+                                          <div class="of-eyebrow">OptiFerre SaaS</div>
+                                          <h2 style="margin:6px 0 0 0">Diagnostico ejecutivo de inventarios para empresas ferreteras e industriales</h2>
+                                        </div>
+                                        <div class="of-public-badge">Prueba gratuita de 14 dias</div>
+                                  </div>
                                 </div>
-                                <div class="of-public-badge">Prueba gratuita de 14 dias</div>
-                          </div>
-                        </div>
-                        """
-                ),
-                unsafe_allow_html=True,
-        )
+                                """
+                        ),
+                        unsafe_allow_html=True,
+                )
 
         hero_col, form_col = st.columns([1.5, 0.9], gap="large")
 

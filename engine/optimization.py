@@ -41,6 +41,7 @@ class AnalysisConfig:
     horizon_days: int = 90  # ventana para calcular demanda promedio
     abc_thresholds: tuple[float, float] = (0.80, 0.95)
     xyz_thresholds: tuple[float, float] = (0.5, 1.0)  # CV
+    annual_opportunity_rate: float = 0.12
 
 
 # ---------- Métricas de demanda ----------
@@ -152,6 +153,11 @@ def calculate_reorder_point(avg_demand: float, lead_time: float, safety_stock: i
     return math.ceil(max(0.0, avg_demand) * max(0.0, lead_time) + max(0, safety_stock))
 
 
+def calculate_opportunity_cost(capital: float, annual_rate: float = 0.12) -> tuple[float, float]:
+    annual_cost = max(0.0, capital) * max(0.0, annual_rate)
+    return annual_cost, annual_cost / 12
+
+
 # ---------- Guardarraíl industrial ----------
 
 def _round_to_pack(qty: float, pack: int) -> int:
@@ -232,6 +238,12 @@ def full_analysis(
         df["valor_inventario"],
         0,
     )
+    annual_costs, monthly_costs = zip(*[
+        calculate_opportunity_cost(value, cfg.annual_opportunity_rate)
+        for value in df["capital_inmovilizado"].tolist()
+    ]) if not df.empty else ([], [])
+    df["costo_oportunidad_anual"] = list(annual_costs)
+    df["costo_oportunidad_mensual"] = list(monthly_costs)
 
     def _estado(row: pd.Series) -> str:
         if row["stock_actual"] <= 0:
@@ -246,3 +258,28 @@ def full_analysis(
 
     df = apply_industrial_guardrails(df)
     return df
+
+
+def simulate_service_level_impact(
+    inventory_df: pd.DataFrame,
+    sales_df: pd.DataFrame,
+    levels: list[float] | None = None,
+    horizon_days: int = 90,
+) -> pd.DataFrame:
+    scenario_levels = levels or [0.90, 0.95, 0.975, 0.99]
+    rows = []
+    for level in scenario_levels:
+        result = full_analysis(
+            inventory_df,
+            sales_df,
+            AnalysisConfig(service_level=level, horizon_days=horizon_days),
+        )
+        rows.append(
+            {
+                "service_level": level,
+                "sugerencia_compra_total": float(result["sugerencia_compra"].sum()),
+                "capital_inmovilizado": float(result["capital_inmovilizado"].sum()),
+                "costo_oportunidad_mensual": float(result["costo_oportunidad_mensual"].sum()),
+            }
+        )
+    return pd.DataFrame(rows)

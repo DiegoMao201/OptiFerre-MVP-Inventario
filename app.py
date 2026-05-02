@@ -7,6 +7,7 @@ from core.auth import current_user, logout
 from core.billing import get_subscription
 from core.config import get_settings
 from core.database import init_db
+from core.logging_config import clear_log_context, configure_logging, set_log_context
 from core.tenancy import get_tenant
 from ui.pages import (
     analysis,
@@ -20,6 +21,7 @@ from ui.pages import (
 from ui.theme import inject_brand_css, render_brand_header
 
 settings = get_settings()
+configure_logging()
 
 st.set_page_config(
     page_title=settings.app_name,
@@ -32,7 +34,7 @@ st.set_page_config(
 init_db()
 
 # Tema base (puede ser sobrescrito por marca del tenant)
-inject_brand_css("#FF6B1A", "dark")
+inject_brand_css("#10B7C4", "dark")
 
 
 PUBLIC_ROUTES = {
@@ -67,6 +69,10 @@ def _sidebar_user_block(user: dict) -> None:
 
 def main() -> None:
     user = current_user()
+    if user:
+        set_log_context(tenant_id=user.get("tenant_id"), user_id=user.get("user_id"))
+    else:
+        clear_log_context()
 
     if user:
         # Aplicar branding del tenant

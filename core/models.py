@@ -82,3 +82,15 @@ class AnalysisRun(Base):
     created_at: Mapped[datetime] = mapped_column(DateTime, server_default=func.now())
 
     tenant: Mapped[Tenant] = relationship(back_populates="runs")
+
+
+class AuditLog(Base):
+    __tablename__ = "audit_logs"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    tenant_id: Mapped[int] = mapped_column(ForeignKey("tenants.id", ondelete="CASCADE"))
+    user_email: Mapped[Optional[str]] = mapped_column(String(180), nullable=True)
+    action: Mapped[str] = mapped_column(String(120))
+    entity: Mapped[str] = mapped_column(String(120), default="system")
+    notes: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime, server_default=func.now())

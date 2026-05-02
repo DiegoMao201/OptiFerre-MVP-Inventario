@@ -7,6 +7,8 @@ import pandas as pd
 import streamlit as st
 
 from core.templates import INVENTORY_TEMPLATE, SALES_TEMPLATE, validate_columns
+from engine.cleaning import apply_smart_column_mapping
+from engine.demo_data import get_demo_dataset
 
 
 def _read_any(uploaded) -> pd.DataFrame | None:
@@ -74,17 +76,30 @@ def render() -> None:
     cols = st.columns(2)
     with cols[0]:
         st.markdown("### 1) Inventario maestro")
+        if st.button("Cargar demo industrial", use_container_width=True, key="load_demo_inventory"):
+            demo_inventory, demo_sales = get_demo_dataset()
+            st.session_state["uploaded_inventory"] = demo_inventory
+            st.session_state["uploaded_sales"] = demo_sales
+            st.session_state["demo_mode"] = True
+            st.success("Demo industrial cargada. Ya puedes ir a Dashboard o Análisis.")
         inv_file = st.file_uploader(
             "Inventario (CSV o XLSX)", type=["csv", "xlsx", "xls"], key="inv_uploader"
         )
         if inv_file is not None:
             try:
                 df = _read_any(inv_file)
+                df, mapping = apply_smart_column_mapping(df, schema="inventory")
                 ok, missing = validate_columns(df, INVENTORY_TEMPLATE)
                 if not ok:
                     st.error(f"❌ Faltan columnas obligatorias: {', '.join(missing)}")
                 else:
                     st.session_state["uploaded_inventory"] = df
+                    st.session_state["demo_mode"] = False
+                    if mapping:
+                        st.info(
+                            "Smart Importer aplicó estas equivalencias: "
+                            + ", ".join(f"{src} → {dst}" for src, dst in mapping.items())
+                        )
                     st.success(f"✅ Inventario cargado: {len(df):,} filas.")
                     st.dataframe(df.head(10), use_container_width=True, hide_index=True)
             except Exception as exc:
@@ -98,11 +113,18 @@ def render() -> None:
         if sales_file is not None:
             try:
                 df = _read_any(sales_file)
+                df, mapping = apply_smart_column_mapping(df, schema="sales")
                 ok, missing = validate_columns(df, SALES_TEMPLATE)
                 if not ok:
                     st.error(f"❌ Faltan columnas obligatorias: {', '.join(missing)}")
                 else:
                     st.session_state["uploaded_sales"] = df
+                    st.session_state["demo_mode"] = False
+                    if mapping:
+                        st.info(
+                            "Smart Importer aplicó estas equivalencias: "
+                            + ", ".join(f"{src} → {dst}" for src, dst in mapping.items())
+                        )
                     st.success(f"✅ Ventas cargadas: {len(df):,} filas.")
                     st.dataframe(df.head(10), use_container_width=True, hide_index=True)
             except Exception as exc:

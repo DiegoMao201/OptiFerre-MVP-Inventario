@@ -4,10 +4,13 @@ from __future__ import annotations
 from contextlib import contextmanager
 from typing import Iterator
 
-from sqlalchemy import create_engine
+import logging
+
+from sqlalchemy import create_engine, select
 from sqlalchemy.orm import DeclarativeBase, Session, sessionmaker
 
 from core.config import get_settings
+from core.logging_config import set_log_context
 
 
 class Base(DeclarativeBase):
@@ -21,6 +24,7 @@ if _settings.database_url.startswith("sqlite"):
 
 engine = create_engine(_settings.database_url, **_engine_kwargs)
 SessionLocal = sessionmaker(bind=engine, autoflush=False, autocommit=False, future=True)
+logger = logging.getLogger("optiferre.database")
 
 
 def init_db() -> None:
@@ -31,14 +35,45 @@ def init_db() -> None:
 
 
 @contextmanager
-def session_scope() -> Iterator[Session]:
+def session_scope(*, tenant_id: int | None = None, user_id: int | None = None) -> Iterator[Session]:
     """Context manager con commit/rollback automáticos."""
     session = SessionLocal()
+    session.info["tenant_id"] = tenant_id
+    session.info["user_id"] = user_id
+    if tenant_id is not None or user_id is not None:
+        set_log_context(tenant_id=tenant_id, user_id=user_id)
     try:
         yield session
         session.commit()
     except Exception:
         session.rollback()
+        logger.exception(
+            "database_session_error",
+            extra={"tenant_id": tenant_id, "user_id": user_id},
+        )
         raise
     finally:
         session.close()
+
+
+@contextmanager
+def tenant_session_scope(tenant_id: int, user_id: int | None = None) -> Iterator[Session]:
+    """Wrapper explícito para consultas ligadas obligatoriamente a un tenant."""
+    with session_scope(tenant_id=tenant_id, user_id=user_id) as session:
+        yield session
+
+
+def tenant_select(session: Session, model: type[Base]):
+    """Genera un select forzado al tenant_id actual de la sesión."""
+    tenant_id = session.info.get("tenant_id")
+    if tenant_id is None:
+        raise ValueError("tenant_select requiere una sesión tenant-aware")
+    if not hasattr(model, "tenant_id"):
+        raise ValueError(f"{model.__name__} no soporta filtrado por tenant_id")
+    return select(model).where(getattr(model, "tenant_id") == tenant_id)
+
+
+def tenant_get(session: Session, model: type[Base], row_id: int):
+    """Obtiene una fila por PK restringida al tenant actual."""
+    stmt = tenant_select(session, model).where(getattr(model, "id") == row_id)
+    return session.scalar(stmt)

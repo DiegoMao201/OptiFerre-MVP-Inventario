@@ -45,6 +45,12 @@ def update_brand(
             t.theme_mode = theme_mode
 
 
+def resolve_brand_logo(tenant: dict | None = None) -> str | None:
+    if tenant and tenant.get("brand_logo_url"):
+        return tenant["brand_logo_url"]
+    return "logo_nexus.png"
+
+
 def list_tenants() -> list[dict]:
     with session_scope() as db:
         rows = db.scalars(select(Tenant).order_by(Tenant.created_at.desc())).all()

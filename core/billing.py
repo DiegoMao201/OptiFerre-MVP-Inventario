@@ -11,7 +11,7 @@ from typing import Optional
 from sqlalchemy import select
 
 from core.config import get_settings
-from core.database import session_scope
+from core.database import session_scope, tenant_select, tenant_session_scope
 from core.models import Subscription, Tenant
 
 try:
@@ -72,8 +72,8 @@ def _price_id_for(plan: str) -> Optional[str]:
 
 
 def get_subscription(tenant_id: int) -> Optional[dict]:
-    with session_scope() as db:
-        sub = db.scalar(select(Subscription).where(Subscription.tenant_id == tenant_id))
+    with tenant_session_scope(tenant_id=tenant_id) as db:
+        sub = db.scalar(tenant_select(db, Subscription))
         if not sub:
             return None
         return {
@@ -130,8 +130,8 @@ def create_checkout_session(
 
 
 def _simulate_activation(tenant_id: int, plan: str) -> None:
-    with session_scope() as db:
-        sub = db.scalar(select(Subscription).where(Subscription.tenant_id == tenant_id))
+    with tenant_session_scope(tenant_id=tenant_id) as db:
+        sub = db.scalar(tenant_select(db, Subscription))
         if not sub:
             sub = Subscription(tenant_id=tenant_id)
             db.add(sub)
@@ -154,8 +154,8 @@ def handle_webhook_event(payload: bytes, sig_header: str) -> dict:
     if not tenant_id:
         return {"ok": True, "ignored": True}
 
-    with session_scope() as db:
-        sub = db.scalar(select(Subscription).where(Subscription.tenant_id == tenant_id))
+    with tenant_session_scope(tenant_id=tenant_id) as db:
+        sub = db.scalar(tenant_select(db, Subscription))
         if not sub:
             sub = Subscription(tenant_id=tenant_id)
             db.add(sub)

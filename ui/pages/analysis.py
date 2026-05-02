@@ -9,7 +9,7 @@ import streamlit as st
 from core.auth import require_login
 from core.billing import has_active_access
 from engine import full_analysis
-from engine.optimization import AnalysisConfig
+from engine.optimization import AnalysisConfig, simulate_service_level_impact
 from ui.components import integration_banner, paywall
 
 ESTADO_COLORS = {
@@ -98,6 +98,17 @@ def render() -> None:
     st.dataframe(styled, use_container_width=True, hide_index=True, height=520)
 
     st.markdown("#### Exportar resultados")
+    scenarios = simulate_service_level_impact(inv, sales, horizon_days=horizon)
+    current = scenarios[scenarios["service_level"] == sl]
+    baseline = scenarios[scenarios["service_level"] == 0.95]
+    if not current.empty and not baseline.empty:
+        current_total = float(current.iloc[0]["sugerencia_compra_total"])
+        base_total = float(baseline.iloc[0]["sugerencia_compra_total"])
+        st.info(
+            f"Con nivel de servicio {int(sl * 100)}%, la sugerencia total de compra es {current_total:,.0f} unidades. "
+            f"Diferencia vs 95%: {current_total - base_total:,.0f}."
+        )
+
     colx, coly = st.columns(2)
     csv_bytes = view.to_csv(index=False).encode("utf-8")
     colx.download_button(

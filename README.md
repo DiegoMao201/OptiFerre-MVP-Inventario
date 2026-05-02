@@ -2,7 +2,7 @@
 
 Plataforma SaaS B2B para análisis y optimización masiva de inventarios ferreteros e industriales. El producto está diseñado para operar en modo multitenant, cobrar suscripciones con Stripe, soportar marca blanca por cliente y entregar decisiones accionables de abastecimiento con lógica de ingeniería de inventarios.
 
-Frontend productivo previsto: https://optiferredatovatenexuspro.com
+Frontend productivo previsto: https://optiferre.datovatenexuspro.com
 
 ## Resumen ejecutivo
 
@@ -18,6 +18,8 @@ OptiFerre SaaS resuelve cuatro problemas operativos críticos:
 - Multitenancy con aislamiento por empresa.
 - Registro e inicio de sesión con trial automático de 14 días.
 - Landing pública rediseñada con propuesta de valor, prueba guiada, FAQ y mensajes de confianza.
+- Smart Importer con aliases y fuzzy matching para columnas ERP heterogéneas.
+- Demo Mode con dataset industrial precargado para reducir time-to-value comercial.
 - Paywall por suscripción activa.
 - Descarga de plantillas oficiales de Inventario, Ventas y Catálogo.
 - Validación estructural al subir archivos.
@@ -26,10 +28,14 @@ OptiFerre SaaS resuelve cuatro problemas operativos críticos:
 - Clasificación ABC/XYZ.
 - Stock de seguridad dinámico.
 - Punto de reorden.
+- Simulador de nivel de servicio y sensibilidad de compra.
+- KPI de costo de oportunidad y alertas accionables priorizadas.
 - Redondeo de compra al empaque mínimo con `math.ceil`.
 - Sugerencia de catalizadores para químicos industriales.
 - Dashboard ejecutivo y vista analítica exportable a CSV/Excel.
 - White-label por tenant: color, logo y modo dark/light.
+- Logging estructurado JSON con `tenant_id` y `user_id`.
+- Ruta inicial de migraciones con Alembic.
 
 ## Reglas de negocio implementadas
 
@@ -55,7 +61,27 @@ Si no hay suficiente histórico, el sistema usa una heurística conservadora bas
 
 - Las notas crédito y devoluciones restan demanda.
 - Las fechas y numéricos se normalizan.
+- El Smart Importer sugiere y corrige aliases comunes como `Existencias`, `Qty`, `Codigo`, `Descripcion`.
 - Se corrigen columnas mínimas para que el motor no falle por formatos erráticos.
+
+### KPI financiero ampliado
+
+- El sistema estima `capital_inmovilizado` cuando hay demanda nula o cobertura excesiva.
+- Sobre ese capital se calcula costo de oportunidad anual y mensual.
+- El dashboard expone este costo como proxy directo de caja atrapada.
+
+### Simulación operativa
+
+- El nivel de servicio sigue siendo configurable globalmente.
+- La app ahora compara escenarios y muestra cómo cambia la sugerencia total de compra al mover el service level.
+- Esto permite discutir trade-offs entre fill rate, caja y riesgo de quiebre.
+
+### Seguridad de tenancy
+
+- Se añadió `tenant_session_scope()` para abrir sesiones con contexto explícito de tenant.
+- Se añadió `tenant_select()` para forzar filtros por `tenant_id` en modelos tenant-scoped.
+- Se añadió logging estructurado para que errores y eventos puedan rastrearse por tenant y usuario.
+- Se añadió `AuditLog` para registrar ejecuciones clave como corridas de análisis.
 
 ### Guardarraíl industrial
 
@@ -75,12 +101,16 @@ Si no hay suficiente histórico, el sistema usa una heurística conservadora bas
 │   ├── billing.py
 │   ├── config.py
 │   ├── database.py
+│   ├── logging_config.py
 │   ├── models.py
 │   ├── tenancy.py
 │   └── templates.py
 ├── engine/
 │   ├── cleaning.py
+│   ├── demo_data.py
 │   └── optimization.py
+├── alembic/
+│   └── env.py
 ├── ui/
 │   ├── components.py
 │   ├── theme.py
@@ -99,9 +129,10 @@ Si no hay suficiente histórico, el sistema usa una heurística conservadora bas
 3. Descargar las plantillas oficiales.
 4. Completar las columnas obligatorias.
 5. Cargar Inventario y Ventas con ayuda contextual en pantalla.
-6. Ir a Dashboard para ver capital inmovilizado y alertas.
-7. Ir a Análisis para revisar SS, ROP y sugerencia de compra.
-8. Exportar resultados y ejecutar compras o acciones correctivas.
+6. Si quiere validar rápido, activar Demo Mode con dataset industrial precargado.
+7. Ir a Dashboard para ver capital inmovilizado, costo de oportunidad, alertas y tareas prioritarias.
+8. Ir a Análisis para revisar SS, ROP, sugerencia de compra y sensibilidad por nivel de servicio.
+9. Exportar resultados y ejecutar compras o acciones correctivas.
 
 ### Qué debe cargar el cliente
 
@@ -141,10 +172,14 @@ Columnas mínimas:
 
 - Capital total invertido.
 - Capital inmovilizado.
+- Costo de oportunidad mensual.
 - SKUs en quiebre.
 - SKUs por reponer.
 - Sobrestock.
 - Distribución por clase ABC/XYZ.
+- Matriz bubble ABC/XYZ según capital atrapado.
+- Escenarios de nivel de servicio.
+- Lista de tareas priorizadas para compras y desinversión.
 
 ### Qué significa cada estado
 
@@ -164,6 +199,7 @@ La aplicación ya incorpora un enfoque explícito de confianza para ayudar a con
 - explicación del uso de la información cargada,
 - aclaración de que la integración ERP no es obligatoria al inicio,
 - guía contextual en la sección de carga de archivos,
+- demo industrial para acortar onboarding,
 - separación comercial entre suscripción SaaS e integración premium.
 
 Preguntas que la app responde directamente:
@@ -183,7 +219,9 @@ La app queda lista para desplegar en Coolify con Docker Compose.
 
 - `Dockerfile`
 - `docker-compose.yml`
+- `docker-compose.yaml`
 - `.dockerignore`
+- `alembic/env.py`
 
 ### Configuración en Coolify
 
@@ -248,12 +286,20 @@ streamlit run app.py
 pytest -q
 ```
 
+Validación reciente del slice crítico:
+
+- `pytest -q tests/test_engine.py` -> `10 passed`
+- smoke import de `app.py` -> OK
+
 ## Seguridad y buenas prácticas
 
 - `.env.example` debe contener placeholders, no secretos reales.
 - Las credenciales reales deben vivir en Coolify, no en Git.
 - PostgreSQL es la opción recomendada para producción.
 - SQLite solo debe usarse para demos locales o pruebas rápidas.
+- Las consultas tenant-scoped deben pasar por helpers con filtro obligatorio por `tenant_id`.
+- Los logs deben conservar `tenant_id` y `user_id` para auditoría y soporte.
+- Alembic queda preparado como ruta de migración evolutiva para salir de `create_all()` sin ruptura.
 
 ## Modelo comercial
 

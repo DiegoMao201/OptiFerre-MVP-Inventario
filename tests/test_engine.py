@@ -7,10 +7,13 @@ import pandas as pd
 
 from core.auth import hash_password, verify_password
 from engine import full_analysis
+from engine.cleaning import apply_smart_column_mapping
 from engine.optimization import (
     abc_classification,
+    calculate_opportunity_cost,
     calculate_reorder_point,
     calculate_safety_stock,
+    simulate_service_level_impact,
     xyz_classification,
 )
 
@@ -74,3 +77,27 @@ def test_password_hash_supports_long_passwords():
     password = "Ferre-" + ("segura123!" * 12)
     hashed = hash_password(password)
     assert verify_password(password, hashed)
+
+
+def test_smart_importer_maps_aliases():
+    df = pd.DataFrame({"Existencias": [10], "Costo": [5], "Codigo": ["A1"], "Descripcion": ["Prod"]})
+    renamed, mapping = apply_smart_column_mapping(df, schema="inventory")
+    assert mapping["Existencias"] == "stock_actual"
+    assert "stock_actual" in renamed.columns
+
+
+def test_opportunity_cost():
+    annual, monthly = calculate_opportunity_cost(1200, annual_rate=0.12)
+    assert annual == 144
+    assert monthly == 12
+
+
+def test_service_level_simulation():
+    inv = pd.DataFrame(
+        [{"sku": "A1", "nombre_comercial": "Prod A1", "stock_actual": 5, "costo_unitario": 10, "lead_time_dias": 7, "categoria": "Fer", "unidad_empaque_minimo": 1}]
+    )
+    sales = pd.DataFrame(
+        [{"fecha": "2026-01-01", "sku": "A1", "cantidad_vendida": 2, "tipo_documento": "FV"}]
+    )
+    scenarios = simulate_service_level_impact(inv, sales, levels=[0.90, 0.95])
+    assert list(scenarios["service_level"]) == [0.90, 0.95]

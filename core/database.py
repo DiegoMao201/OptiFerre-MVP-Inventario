@@ -10,7 +10,7 @@ from sqlalchemy import create_engine, select
 from sqlalchemy.orm import DeclarativeBase, Session, sessionmaker
 
 from core.config import get_settings
-from core.logging_config import set_log_context
+from core.logging_config import clear_log_context, set_log_context
 
 
 class Base(DeclarativeBase):
@@ -38,10 +38,12 @@ def init_db() -> None:
 def session_scope(*, tenant_id: int | None = None, user_id: int | None = None) -> Iterator[Session]:
     """Context manager con commit/rollback automáticos."""
     session = SessionLocal()
+    tenant_token = None
+    user_token = None
     session.info["tenant_id"] = tenant_id
     session.info["user_id"] = user_id
     if tenant_id is not None or user_id is not None:
-        set_log_context(tenant_id=tenant_id, user_id=user_id)
+        tenant_token, user_token = set_log_context(tenant_id=tenant_id, user_id=user_id)
     try:
         yield session
         session.commit()
@@ -54,6 +56,8 @@ def session_scope(*, tenant_id: int | None = None, user_id: int | None = None) -
         raise
     finally:
         session.close()
+        if tenant_token is not None or user_token is not None:
+            clear_log_context(tenant_token=tenant_token, user_token=user_token)
 
 
 @contextmanager

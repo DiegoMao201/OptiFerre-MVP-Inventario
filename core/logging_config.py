@@ -4,7 +4,7 @@ from __future__ import annotations
 import json
 import logging
 import sys
-from contextvars import ContextVar
+from contextvars import ContextVar, Token
 from datetime import datetime, timezone
 
 tenant_context: ContextVar[int | None] = ContextVar("tenant_id", default=None)
@@ -38,11 +38,22 @@ def configure_logging() -> None:
     configure_logging._configured = True  # type: ignore[attr-defined]
 
 
-def set_log_context(tenant_id: int | None = None, user_id: int | None = None) -> None:
-    tenant_context.set(tenant_id)
-    user_context.set(user_id)
+def set_log_context(tenant_id: int | None = None, user_id: int | None = None) -> tuple[Token, Token]:
+    tenant_token = tenant_context.set(tenant_id)
+    user_token = user_context.set(user_id)
+    return tenant_token, user_token
 
 
-def clear_log_context() -> None:
-    tenant_context.set(None)
-    user_context.set(None)
+def clear_log_context(
+    tenant_token: Token | None = None,
+    user_token: Token | None = None,
+) -> None:
+    if tenant_token is not None:
+        tenant_context.reset(tenant_token)
+    else:
+        tenant_context.set(None)
+
+    if user_token is not None:
+        user_context.reset(user_token)
+    else:
+        user_context.set(None)

@@ -93,6 +93,71 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
       }}
       .of-banner h4 {{ margin: 0 0 4px 0; color: var(--primary); }}
       .of-banner p {{ margin: 0; color: var(--text); opacity: 0.92; }}
+      .of-section-shell {{ margin: 0 0 14px 0; }}
+      .of-exec-shell {{
+        background:
+          radial-gradient(circle at top right, rgba(16,183,196,0.18), transparent 36%),
+          linear-gradient(135deg, rgba(255,255,255,0.03), transparent),
+          var(--bg2);
+        border: 1px solid var(--card-border);
+        border-radius: 20px;
+        padding: 24px;
+        margin-bottom: 18px;
+      }}
+      .of-exec-grid {{
+        display: grid;
+        grid-template-columns: 1.4fr .8fr;
+        gap: 14px;
+        margin-top: 12px;
+      }}
+      .of-metric-strip {{
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 12px;
+        margin-top: 18px;
+      }}
+      .of-metric-pill {{
+        border: 1px solid var(--card-border);
+        border-radius: 16px;
+        padding: 14px 16px;
+        background: rgba(255,255,255,0.025);
+      }}
+      .of-metric-pill .caption {{ color: var(--muted); font-size: .78rem; text-transform: uppercase; letter-spacing: .08em; }}
+      .of-metric-pill .value {{ color: var(--text); font-size: 1.45rem; font-weight: 700; margin-top: 6px; }}
+      .of-priority-card {{
+        background: rgba(255,255,255,0.025);
+        border: 1px solid var(--card-border);
+        border-radius: 16px;
+        padding: 16px 18px;
+      }}
+      .of-priority-list {{ margin: 12px 0 0 0; padding-left: 18px; }}
+      .of-priority-list li {{ margin-bottom: 8px; color: var(--text); }}
+      .of-chip-row {{ display:flex; flex-wrap:wrap; gap:10px; margin-top: 14px; }}
+      .of-chip {{
+        display:inline-flex;
+        align-items:center;
+        gap:8px;
+        border:1px solid var(--card-border);
+        border-radius:999px;
+        padding:8px 12px;
+        background: rgba(255,255,255,0.03);
+        color: var(--text);
+        font-size: .85rem;
+      }}
+      .of-upload-promo {{
+        background: linear-gradient(135deg, rgba(16,183,196,0.13), rgba(25,74,145,0.12));
+        border: 1px solid var(--card-border);
+        border-radius: 18px;
+        padding: 18px 20px;
+        margin-bottom: 18px;
+      }}
+      .of-upload-promo-grid {{ display:grid; grid-template-columns: 1.1fr .9fr; gap: 14px; }}
+      .of-upload-stat {{
+        background: rgba(8,17,31,0.35);
+        border: 1px solid var(--card-border);
+        border-radius: 14px;
+        padding: 14px 16px;
+      }}
 
       /* Landing */
       .of-hero {{
@@ -217,6 +282,7 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
       @media (max-width: 900px) {{
         .of-grid, .of-proof, .of-plan-strip, .of-trust-grid {{ grid-template-columns: 1fr; }}
         .of-public-topbar {{ flex-direction: column; align-items: flex-start; }}
+        .of-exec-grid, .of-metric-strip, .of-upload-promo-grid {{ grid-template-columns: 1fr; }}
       }}
 
       /* Pill / badge */

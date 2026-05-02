@@ -1,6 +1,8 @@
 """Dashboard ejecutivo: KPIs, capital inmovilizado, alertas."""
 from __future__ import annotations
 
+import hashlib
+
 import pandas as pd
 import plotly.express as px
 import streamlit as st
@@ -12,7 +14,7 @@ from core.models import AnalysisRun, AuditLog
 from engine import full_analysis
 from engine.demo_data import get_demo_dataset
 from engine.optimization import AnalysisConfig, simulate_service_level_impact
-from ui.components import format_currency, integration_banner, kpi, paywall
+from ui.components import format_currency, integration_banner, kpi, paywall, section_shell
 
 
 def _ensure_analysis() -> pd.DataFrame | None:
@@ -36,6 +38,11 @@ def _ensure_analysis() -> pd.DataFrame | None:
 
 
 def _persist_run(tenant_id: int, email: str, df: pd.DataFrame, sales_rows: int) -> None:
+    signature = hashlib.sha1(
+        f"{tenant_id}|{len(df)}|{sales_rows}|{df['valor_inventario'].sum():.2f}|{df['capital_inmovilizado'].sum():.2f}".encode("utf-8")
+    ).hexdigest()
+    if st.session_state.get("_last_persisted_analysis_signature") == signature:
+        return
     try:
         with tenant_session_scope(tenant_id=tenant_id) as db:
             db.add(
@@ -57,8 +64,33 @@ def _persist_run(tenant_id: int, email: str, df: pd.DataFrame, sales_rows: int) 
                     notes=f"rows_inventory={len(df)} rows_sales={sales_rows}",
                 )
             )
+        st.session_state["_last_persisted_analysis_signature"] = signature
     except Exception:
         pass
+
+
+def _build_exec_summary(df: pd.DataFrame) -> tuple[str, str, list[str], int]:
+    quiebres_a = int(((df["abc"] == "A") & (df["estado"] == "QUIEBRE")).sum())
+    reponer_a = int(((df["abc"] == "A") & (df["estado"] == "REPONER")).sum())
+    pct_inmov = float((df["capital_inmovilizado"].sum() / max(df["valor_inventario"].sum(), 1)) * 100)
+    risk_score = min(100, int(quiebres_a * 14 + reponer_a * 6 + pct_inmov * 0.7))
+
+    if risk_score >= 70:
+        title = "Riesgo operativo alto"
+        narrative = "Hay presión combinada en quiebres clase A, capital atrapado y reposición pendiente. La prioridad es proteger ventas y liberar caja rápida."
+    elif risk_score >= 35:
+        title = "Riesgo controlable con acción semanal"
+        narrative = "El inventario ya muestra focos de presión, pero todavía hay margen para corregir compras, sobrestock y prioridades de surtido."
+    else:
+        title = "Salud operativa estable"
+        narrative = "El inventario luce razonablemente controlado. El foco pasa a optimización fina, reducción de capital y disciplina de reposición."
+
+    chips = [
+        f"{int(df['sku'].nunique())} SKUs analizados",
+        f"{int((df['estado'] == 'SOBRESTOCK').sum())} SKU con sobrestock",
+        f"{int((df['capital_inmovilizado'] > 0).sum())} SKU con caja atrapada",
+    ]
+    return title, narrative, chips, risk_score
 
 
 def render() -> None:
@@ -67,7 +99,11 @@ def render() -> None:
         paywall()
         return
 
-    st.markdown("## 📊 Dashboard ejecutivo")
+    section_shell(
+        "Dashboard ejecutivo",
+        "Lectura rápida de riesgo, caja atrapada y acciones de abastecimiento para decidir hoy.",
+        eyebrow="Executive Control Tower",
+    )
     df = _ensure_analysis()
     if df is None or df.empty:
         st.warning("Aún no has cargado datos. Ve a **📤 Cargar Datos**.")
@@ -83,6 +119,45 @@ def render() -> None:
     quiebres = int((df["estado"] == "QUIEBRE").sum())
     reponer = int((df["estado"] == "REPONER").sum())
     sobre = int((df["estado"] == "SOBRESTOCK").sum())
+    summary_title, summary_text, chips, risk_score = _build_exec_summary(df)
+
+    st.markdown(
+        f"""
+        <div class='of-exec-shell'>
+            <div class='of-eyebrow'>{'Demo industrial activa' if st.session_state.get('demo_mode') else 'Diagnóstico con datos del tenant'}</div>
+            <div class='of-exec-grid'>
+                <div>
+                    <h2 style='margin:8px 0 0 0'>{summary_title}</h2>
+                    <p class='of-mini-note' style='margin-top:10px'>{summary_text}</p>
+                    <div class='of-chip-row'>{''.join(f"<span class='of-chip'>{chip}</span>" for chip in chips)}</div>
+                    <div class='of-metric-strip'>
+                        <div class='of-metric-pill'>
+                            <div class='caption'>Health Score</div>
+                            <div class='value'>{max(0, 100 - risk_score)}/100</div>
+                        </div>
+                        <div class='of-metric-pill'>
+                            <div class='caption'>Capital atrapado</div>
+                            <div class='value'>{format_currency(inmov)}</div>
+                        </div>
+                        <div class='of-metric-pill'>
+                            <div class='caption'>Caja sacrificada / mes</div>
+                            <div class='value'>{format_currency(monthly_opp)}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class='of-priority-card'>
+                    <div class='of-eyebrow'>Qué haría un gerente hoy</div>
+                    <ul class='of-priority-list'>
+                        <li>Proteger los SKUs clase A en quiebre o bajo ROP.</li>
+                        <li>Atacar primero el capital inmovilizado con mayor impacto mensual.</li>
+                        <li>Revisar el nivel de servicio antes de sobrecomprar por reflejo.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
 
     cols = st.columns(4)
     with cols[0]:
@@ -118,6 +193,19 @@ def render() -> None:
         tasks.append(f"Botón de pánico: {len(panic)} SKUs podrían agotarse en 7 días o menos.")
     for task in tasks or ["No hay alertas críticas inmediatas. Mantén seguimiento semanal."]:
         st.markdown(f"- {task}")
+
+    spotlight_cols = st.columns(3)
+    with spotlight_cols[0]:
+        top_sobrestock = df.sort_values("capital_inmovilizado", ascending=False).head(1)
+        top_name = top_sobrestock.iloc[0]["nombre_comercial"] if not top_sobrestock.empty else "Sin sobrestock crítico"
+        top_value = float(top_sobrestock.iloc[0]["capital_inmovilizado"]) if not top_sobrestock.empty else 0
+        kpi("Mayor foco de caja", top_name[:24], format_currency(top_value))
+    with spotlight_cols[1]:
+        panic_count = int(((df["demanda_diaria_avg"] > 0) & (df["stock_actual"] / df["demanda_diaria_avg"] <= 7)).sum())
+        kpi("Riesgo 7 días", f"{panic_count:,}", "SKUs podrían agotarse")
+    with spotlight_cols[2]:
+        a_critical = int(((df["abc"] == "A") & (df["estado"].isin(["QUIEBRE", "REPONER"]))).sum())
+        kpi("Clase A bajo presión", f"{a_critical:,}", "Prioridad comercial")
 
     st.divider()
     st.markdown("### 💸 Top 10 capital inmovilizado")
@@ -177,7 +265,14 @@ def render() -> None:
         markers=True,
         hover_data={"capital_inmovilizado": ':,.0f', "costo_oportunidad_mensual": ':,.0f'},
     )
+    fig4.update_traces(line_color="#10B7C4")
     fig4.update_layout(height=320, margin=dict(l=10, r=10, t=10, b=10))
     st.plotly_chart(fig4, use_container_width=True)
+
+    best_level = scenarios.sort_values("costo_oportunidad_mensual").iloc[0]
+    st.info(
+        f"Escenario más liviano en caja dentro del simulador: {int(best_level['service_level'] * 100)}% de nivel de servicio, "
+        f"con costo de oportunidad mensual estimado de {format_currency(float(best_level['costo_oportunidad_mensual']))}."
+    )
 
     integration_banner()

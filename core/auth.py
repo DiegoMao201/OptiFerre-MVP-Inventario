@@ -91,7 +91,16 @@ def login(session_data: dict) -> None:
 
 
 def logout() -> None:
-    for key in ("auth", "uploaded_inventory", "uploaded_sales", "analysis_result"):
+    for key in (
+        "auth",
+        "uploaded_inventory",
+        "uploaded_sales",
+        "analysis_result",
+        "demo_mode",
+        "cfg_service_level",
+        "cfg_horizon_days",
+        "_last_persisted_analysis_signature",
+    ):
         st.session_state.pop(key, None)
 
 

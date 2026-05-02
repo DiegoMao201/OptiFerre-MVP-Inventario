@@ -15,6 +15,15 @@ def kpi(label: str, value: str, delta: str | None = None) -> None:
     )
 
 
+def section_shell(title: str, subtitle: str | None = None, eyebrow: str | None = None) -> None:
+    eyebrow_html = f"<div class='of-eyebrow'>{eyebrow}</div>" if eyebrow else ""
+    subtitle_html = f"<p class='of-mini-note' style='margin:8px 0 0 0'>{subtitle}</p>" if subtitle else ""
+    st.markdown(
+        f"<div class='of-section-shell'>{eyebrow_html}<h3 style='margin:4px 0 0 0'>{title}</h3>{subtitle_html}</div>",
+        unsafe_allow_html=True,
+    )
+
+
 def integration_banner() -> None:
     s = get_settings()
     st.markdown(

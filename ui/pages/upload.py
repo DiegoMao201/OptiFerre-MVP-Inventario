@@ -9,6 +9,7 @@ import streamlit as st
 from core.templates import INVENTORY_TEMPLATE, SALES_TEMPLATE, validate_columns
 from engine.cleaning import apply_smart_column_mapping
 from engine.demo_data import get_demo_dataset
+from ui.components import section_shell
 
 
 def _read_any(uploaded) -> pd.DataFrame | None:
@@ -25,8 +26,36 @@ def _read_any(uploaded) -> pd.DataFrame | None:
 
 
 def render() -> None:
-    st.markdown("## 📤 Cargar datos")
-    st.caption("Sube tu inventario y ventas. El motor procesa millones de filas en segundos.")
+    section_shell(
+        "Onboarding de datos",
+        "Carga archivos reales o activa una demo industrial y obtén un diagnóstico ejecutivo en minutos.",
+        eyebrow="Smart Importer + Demo Mode",
+    )
+    st.markdown(
+        """
+        <div class='of-upload-promo'>
+            <div class='of-upload-promo-grid'>
+                <div>
+                    <h3 style='margin:0 0 8px 0'>Menos fricción, más tiempo a valor</h3>
+                    <p class='of-mini-note' style='margin:0'>El Smart Importer reconoce aliases comunes de ERP y la demo industrial te deja mostrar valor comercial sin esperar la data del cliente.</p>
+                    <div class='of-chip-row'>
+                        <span class='of-chip'>Reconoce columnas ERP</span>
+                        <span class='of-chip'>Corrige estructura antes del análisis</span>
+                        <span class='of-chip'>Demo lista para vender</span>
+                    </div>
+                </div>
+                <div>
+                    <div class='of-upload-stat'>
+                        <div class='of-eyebrow'>Resultado esperado</div>
+                        <div style='font-size:1.2rem; font-weight:700; margin-top:6px'>Dashboard + ABC/XYZ + ROP + compra sugerida</div>
+                        <p class='of-mini-note' style='margin:8px 0 0 0'>Puedes empezar con Excel y escalar a integración ERP después.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
 
     help_cols = st.columns(4)
     with help_cols[0]:
@@ -80,6 +109,7 @@ def render() -> None:
             demo_inventory, demo_sales = get_demo_dataset()
             st.session_state["uploaded_inventory"] = demo_inventory
             st.session_state["uploaded_sales"] = demo_sales
+            st.session_state.pop("analysis_result", None)
             st.session_state["demo_mode"] = True
             st.success("Demo industrial cargada. Ya puedes ir a Dashboard o Análisis.")
         inv_file = st.file_uploader(
@@ -94,6 +124,7 @@ def render() -> None:
                     st.error(f"❌ Faltan columnas obligatorias: {', '.join(missing)}")
                 else:
                     st.session_state["uploaded_inventory"] = df
+                    st.session_state.pop("analysis_result", None)
                     st.session_state["demo_mode"] = False
                     if mapping:
                         st.info(
@@ -119,6 +150,7 @@ def render() -> None:
                     st.error(f"❌ Faltan columnas obligatorias: {', '.join(missing)}")
                 else:
                     st.session_state["uploaded_sales"] = df
+                    st.session_state.pop("analysis_result", None)
                     st.session_state["demo_mode"] = False
                     if mapping:
                         st.info(

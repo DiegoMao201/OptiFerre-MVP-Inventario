@@ -33,6 +33,7 @@ OptiFerre SaaS resuelve cuatro problemas operativos críticos:
 - Redondeo de compra al empaque mínimo con `math.ceil`.
 - Sugerencia de catalizadores para químicos industriales.
 - Dashboard ejecutivo y vista analítica exportable a CSV/Excel.
+- Resumen ejecutivo con health score, prioridades gerenciales y lectura comercial del riesgo.
 - White-label por tenant: color, logo y modo dark/light.
 - Logging estructurado JSON con `tenant_id` y `user_id`.
 - Ruta inicial de migraciones con Alembic.
@@ -82,6 +83,14 @@ Si no hay suficiente histórico, el sistema usa una heurística conservadora bas
 - Se añadió `tenant_select()` para forzar filtros por `tenant_id` en modelos tenant-scoped.
 - Se añadió logging estructurado para que errores y eventos puedan rastrearse por tenant y usuario.
 - Se añadió `AuditLog` para registrar ejecuciones clave como corridas de análisis.
+- El contexto de logging se limpia al cerrar cada sesión de persistencia para evitar contaminación cruzada entre requests.
+- El `logout()` limpia también estado de demo, configuraciones de análisis y firma de auditoría en memoria de sesión.
+
+### Ruta de migración
+
+- El proyecto ya incluye `alembic.ini`, `alembic/env.py` y una baseline `20260502_0001`.
+- La baseline crea `tenants`, `users`, `subscriptions`, `analysis_runs`, `audit_logs` y `alembic_version`.
+- Se validó con `alembic upgrade head` sobre una base SQLite vacía.
 
 ### Guardarraíl industrial
 
@@ -95,6 +104,7 @@ Si no hay suficiente histórico, el sistema usa una heurística conservadora bas
 .
 ├── app.py
 ├── Dockerfile
+├── alembic.ini
 ├── docker-compose.yml
 ├── core/
 │   ├── auth.py
@@ -110,7 +120,9 @@ Si no hay suficiente histórico, el sistema usa una heurística conservadora bas
 │   ├── demo_data.py
 │   └── optimization.py
 ├── alembic/
-│   └── env.py
+│   ├── env.py
+│   ├── script.py.mako
+│   └── versions/
 ├── ui/
 │   ├── components.py
 │   ├── theme.py
@@ -133,6 +145,15 @@ Si no hay suficiente histórico, el sistema usa una heurística conservadora bas
 7. Ir a Dashboard para ver capital inmovilizado, costo de oportunidad, alertas y tareas prioritarias.
 8. Ir a Análisis para revisar SS, ROP, sugerencia de compra y sensibilidad por nivel de servicio.
 9. Exportar resultados y ejecutar compras o acciones correctivas.
+
+### Qué ve ahora un decisor en el dashboard
+
+- Diagnóstico ejecutivo resumido como `riesgo alto`, `riesgo controlable` o `salud estable`.
+- Health score sintético para lectura rápida en comité o reunión comercial.
+- Foco principal de caja atrapada.
+- Riesgo de quiebre en horizonte de 7 días.
+- Presión concentrada en SKUs clase A.
+- Escenario de service level más liviano en caja dentro del simulador.
 
 ### Qué debe cargar el cliente
 
@@ -221,7 +242,9 @@ La app queda lista para desplegar en Coolify con Docker Compose.
 - `docker-compose.yml`
 - `docker-compose.yaml`
 - `.dockerignore`
+- `alembic.ini`
 - `alembic/env.py`
+- `alembic/versions/20260502_0001_baseline_schema.py`
 
 ### Configuración en Coolify
 
@@ -286,10 +309,17 @@ streamlit run app.py
 pytest -q
 ```
 
+```bash
+alembic upgrade head
+```
+
 Validación reciente del slice crítico:
 
 - `pytest -q tests/test_engine.py` -> `10 passed`
+- `pytest -q` -> `10 passed`
 - smoke import de `app.py` -> OK
+- `streamlit run app.py` -> superficie HTTP respondió `200`
+- `alembic upgrade head` sobre SQLite temporal -> OK
 
 ## Seguridad y buenas prácticas
 

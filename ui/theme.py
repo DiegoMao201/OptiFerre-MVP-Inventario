@@ -278,11 +278,201 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
         padding: 18px;
         margin-top: 18px;
       }}
+      .of-landing-canvas {{ position: relative; overflow: hidden; }}
+      .of-glow {{
+        position: absolute;
+        border-radius: 999px;
+        filter: blur(120px);
+        opacity: .34;
+        pointer-events: none;
+        animation: of-float 10s ease-in-out infinite;
+      }}
+      .of-glow.orb-a {{ width: 360px; height: 360px; top: -40px; left: -120px; background: rgba(16,183,196,0.5); }}
+      .of-glow.orb-b {{ width: 300px; height: 300px; top: 140px; right: -80px; background: rgba(25,74,145,0.55); animation-delay: 2.8s; }}
+      .of-glow.orb-c {{ width: 240px; height: 240px; bottom: 160px; left: 28%; background: rgba(16,183,196,0.18); animation-delay: 5.2s; }}
+      @keyframes of-float {{
+        0%, 100% {{ transform: translateY(0) scale(1); }}
+        50% {{ transform: translateY(-24px) scale(1.08); }}
+      }}
+      .card-hover {{ transition: transform .25s ease, box-shadow .25s ease; }}
+      .card-hover:hover {{
+        transform: translateY(-4px);
+        box-shadow: 0 18px 44px rgba(7, 16, 27, 0.22);
+      }}
+      .testimonial-card {{ backdrop-filter: blur(12px); }}
+      .of-stage-logo-wrap {{ min-height: 190px; display:flex; align-items:flex-start; }}
+      .of-stage-title-wrap {{
+        padding-top: 6px;
+        max-width: 560px;
+        margin-left: auto;
+      }}
+      .of-stage-title {{
+        font-size: clamp(2.4rem, 4.8vw, 5rem);
+        line-height: .96;
+        margin: 10px 0 0 0;
+        letter-spacing: -0.04em;
+      }}
+      .of-hero-v2 {{
+        position: relative;
+        background:
+          radial-gradient(circle at top right, rgba(16,183,196,0.18), transparent 34%),
+          linear-gradient(135deg, rgba(255,255,255,0.035), transparent),
+          linear-gradient(180deg, rgba(18,34,58,0.98), rgba(14,24,44,0.98));
+        border: 1px solid rgba(255,255,255,0.09);
+        border-radius: 24px;
+        padding: 28px 26px 26px 26px;
+        margin-bottom: 22px;
+      }}
+      .of-hero-v2 h2 {{
+        font-size: clamp(2.35rem, 4vw, 4.4rem);
+        line-height: .98;
+        margin: 14px 0 16px 0;
+        max-width: 760px;
+        letter-spacing: -0.04em;
+      }}
+      .of-hero-v2 p {{ color: var(--muted); line-height: 1.7; max-width: 860px; margin: 0; }}
+      .of-proof-v2 {{
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 10px;
+        margin-top: 22px;
+      }}
+      .of-proof-v2 .item {{
+        background: rgba(255,255,255,0.035);
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 16px;
+        padding: 16px;
+      }}
+      .of-proof-v2 .number {{ font-size: 1.7rem; font-weight: 800; letter-spacing: -0.03em; }}
+      .of-proof-v2 .caption {{ color: var(--muted); font-size: .88rem; margin-top: 6px; line-height: 1.45; }}
+      .of-stat-grid {{
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 12px;
+        margin: 18px 0 22px 0;
+      }}
+      .of-stat-card {{
+        background: rgba(255,255,255,0.035);
+        border: 1px solid rgba(255,255,255,0.07);
+        border-radius: 18px;
+        padding: 18px 16px;
+      }}
+      .of-stat-card .value {{ color: var(--primary); font-size: 1.65rem; font-weight: 800; letter-spacing: -0.03em; }}
+      .of-stat-card .caption {{ color: var(--muted); font-size: .82rem; line-height: 1.4; margin-top: 6px; }}
+      .of-feature-grid-v2 {{
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+      }}
+      .of-feature-card-v2 {{
+        background: rgba(255,255,255,0.035);
+        border: 1px solid rgba(255,255,255,0.07);
+        border-radius: 18px;
+        padding: 18px;
+      }}
+      .of-feature-card-v2 h4 {{ margin: 12px 0 8px 0; font-size: 1.05rem; }}
+      .of-feature-card-v2 p {{ margin: 0; color: var(--muted); font-size: .92rem; line-height: 1.55; }}
+      .of-feature-icon {{
+        width: 42px;
+        height: 42px;
+        border-radius: 12px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(16,183,196,0.14);
+        color: var(--primary);
+        font-weight: 800;
+      }}
+      .of-auth-card {{
+        background: linear-gradient(180deg, rgba(255,255,255,0.03), transparent), rgba(20,31,55,0.96);
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 22px;
+        padding: 22px;
+        margin-bottom: 14px;
+      }}
+      .of-auth-card h3 {{
+        margin: 10px 0 10px 0;
+        font-size: clamp(1.7rem, 2.2vw, 2.45rem);
+        line-height: 1.06;
+        letter-spacing: -0.03em;
+      }}
+      .of-proof-grid-v2 {{
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+        margin-top: 16px;
+        margin-bottom: 12px;
+      }}
+      .of-proof-card-v2 {{
+        background: rgba(255,255,255,0.04);
+        border: 1px solid rgba(255,255,255,0.07);
+        border-radius: 20px;
+        padding: 22px;
+      }}
+      .of-proof-card-v2 p {{
+        margin: 12px 0 14px 0;
+        color: var(--text);
+        font-size: 1rem;
+        line-height: 1.7;
+      }}
+      .of-proof-person {{ color: var(--muted); font-size: .88rem; }}
+      .of-price-grid {{
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 14px;
+        margin-top: 8px;
+      }}
+      .of-price-card {{
+        position: relative;
+        background: rgba(255,255,255,0.035);
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 22px;
+        padding: 22px 20px;
+      }}
+      .of-price-popular {{
+        background: linear-gradient(180deg, rgba(16,183,196,0.09), rgba(255,255,255,0.03));
+        border-color: rgba(16,183,196,0.55);
+        box-shadow: 0 0 0 1px rgba(16,183,196,0.12) inset;
+      }}
+      .of-popular-badge {{
+        position: absolute;
+        top: -12px;
+        left: 50%;
+        transform: translateX(-50%);
+        border-radius: 999px;
+        padding: 4px 12px;
+        background: var(--primary);
+        color: #08111F;
+        font-size: .68rem;
+        font-weight: 800;
+        letter-spacing: .12em;
+        text-transform: uppercase;
+      }}
+      .of-price-main {{ margin: 14px 0 14px 0; font-size: 2.3rem; font-weight: 900; letter-spacing: -0.04em; }}
+      .of-price-main span {{ color: var(--muted); font-size: .95rem; font-weight: 500; margin-left: 2px; }}
+      .of-price-list {{ margin: 0; padding-left: 18px; color: var(--muted); }}
+      .of-price-list li {{ margin-bottom: 8px; line-height: 1.45; }}
+      .of-final-cta {{
+        margin-top: 22px;
+        padding: 32px 28px;
+        border-radius: 28px;
+        border: 1px solid rgba(16,183,196,0.16);
+        background: linear-gradient(135deg, rgba(16,183,196,0.1), rgba(25,74,145,0.08));
+        text-align: center;
+      }}
+      .of-final-cta h3 {{
+        font-size: clamp(2rem, 3vw, 3.35rem);
+        line-height: .98;
+        letter-spacing: -0.04em;
+        margin: 12px 0;
+      }}
 
       @media (max-width: 900px) {{
         .of-grid, .of-proof, .of-plan-strip, .of-trust-grid {{ grid-template-columns: 1fr; }}
         .of-public-topbar {{ flex-direction: column; align-items: flex-start; }}
         .of-exec-grid, .of-metric-strip, .of-upload-promo-grid {{ grid-template-columns: 1fr; }}
+        .of-stage-title-wrap {{ margin-left: 0; max-width: 100%; }}
+        .of-stat-grid, .of-proof-v2, .of-feature-grid-v2, .of-proof-grid-v2, .of-price-grid {{ grid-template-columns: 1fr; }}
       }}
 
       /* Pill / badge */

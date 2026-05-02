@@ -14,6 +14,15 @@ except Exception:  # pragma: no cover
     pass
 
 
+def _normalize_database_url(raw_url: str) -> str:
+    """Normaliza aliases comunes para SQLAlchemy en producción."""
+    if raw_url.startswith("postgres://"):
+        return raw_url.replace("postgres://", "postgresql+psycopg2://", 1)
+    if raw_url.startswith("postgresql://") and "+" not in raw_url.split("://", 1)[0]:
+        return raw_url.replace("postgresql://", "postgresql+psycopg2://", 1)
+    return raw_url
+
+
 @dataclass(frozen=True)
 class Settings:
     app_name: str
@@ -37,12 +46,13 @@ class Settings:
 
 @lru_cache(maxsize=1)
 def get_settings() -> Settings:
+    database_url = _normalize_database_url(os.getenv("DATABASE_URL", "sqlite:///optiferre.db"))
     return Settings(
         app_name=os.getenv("APP_NAME", "OptiFerre SaaS"),
         app_env=os.getenv("APP_ENV", "development"),
         secret_key=os.getenv("APP_SECRET_KEY", "dev-secret-change-me"),
         base_url=os.getenv("APP_BASE_URL", "http://localhost:8501"),
-        database_url=os.getenv("DATABASE_URL", "sqlite:///optiferre.db"),
+        database_url=database_url,
         stripe_secret_key=os.getenv("STRIPE_SECRET_KEY", ""),
         stripe_publishable_key=os.getenv("STRIPE_PUBLISHABLE_KEY", ""),
         stripe_webhook_secret=os.getenv("STRIPE_WEBHOOK_SECRET", ""),

@@ -1,0 +1,28 @@
+services:
+  optiferre-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: optiferre-app
+    restart: unless-stopped
+    ports:
+      - "8501:8501"
+    environment:
+      APP_NAME: ${APP_NAME:-OptiFerre SaaS}
+      APP_ENV: ${APP_ENV:-production}
+      APP_SECRET_KEY: ${APP_SECRET_KEY:-define-una-clave-larga-y-segura}
+      APP_BASE_URL: ${APP_BASE_URL:-https://optiferredatovatenexuspro.com}
+      DATABASE_URL: ${DATABASE_URL:-sqlite:///optiferre.db}
+      STRIPE_SECRET_KEY: ${STRIPE_SECRET_KEY:-}
+      STRIPE_PUBLISHABLE_KEY: ${STRIPE_PUBLISHABLE_KEY:-}
+      STRIPE_WEBHOOK_SECRET: ${STRIPE_WEBHOOK_SECRET:-}
+      STRIPE_PRICE_STARTER: ${STRIPE_PRICE_STARTER:-}
+      STRIPE_PRICE_PRO: ${STRIPE_PRICE_PRO:-}
+      STRIPE_PRICE_ENTERPRISE: ${STRIPE_PRICE_ENTERPRISE:-}
+      SALES_CONTACT_EMAIL: ${SALES_CONTACT_EMAIL:-ventas@optiferre.com}
+      SALES_CONTACT_PHONE: ${SALES_CONTACT_PHONE:-+57 300 000 0000}
+    volumes:
+      - optiferre_data:/app/data
+
+volumes:
+  optiferre_data:

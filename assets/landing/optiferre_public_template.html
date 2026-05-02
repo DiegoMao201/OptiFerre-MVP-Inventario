@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>OptiFerre SaaS</title>
+    <title>OptiFerre | Diagnóstico de inventario</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
@@ -105,13 +105,20 @@
       }
       .stat {
         padding: 18px;
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.78), rgba(225, 236, 248, 0.58));
       }
       .stat strong {
-        display: block;
-        color: var(--primary);
+        display: inline-block;
         font-size: 28px;
         margin-bottom: 8px;
+        background: linear-gradient(90deg, #102c49 0%, #10b7c4 35%, #0d3f7a 68%, #102c49 100%);
+        background-size: 220% auto;
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        animation: shimmer 5s linear infinite;
       }
+      .stat .mini { color: rgba(18, 49, 84, 0.92); font-weight: 600; }
       .layout {
         display: grid;
         grid-template-columns: 1.55fr 0.9fr;
@@ -152,6 +159,12 @@
       .proof,
       .price,
       .side-card { padding: 20px; }
+      .proof {
+        background: linear-gradient(180deg, rgba(248, 251, 255, 0.86), rgba(227, 238, 249, 0.72));
+      }
+      .proof p { color: #102c49; font-weight: 500; }
+      .proof .mini,
+      .proof small { color: #0e6e7c; }
       .feature { transition: 0.3s ease; min-height: 220px; }
       .feature:hover { border-color: var(--primary); background: rgba(34, 211, 238, 0.02); transform: translateY(-4px); }
       .feature .icon {
@@ -169,14 +182,31 @@
       .proof small { color: var(--primary); font-weight: 700; }
       .price.popular {
         border-color: var(--primary);
-        box-shadow: 0 0 0 1px rgba(16, 183, 196, 0.2) inset;
+        box-shadow: 0 0 0 1px rgba(16, 183, 196, 0.2) inset, 0 20px 38px rgba(16, 183, 196, 0.08);
+        background: linear-gradient(180deg, rgba(222, 250, 252, 0.98), rgba(211, 239, 249, 0.92));
       }
-      .price { transition: 0.3s ease; cursor: pointer; }
+      .price {
+        transition: 0.3s ease;
+        cursor: pointer;
+        background: linear-gradient(180deg, rgba(250, 253, 255, 0.96), rgba(228, 238, 249, 0.9));
+      }
+      .price h3,
+      .price .mini,
+      .side-card h3,
+      .side-card .mini { color: #123154; }
       .price:hover,
       .price:focus-within {
         transform: translateY(-6px);
         border-color: var(--primary);
-        box-shadow: 0 24px 42px rgba(34, 211, 238, 0.12);
+        background: linear-gradient(180deg, rgba(255, 255, 255, 1), rgba(236, 247, 253, 0.98));
+        box-shadow: 0 24px 42px rgba(34, 211, 238, 0.14);
+      }
+      .price:hover h3,
+      .price:hover .mini,
+      .price:focus-within h3,
+      .price:focus-within .mini { color: #102c49; }
+      .side-card {
+        background: linear-gradient(180deg, rgba(245, 250, 255, 0.98), rgba(226, 237, 249, 0.92));
       }
       .footer-cta {
         margin-top: 30px;
@@ -201,7 +231,7 @@
           <img src="../../logo_nexus.png" alt="Nexus Pro" style="max-width: 220px; width: 100%; opacity: 0.96;" />
         </div>
         <div>
-          <div class="eyebrow">OptiFerre SaaS</div>
+          <div class="eyebrow">OptiFerre</div>
           <h1 class="title">Diagnóstico <span class="shimmer-text">ejecutivo</span> de inventarios para empresas que gestionan stock</h1>
           <p class="lead">Sube inventario y movimientos, obtén lectura ejecutiva de caja atrapada, riesgo de quiebre y compra sugerida con una puesta en escena mucho más clara y premium.</p>
           <div class="chips">
@@ -224,7 +254,7 @@
           <div class="hero-card">
             <div class="eyebrow">Optimización B2B para cualquier operación con inventario</div>
             <h2>Reduce capital inmovilizado y repone con <span class="shimmer-text">criterio</span>.</h2>
-            <p>OptiFerre SaaS convierte archivos de inventario y movimientos en una lectura ejecutiva de riesgo, rotación y abastecimiento. En pocos minutos sabes dónde tienes dinero atrapado, qué referencias están por quebrarse y cuánto deberías comprar realmente.</p>
+            <p>OptiFerre convierte archivos de inventario y movimientos en una lectura ejecutiva de riesgo, rotación y abastecimiento. En pocos minutos sabes dónde tienes dinero atrapado, qué referencias están por quebrarse y cuánto deberías comprar realmente.</p>
           </div>
           <div class="feature-grid">
             <article class="feature"><div class="icon">01</div><h3>Smart Importer</h3><p>Reconoce aliases comunes de ERP y reduce fricción de carga desde el primer intento.</p></article>
@@ -234,14 +264,14 @@
         </div>
         <aside class="side-card">
           <div class="eyebrow">Acceso</div>
-          <h3 style="font-size: 34px; line-height: 1.05; margin: 12px 0;">Crea tu cuenta o entra a tu tenant</h3>
-          <p class="mini">En Streamlit esta columna convive con los formularios reales de login y signup con mejor contraste visual.</p>
+          <h3 style="font-size: 34px; line-height: 1.05; margin: 12px 0;">Crea tu cuenta o entra a tu espacio</h3>
+          <p class="mini">En Streamlit esta columna convive con los formularios reales de ingreso y registro con contraste más claro y legible.</p>
         </aside>
       </section>
 
       <section class="proof-grid">
         <article class="proof"><small>Qué resuelve</small><p>Pasas de hojas dispersas a una lectura accionable de quiebres, sobrestock, ROP y compra sugerida.</p></article>
-        <article class="proof"><small>Cómo tratamos tu información</small><p>Tus datos no se venden ni se comparten. Cada empresa opera como tenant separado.</p></article>
+        <article class="proof"><small>Cómo tratamos tu información</small><p>Tus datos no se venden ni se comparten. Cada empresa trabaja en un espacio privado.</p></article>
       </section>
 
       <section class="price-grid">
@@ -251,7 +281,7 @@
       </section>
 
       <section class="hero-card footer-cta">
-        <div class="eyebrow">OptiFerre SaaS</div>
+        <div class="eyebrow">OptiFerre</div>
         <h2 style="font-size: clamp(30px, 4vw, 54px); max-width: 760px; margin-inline: auto;">Empieza con archivos. Escala a plataforma.</h2>
         <p class="mini" style="max-width: 720px; margin: 0 auto;">Esta plantilla replica la dirección visual usada en la landing pública de Streamlit y sirve como referencia para futuras iteraciones fuera del runtime de la app.</p>
       </section>

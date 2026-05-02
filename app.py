@@ -24,7 +24,7 @@ settings = get_settings()
 configure_logging()
 
 st.set_page_config(
-    page_title=settings.app_name,
+    page_title="OptiFerre",
     page_icon="🛠️",
     layout="wide",
     initial_sidebar_state="expanded",
@@ -81,7 +81,7 @@ def main() -> None:
             inject_brand_css(tenant["brand_primary_color"], tenant["theme_mode"])
             render_brand_header(tenant["company_name"], tenant["brand_logo_url"])
 
-        st.sidebar.title("OptiFerre SaaS")
+        st.sidebar.title("OptiFerre")
         _sidebar_user_block(user)
         choice = st.sidebar.radio("Navegación", list(PRIVATE_ROUTES.keys()), label_visibility="collapsed")
         st.sidebar.divider()

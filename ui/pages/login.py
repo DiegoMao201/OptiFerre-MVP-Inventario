@@ -32,7 +32,7 @@ def _render_top_stage() -> None:
                                                 dedent(
                                                                 """
                                                                 <div class="of-stage-title-wrap">
-                                                                        <div class="of-eyebrow">OptiFerre SaaS</div>
+                                                                        <div class="of-eyebrow">OptiFerre</div>
                                                                         <h1 class="of-stage-title">Diagnóstico <span class="of-shimmer-text">ejecutivo</span> de inventarios para empresas que gestionan stock</h1>
                                                                         <p class="of-stage-lead">Sube inventario y movimientos, obtén lectura ejecutiva de caja atrapada, riesgo de quiebre y compra sugerida con una experiencia más clara, visible y tecnológica.</p>
                                                                         <div class="of-chip-row">
@@ -55,7 +55,7 @@ def _render_value_stage() -> None:
                                                         <div class="of-eyebrow">Optimización B2B para cualquier operación con inventario</div>
                                                         <h2>Reduce capital inmovilizado y repone con <span class="of-shimmer-text">criterio</span>.</h2>
                                                         <p>
-                                                                OptiFerre SaaS convierte archivos de inventario y movimientos en una lectura ejecutiva de riesgo,
+                                                                OptiFerre convierte archivos de inventario y movimientos en una lectura ejecutiva de riesgo,
                                                                 rotación y abastecimiento. En pocos minutos sabes dónde tienes dinero atrapado,
                                                                 qué referencias están por quebrarse y cuánto deberías comprar realmente.
                                                         </p>
@@ -145,8 +145,8 @@ def _render_feature_grid() -> None:
                                                         </div>
                                                         <div class="of-feature-card-v2 card-hover">
                                                                 <div class="of-feature-icon">06</div>
-                                                                <h4>Modelo SaaS claro</h4>
-                                                                <p>Suscripción para el SaaS e integraciones o automatizaciones avanzadas como servicio premium separado.</p>
+                                                                <h4>Crecimiento por etapas</h4>
+                                                                <p>Empiezas con una prueba guiada y luego sumas automatizaciones o integraciones solo cuando ya ves valor real.</p>
                                                         </div>
                                                 </div>
                                                 """
@@ -161,8 +161,8 @@ def _render_form_shell() -> None:
                                                 """
                                                 <div class="of-auth-card card-hover">
                                                         <div class="of-eyebrow">Empieza hoy</div>
-                                                        <h3>Crea tu cuenta o entra a tu tenant</h3>
-                                                        <p class="of-mini-note">La prueba incluye dashboard ejecutivo, clasificación ABC/XYZ, stock de seguridad, punto de reorden y exportación de resultados con mejor contraste y lectura.</p>
+                                                        <h3>Crea tu cuenta o entra a tu espacio</h3>
+                                                        <p class="of-mini-note">La prueba incluye dashboard ejecutivo, clasificación ABC/XYZ, stock de seguridad, punto de reorden y exportación de resultados con lectura clara en cada campo.</p>
                                                 </div>
                                                 """
                                 ),
@@ -183,7 +183,7 @@ def _render_trust_and_proof() -> None:
                                                         </div>
                                                         <div class="of-proof-card-v2 testimonial-card">
                                                                 <div class="of-eyebrow">Cómo tratamos tu información</div>
-                                                                <p>"Tus datos no se venden ni se comparten. Cada empresa opera como tenant separado y el análisis se usa para su propia toma de decisiones."</p>
+                                                                <p>"Tus datos no se venden ni se comparten. Cada empresa trabaja en un espacio privado y el análisis se usa solo para su propia toma de decisiones."</p>
                                                                 <div class="of-proof-person">Transparencia primero, venta después.</div>
                                                         </div>
                                                 </div>
@@ -250,13 +250,13 @@ def _render_faq() -> None:
                                                 "¿Dónde se guarda la información?",
                                                 [
                                                                 "La cuenta, configuración y suscripción viven en base de datos.",
-                                                                "Los archivos cargados se usan para construir el análisis del tenant actual dentro del flujo de trabajo de la aplicación.",
+                                                                "Los archivos cargados se usan para construir el análisis de tu empresa dentro del flujo de trabajo de la aplicación.",
                                                 ],
                                 ),
                                 (
                                                 "¿Quién puede ver mis datos?",
                                                 [
-                                                                "El modelo es multitenant y cada empresa opera separada. No está pensada para compartir datos entre clientes.",
+                                                                "Cada empresa tiene su espacio separado. La app no comparte información entre clientes.",
                                                 ],
                                 ),
                                 (
@@ -289,7 +289,7 @@ def _render_final_cta() -> None:
                                 dedent(
                                                 """
                                                 <div class="of-final-cta">
-                                                        <div class="of-eyebrow">OptiFerre SaaS</div>
+                                                        <div class="of-eyebrow">OptiFerre</div>
                                                         <h3>Empieza con <span class="of-shimmer-text">archivos</span>. Escala a plataforma.</h3>
                                                         <p class="of-mini-note">Primero validas valor con la prueba y el dashboard. Luego decides si activas suscripción, integración ERP o automatización avanzada.</p>
                                                 </div>

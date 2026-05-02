@@ -442,36 +442,47 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
         margin: 18px 0 22px 0;
       }}
       .of-stat-card {{
-        background: linear-gradient(180deg, rgba(255,255,255,0.42), rgba(214,228,244,0.22));
-        border: 1px solid rgba(16,33,59,0.16);
+        background: linear-gradient(180deg, rgba(255,255,255,0.78), rgba(225,236,248,0.58));
+        border: 1px solid rgba(16,33,59,0.18);
         border-radius: 18px;
         padding: 18px 16px;
-        box-shadow: 0 12px 28px rgba(8, 17, 31, 0.08);
+        box-shadow: 0 14px 30px rgba(8, 17, 31, 0.09);
       }}
-      .of-stat-card .value {{ color: #123154; font-size: 1.65rem; font-weight: 800; letter-spacing: -0.03em; }}
-      .of-stat-card .caption {{ color: rgba(18,49,84,0.78); font-size: .82rem; line-height: 1.4; margin-top: 6px; }}
+      .of-stat-card .value {{
+        display: inline-block;
+        font-size: 1.65rem;
+        font-weight: 900;
+        letter-spacing: -0.03em;
+        background: linear-gradient(90deg, #102C49 0%, #10B7C4 35%, #0D3F7A 68%, #102C49 100%);
+        background-size: 220% auto;
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        animation: of-shimmer 5s linear infinite;
+      }}
+      .of-stat-card .caption {{ color: rgba(18,49,84,0.92); font-size: .82rem; line-height: 1.45; margin-top: 6px; font-weight: 600; }}
       .of-feature-grid-v2 {{
         display: grid;
         grid-template-columns: repeat(3, minmax(0, 1fr));
         gap: 16px;
       }}
       .of-feature-card-v2 {{
-        background: linear-gradient(180deg, rgba(255,255,255,0.34), rgba(220,233,247,0.14));
-        border: 1px solid rgba(16,33,59,0.16);
+        background: linear-gradient(180deg, rgba(248,251,255,0.88), rgba(229,239,249,0.72));
+        border: 1px solid rgba(16,33,59,0.18);
         border-radius: 18px;
         padding: 18px;
-        box-shadow: 0 14px 28px rgba(8, 17, 31, 0.08);
+        box-shadow: 0 16px 30px rgba(8, 17, 31, 0.1);
         min-height: 220px;
         transition: transform .28s ease, box-shadow .28s ease, border-color .28s ease, background .28s ease;
       }}
       .of-feature-card-v2:hover {{
         transform: translateY(-5px);
         border-color: rgba(16,183,196,0.45);
-        background: linear-gradient(180deg, rgba(255,255,255,0.24), rgba(16,183,196,0.08));
-        box-shadow: 0 22px 36px rgba(8, 17, 31, 0.12);
+        background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(235,246,252,0.95));
+        box-shadow: 0 22px 36px rgba(8, 17, 31, 0.14);
       }}
-      .of-feature-card-v2 h4 {{ margin: 12px 0 8px 0; font-size: 1.05rem; color: #123154; }}
-      .of-feature-card-v2 p {{ margin: 0; color: rgba(18,49,84,0.92); font-size: .94rem; line-height: 1.58; }}
+      .of-feature-card-v2 h4 {{ margin: 12px 0 8px 0; font-size: 1.05rem; color: #102C49; }}
+      .of-feature-card-v2 p {{ margin: 0; color: rgba(16,44,73,0.94); font-size: .94rem; line-height: 1.58; font-weight: 500; }}
       .of-feature-icon {{
         width: 42px;
         height: 42px;
@@ -484,12 +495,14 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
         font-weight: 800;
       }}
       .of-auth-card {{
-        background: linear-gradient(180deg, rgba(248,251,255,0.34), rgba(26,43,70,0.98));
-        border: 1px solid rgba(255,255,255,0.18);
+        background:
+          radial-gradient(circle at top right, rgba(16,183,196,0.18), transparent 34%),
+          linear-gradient(180deg, rgba(28,52,83,0.98), rgba(10,19,35,0.99));
+        border: 1px solid rgba(167,204,233,0.24);
         border-radius: 22px;
         padding: 22px;
         margin-bottom: 14px;
-        box-shadow: 0 22px 44px rgba(8, 17, 31, 0.2);
+        box-shadow: 0 24px 48px rgba(8, 17, 31, 0.24);
       }}
       .of-auth-card .of-eyebrow {{ color: #6EF0FF; }}
       .of-auth-card h3 {{
@@ -499,9 +512,7 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
         letter-spacing: -0.03em;
         color: #F6FAFF;
       }}
-      .of-auth-card .of-mini-note {{
-        color: rgba(235,243,251,0.9);
-      }}
+      .of-auth-card .of-mini-note {{ color: rgba(242,247,252,0.96); }}
       .of-proof-grid-v2 {{
         display: grid;
         grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -510,19 +521,20 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
         margin-bottom: 12px;
       }}
       .of-proof-card-v2 {{
-        background: linear-gradient(180deg, rgba(255,255,255,0.34), rgba(223,235,248,0.12));
-        border: 1px solid rgba(16,33,59,0.16);
+        background: linear-gradient(180deg, rgba(248,251,255,0.86), rgba(227,238,249,0.72));
+        border: 1px solid rgba(16,33,59,0.18);
         border-radius: 20px;
         padding: 22px;
-        box-shadow: 0 16px 34px rgba(8, 17, 31, 0.08);
+        box-shadow: 0 16px 34px rgba(8, 17, 31, 0.1);
       }}
       .of-proof-card-v2 p {{
         margin: 12px 0 14px 0;
-        color: #123154;
+        color: #102C49;
         font-size: 1rem;
         line-height: 1.7;
+        font-weight: 500;
       }}
-      .of-proof-person {{ color: rgba(18,49,84,0.76); font-size: .88rem; }}
+      .of-proof-person {{ color: rgba(16,44,73,0.82); font-size: .88rem; font-weight: 600; }}
       .of-price-grid {{
         display: grid;
         grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -531,11 +543,11 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
       }}
       .of-price-card {{
         position: relative;
-        background: linear-gradient(180deg, rgba(247,251,255,0.82), rgba(209,225,242,0.34));
-        border: 1px solid rgba(16,33,59,0.2);
+        background: linear-gradient(180deg, rgba(250,253,255,0.96), rgba(228,238,249,0.9));
+        border: 1px solid rgba(16,33,59,0.22);
         border-radius: 22px;
         padding: 22px 20px;
-        box-shadow: 0 18px 36px rgba(8, 17, 31, 0.1);
+        box-shadow: 0 18px 36px rgba(8, 17, 31, 0.11);
         transition: transform .28s ease, box-shadow .28s ease, border-color .28s ease, background .28s ease;
         cursor: pointer;
       }}
@@ -543,15 +555,15 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
       .of-price-card:focus,
       .of-price-card:focus-visible {{
         transform: translateY(-6px) scale(1.01);
-        border-color: rgba(16,183,196,0.5);
-        background: linear-gradient(180deg, rgba(255,255,255,0.24), rgba(16,183,196,0.08));
-        box-shadow: 0 26px 42px rgba(8, 17, 31, 0.14);
+        border-color: rgba(16,183,196,0.58);
+        background: linear-gradient(180deg, rgba(255,255,255,1), rgba(236,247,253,0.98));
+        box-shadow: 0 26px 42px rgba(8, 17, 31, 0.16);
         outline: none;
       }}
       .of-price-popular {{
-        background: linear-gradient(180deg, rgba(207,248,252,0.9), rgba(196,230,245,0.34));
+        background: linear-gradient(180deg, rgba(222,250,252,0.98), rgba(211,239,249,0.92));
         border-color: rgba(16,183,196,0.55);
-        box-shadow: 0 0 0 1px rgba(16,183,196,0.12) inset;
+        box-shadow: 0 0 0 1px rgba(16,183,196,0.12) inset, 0 20px 38px rgba(16,183,196,0.08);
       }}
       .of-price-popular:hover,
       .of-price-popular:focus,
@@ -573,11 +585,20 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
         letter-spacing: .12em;
         text-transform: uppercase;
       }}
-      .of-price-card .of-pill {{ background: rgba(16,183,196,0.14); color: #0F5E69; font-weight: 700; }}
+      .of-price-card .of-pill {{ background: rgba(16,183,196,0.18); color: #0E445B; font-weight: 800; }}
       .of-price-main {{ margin: 14px 0 14px 0; font-size: 2.3rem; font-weight: 900; letter-spacing: -0.04em; color: #0E2A48; }}
-      .of-price-main span {{ color: rgba(18,49,84,0.82); font-size: .95rem; font-weight: 500; margin-left: 2px; }}
-      .of-price-list {{ margin: 0; padding-left: 18px; color: rgba(18,49,84,0.98); }}
-      .of-price-list li {{ margin-bottom: 8px; line-height: 1.45; }}
+      .of-price-main span {{ color: rgba(18,49,84,0.9); font-size: .95rem; font-weight: 600; margin-left: 2px; }}
+      .of-price-list {{ margin: 0; padding-left: 18px; color: #163557; }}
+      .of-price-list li {{ margin-bottom: 8px; line-height: 1.45; color: #163557; font-weight: 600; }}
+      .of-price-card:hover .of-pill,
+      .of-price-card:focus .of-pill,
+      .of-price-card:focus-visible .of-pill {{ background: rgba(16,183,196,0.22); color: #0A3851; }}
+      .of-price-card:hover .of-price-main,
+      .of-price-card:focus .of-price-main,
+      .of-price-card:focus-visible .of-price-main,
+      .of-price-card:hover .of-price-list li,
+      .of-price-card:focus .of-price-list li,
+      .of-price-card:focus-visible .of-price-list li {{ color: #102C49; }}
       .of-final-cta {{
         margin-top: 22px;
         padding: 32px 28px;
@@ -661,28 +682,51 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
       }}
 
       /* Tabs */
+      .stTabs [data-baseweb="tab-list"] {{
+        gap: 10px;
+        background: rgba(255,255,255,0.06);
+        border: 1px solid rgba(167,204,233,0.16);
+        border-radius: 18px;
+        padding: 8px;
+        margin-bottom: 14px;
+      }}
       .stTabs [data-baseweb="tab-list"] button {{
-        color: rgba(232,241,250,0.82) !important;
-        font-weight: 700 !important;
+        background: rgba(255,255,255,0.06) !important;
+        border-radius: 12px !important;
+        color: rgba(243,247,252,0.92) !important;
+        font-weight: 800 !important;
+        min-height: 44px !important;
+      }}
+      .stTabs [data-baseweb="tab-list"] button:hover {{
+        background: rgba(255,255,255,0.12) !important;
+        color: #FFFFFF !important;
       }}
       .stTabs [data-baseweb="tab-list"] button[aria-selected="true"] {{
-        color: var(--primary) !important;
-        border-bottom-color: var(--primary) !important;
+        background: linear-gradient(180deg, rgba(227,249,252,0.98), rgba(202,237,248,0.95)) !important;
+        color: #10304E !important;
+        border-bottom-color: transparent !important;
       }}
 
       /* Inputs */
       .stTextInput input, .stNumberInput input, .stSelectbox div[data-baseweb="select"] {{
         border-radius: 14px !important;
-        background: linear-gradient(180deg, rgba(248,251,255,0.96), rgba(230,239,250,0.92)) !important;
-        border: 1px solid rgba(16,33,59,0.16) !important;
+        background: linear-gradient(180deg, rgba(255,255,255,0.99), rgba(240,246,252,0.96)) !important;
+        border: 1px solid rgba(84,120,153,0.28) !important;
         color: #123154 !important;
-        box-shadow: 0 10px 20px rgba(8, 17, 31, 0.08) !important;
+        box-shadow: 0 12px 24px rgba(8, 17, 31, 0.1) !important;
       }}
-      .stTextInput label p, .stCheckbox label p, .stCaption, .stMarkdown p {{
-        color: inherit;
+      .stTextInput input:focus, .stNumberInput input:focus {{
+        border-color: rgba(16,183,196,0.68) !important;
+        box-shadow: 0 0 0 1px rgba(16,183,196,0.28), 0 14px 26px rgba(8, 17, 31, 0.14) !important;
       }}
+      .stTextInput label p, .stNumberInput label p, .stCheckbox label p {{
+        color: rgba(244,248,252,0.98) !important;
+        font-weight: 700 !important;
+        letter-spacing: .01em;
+      }}
+      .stCaption {{ color: rgba(236,243,251,0.86) !important; }}
       .stTextInput input::placeholder, .stNumberInput input::placeholder {{
-        color: rgba(18,49,84,0.52) !important;
+        color: rgba(18,49,84,0.62) !important;
       }}
       .stCheckbox label span, .stCheckbox p {{
         color: rgba(236,243,251,0.94) !important;
@@ -718,7 +762,7 @@ def render_brand_header(company_name: str, logo_url: str | None = None,
     with cols[1]:
         st.markdown(
             f"<h2 style='margin-bottom:0'>{company_name}</h2>"
-            f"<div class='of-pill'>OptiFerre SaaS</div> "
+            f"<div class='of-pill'>OptiFerre</div> "
             f"<span style='color:var(--muted); margin-left:8px;'>{tagline}</span>",
             unsafe_allow_html=True,
         )

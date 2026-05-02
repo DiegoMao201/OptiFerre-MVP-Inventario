@@ -1,6 +1,7 @@
 """Página pública de acceso y conversión comercial."""
 from __future__ import annotations
 
+import base64
 from pathlib import Path
 from textwrap import dedent
 
@@ -10,14 +11,21 @@ from core.auth import authenticate, login, register_tenant
 from core.billing import PLAN_CATALOG
 
 
+def _build_logo_markup() -> str:
+                logo_path = Path("logo_nexus.png")
+                if not logo_path.exists():
+                                return ""
+                encoded = base64.b64encode(logo_path.read_bytes()).decode("ascii")
+                return f"<img class='of-brand-logo' src='data:image/png;base64,{encoded}' alt='Nexus Pro'>"
+
+
 def _render_top_stage() -> None:
-                logo_col, title_col = st.columns([0.9, 1.1], gap="large")
+                logo_col, title_col = st.columns([1, 1], gap="large")
                 with logo_col:
-                                st.markdown("<div class='of-stage-logo-wrap'>", unsafe_allow_html=True)
-                                logo_path = Path("logo_nexus.png")
-                                if logo_path.exists():
-                                                st.image(str(logo_path), width=210)
-                                st.markdown("</div>", unsafe_allow_html=True)
+                                st.markdown(
+                                                f"<div class='of-stage-logo-wrap'><div class='of-logo-panel'>{_build_logo_markup()}<div class='of-logo-caption'>Analítica industrial con identidad clara, contraste limpio y presencia comercial.</div></div></div>",
+                                                unsafe_allow_html=True,
+                                )
 
                 with title_col:
                                 st.markdown(
@@ -26,9 +34,11 @@ def _render_top_stage() -> None:
                                                                 <div class="of-stage-title-wrap">
                                                                         <div class="of-eyebrow">OptiFerre SaaS</div>
                                                                         <h1 class="of-stage-title">Diagnóstico ejecutivo de inventarios para empresas ferreteras e industriales</h1>
+                                                                        <p class="of-stage-lead">Sube inventario y ventas, obtén lectura ejecutiva de caja atrapada, riesgo de quiebre y compra sugerida con una puesta en escena mucho más clara y premium.</p>
                                                                         <div class="of-chip-row">
                                                                                 <span class="of-chip">Prueba gratuita de 14 días</span>
                                                                                 <span class="of-chip">Sin integración ERP obligatoria</span>
+                                                                                <span class="of-chip">Diseñado para ferretería e industria</span>
                                                                         </div>
                                                                 </div>
                                                                 """

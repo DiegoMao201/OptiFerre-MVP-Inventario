@@ -44,9 +44,10 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
       }}
       .stApp {{
         background:
-          radial-gradient(circle at top left, rgba(16,183,196,0.12), transparent 28%),
-          radial-gradient(circle at top right, rgba(25,74,145,0.18), transparent 32%),
-          linear-gradient(180deg, #08111F 0%, #0A1526 36%, #07101B 100%);
+          radial-gradient(circle at top left, rgba(255,255,255,0.42), transparent 18%),
+          radial-gradient(circle at 20% 7%, rgba(16,183,196,0.16), transparent 21%),
+          radial-gradient(circle at top right, rgba(25,74,145,0.14), transparent 24%),
+          linear-gradient(180deg, #DCEBFA 0%, #B9D0E7 10%, #6F97BE 20%, #23446D 34%, #10213B 50%, #08111F 100%);
         color: var(--text);
       }}
       section[data-testid="stSidebar"] {{
@@ -137,12 +138,14 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
         display:inline-flex;
         align-items:center;
         gap:8px;
-        border:1px solid var(--card-border);
+        border:1px solid rgba(16,33,59,0.14);
         border-radius:999px;
         padding:8px 12px;
-        background: rgba(255,255,255,0.03);
-        color: var(--text);
+        background: rgba(255,255,255,0.48);
+        color: #123154;
         font-size: .85rem;
+        font-weight: 700;
+        box-shadow: 0 10px 28px rgba(10, 25, 47, 0.08);
       }}
       .of-upload-promo {{
         background: linear-gradient(135deg, rgba(16,183,196,0.13), rgba(25,74,145,0.12));
@@ -287,9 +290,9 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
         pointer-events: none;
         animation: of-float 10s ease-in-out infinite;
       }}
-      .of-glow.orb-a {{ width: 360px; height: 360px; top: -40px; left: -120px; background: rgba(16,183,196,0.5); }}
-      .of-glow.orb-b {{ width: 300px; height: 300px; top: 140px; right: -80px; background: rgba(25,74,145,0.55); animation-delay: 2.8s; }}
-      .of-glow.orb-c {{ width: 240px; height: 240px; bottom: 160px; left: 28%; background: rgba(16,183,196,0.18); animation-delay: 5.2s; }}
+      .of-glow.orb-a {{ width: 420px; height: 420px; top: -80px; left: -120px; background: rgba(255,255,255,0.5); }}
+      .of-glow.orb-b {{ width: 340px; height: 340px; top: 130px; right: -70px; background: rgba(16,183,196,0.35); animation-delay: 2.8s; }}
+      .of-glow.orb-c {{ width: 280px; height: 280px; bottom: 140px; left: 26%; background: rgba(25,74,145,0.24); animation-delay: 5.2s; }}
       @keyframes of-float {{
         0%, 100% {{ transform: translateY(0) scale(1); }}
         50% {{ transform: translateY(-24px) scale(1.08); }}
@@ -300,10 +303,42 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
         box-shadow: 0 18px 44px rgba(7, 16, 27, 0.22);
       }}
       .testimonial-card {{ backdrop-filter: blur(12px); }}
-      .of-stage-logo-wrap {{ min-height: 190px; display:flex; align-items:flex-start; }}
+      .of-stage-logo-wrap {{ min-height: 260px; display:flex; align-items:center; justify-content:center; }}
+      .of-logo-panel {{
+        width: min(100%, 360px);
+        min-height: 260px;
+        display:flex;
+        flex-direction:column;
+        align-items:center;
+        justify-content:center;
+        gap: 14px;
+        border-radius: 28px;
+        border: 1px solid rgba(16,33,59,0.14);
+        background:
+          radial-gradient(circle at top, rgba(255,255,255,0.92), rgba(219,234,248,0.78) 46%, rgba(191,214,236,0.28) 100%),
+          rgba(255,255,255,0.72);
+        box-shadow: 0 28px 60px rgba(8, 17, 31, 0.16);
+        padding: 24px 22px;
+      }}
+      .of-brand-logo,
+      .of-logo-panel img {{
+        display:block;
+        margin: 0 auto;
+        width: min(100%, 240px);
+        height: auto;
+        filter: drop-shadow(0 16px 32px rgba(10, 25, 47, 0.16));
+      }}
+      .of-logo-caption {{
+        max-width: 250px;
+        text-align: center;
+        color: #264569;
+        font-size: .88rem;
+        line-height: 1.5;
+        font-weight: 600;
+      }}
       .of-stage-title-wrap {{
-        padding-top: 6px;
-        max-width: 560px;
+        padding-top: 12px;
+        max-width: 620px;
         margin-left: auto;
       }}
       .of-stage-title {{
@@ -311,17 +346,32 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
         line-height: .96;
         margin: 10px 0 0 0;
         letter-spacing: -0.04em;
+        background: linear-gradient(180deg, #143153 0%, #214874 34%, #6E96C0 68%, #F2F7FD 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        text-shadow: 0 12px 30px rgba(8, 17, 31, 0.08);
+      }}
+      .of-stage-lead {{
+        margin: 16px 0 0 0;
+        max-width: 560px;
+        color: rgba(227,237,248,0.92);
+        font-size: 1.04rem;
+        line-height: 1.72;
+        font-weight: 500;
+        text-shadow: 0 8px 20px rgba(8, 17, 31, 0.12);
       }}
       .of-hero-v2 {{
         position: relative;
         background:
-          radial-gradient(circle at top right, rgba(16,183,196,0.18), transparent 34%),
-          linear-gradient(135deg, rgba(255,255,255,0.035), transparent),
-          linear-gradient(180deg, rgba(18,34,58,0.98), rgba(14,24,44,0.98));
-        border: 1px solid rgba(255,255,255,0.09);
+          radial-gradient(circle at top right, rgba(255,255,255,0.16), transparent 32%),
+          radial-gradient(circle at left top, rgba(16,183,196,0.16), transparent 34%),
+          linear-gradient(180deg, rgba(28,53,87,0.96), rgba(11,23,42,0.98));
+        border: 1px solid rgba(255,255,255,0.12);
         border-radius: 24px;
         padding: 28px 26px 26px 26px;
         margin-bottom: 22px;
+        box-shadow: 0 24px 46px rgba(8, 17, 31, 0.22);
       }}
       .of-hero-v2 h2 {{
         font-size: clamp(2.35rem, 4vw, 4.4rem);
@@ -352,26 +402,28 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
         margin: 18px 0 22px 0;
       }}
       .of-stat-card {{
-        background: rgba(255,255,255,0.035);
-        border: 1px solid rgba(255,255,255,0.07);
+        background: linear-gradient(180deg, rgba(255,255,255,0.28), rgba(255,255,255,0.1));
+        border: 1px solid rgba(16,33,59,0.12);
         border-radius: 18px;
         padding: 18px 16px;
+        box-shadow: 0 12px 28px rgba(8, 17, 31, 0.08);
       }}
-      .of-stat-card .value {{ color: var(--primary); font-size: 1.65rem; font-weight: 800; letter-spacing: -0.03em; }}
-      .of-stat-card .caption {{ color: var(--muted); font-size: .82rem; line-height: 1.4; margin-top: 6px; }}
+      .of-stat-card .value {{ color: #123154; font-size: 1.65rem; font-weight: 800; letter-spacing: -0.03em; }}
+      .of-stat-card .caption {{ color: rgba(18,49,84,0.78); font-size: .82rem; line-height: 1.4; margin-top: 6px; }}
       .of-feature-grid-v2 {{
         display: grid;
         grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 12px;
       }}
       .of-feature-card-v2 {{
-        background: rgba(255,255,255,0.035);
-        border: 1px solid rgba(255,255,255,0.07);
+        background: linear-gradient(180deg, rgba(255,255,255,0.18), rgba(255,255,255,0.06));
+        border: 1px solid rgba(16,33,59,0.12);
         border-radius: 18px;
         padding: 18px;
+        box-shadow: 0 14px 28px rgba(8, 17, 31, 0.08);
       }}
-      .of-feature-card-v2 h4 {{ margin: 12px 0 8px 0; font-size: 1.05rem; }}
-      .of-feature-card-v2 p {{ margin: 0; color: var(--muted); font-size: .92rem; line-height: 1.55; }}
+      .of-feature-card-v2 h4 {{ margin: 12px 0 8px 0; font-size: 1.05rem; color: #123154; }}
+      .of-feature-card-v2 p {{ margin: 0; color: rgba(18,49,84,0.78); font-size: .92rem; line-height: 1.55; }}
       .of-feature-icon {{
         width: 42px;
         height: 42px;
@@ -384,11 +436,12 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
         font-weight: 800;
       }}
       .of-auth-card {{
-        background: linear-gradient(180deg, rgba(255,255,255,0.03), transparent), rgba(20,31,55,0.96);
-        border: 1px solid rgba(255,255,255,0.08);
+        background: linear-gradient(180deg, rgba(255,255,255,0.14), rgba(15,28,50,0.96));
+        border: 1px solid rgba(255,255,255,0.12);
         border-radius: 22px;
         padding: 22px;
         margin-bottom: 14px;
+        box-shadow: 0 22px 44px rgba(8, 17, 31, 0.2);
       }}
       .of-auth-card h3 {{
         margin: 10px 0 10px 0;
@@ -404,18 +457,19 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
         margin-bottom: 12px;
       }}
       .of-proof-card-v2 {{
-        background: rgba(255,255,255,0.04);
-        border: 1px solid rgba(255,255,255,0.07);
+        background: linear-gradient(180deg, rgba(255,255,255,0.18), rgba(255,255,255,0.06));
+        border: 1px solid rgba(16,33,59,0.12);
         border-radius: 20px;
         padding: 22px;
+        box-shadow: 0 16px 34px rgba(8, 17, 31, 0.08);
       }}
       .of-proof-card-v2 p {{
         margin: 12px 0 14px 0;
-        color: var(--text);
+        color: #123154;
         font-size: 1rem;
         line-height: 1.7;
       }}
-      .of-proof-person {{ color: var(--muted); font-size: .88rem; }}
+      .of-proof-person {{ color: rgba(18,49,84,0.76); font-size: .88rem; }}
       .of-price-grid {{
         display: grid;
         grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -424,10 +478,11 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
       }}
       .of-price-card {{
         position: relative;
-        background: rgba(255,255,255,0.035);
-        border: 1px solid rgba(255,255,255,0.08);
+        background: linear-gradient(180deg, rgba(255,255,255,0.18), rgba(255,255,255,0.08));
+        border: 1px solid rgba(16,33,59,0.12);
         border-radius: 22px;
         padding: 22px 20px;
+        box-shadow: 0 16px 34px rgba(8, 17, 31, 0.08);
       }}
       .of-price-popular {{
         background: linear-gradient(180deg, rgba(16,183,196,0.09), rgba(255,255,255,0.03));
@@ -449,16 +504,17 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
         text-transform: uppercase;
       }}
       .of-price-main {{ margin: 14px 0 14px 0; font-size: 2.3rem; font-weight: 900; letter-spacing: -0.04em; }}
-      .of-price-main span {{ color: var(--muted); font-size: .95rem; font-weight: 500; margin-left: 2px; }}
-      .of-price-list {{ margin: 0; padding-left: 18px; color: var(--muted); }}
+      .of-price-main span {{ color: rgba(18,49,84,0.7); font-size: .95rem; font-weight: 500; margin-left: 2px; }}
+      .of-price-list {{ margin: 0; padding-left: 18px; color: rgba(18,49,84,0.82); }}
       .of-price-list li {{ margin-bottom: 8px; line-height: 1.45; }}
       .of-final-cta {{
         margin-top: 22px;
         padding: 32px 28px;
         border-radius: 28px;
-        border: 1px solid rgba(16,183,196,0.16);
-        background: linear-gradient(135deg, rgba(16,183,196,0.1), rgba(25,74,145,0.08));
+        border: 1px solid rgba(255,255,255,0.18);
+        background: linear-gradient(180deg, rgba(230,241,251,0.58), rgba(19,41,70,0.9));
         text-align: center;
+        box-shadow: 0 24px 48px rgba(8, 17, 31, 0.18);
       }}
       .of-final-cta h3 {{
         font-size: clamp(2rem, 3vw, 3.35rem);
@@ -469,10 +525,39 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
 
       @media (max-width: 900px) {{
         .of-grid, .of-proof, .of-plan-strip, .of-trust-grid {{ grid-template-columns: 1fr; }}
+      .of-final-cta .of-eyebrow {{ color: #10B7C4; }}
+      .of-final-cta p {{ color: rgba(234,242,251,0.86); }}
+
+      div[data-testid="stPopover"] > button,
+      div[data-testid="stPopover"] button[kind="secondary"],
+      button[kind="secondaryFormSubmit"],
+      button[kind="secondary"] {{
+        background: linear-gradient(180deg, rgba(248,251,255,0.96), rgba(220,233,247,0.92)) !important;
+        color: #123154 !important;
+        border: 1px solid rgba(16,33,59,0.14) !important;
+        border-radius: 16px !important;
+        box-shadow: 0 10px 24px rgba(8, 17, 31, 0.08) !important;
+        font-weight: 700 !important;
+      }}
+      div[data-testid="stPopover"] > button:hover,
+      div[data-testid="stPopover"] button[kind="secondary"]:hover,
+      button[kind="secondary"]:hover {{
+        color: #0E2A48 !important;
+        border-color: rgba(16,183,196,0.4) !important;
+        box-shadow: 0 14px 28px rgba(8, 17, 31, 0.12) !important;
+      }}
+      div[data-testid="stPopoverContent"] {{
+        border-radius: 18px !important;
+        border: 1px solid rgba(16,33,59,0.12) !important;
+        background: linear-gradient(180deg, rgba(246,250,255,0.98), rgba(218,232,247,0.96)) !important;
+      }}
+      div[data-testid="stPopoverContent"] * {{ color: #123154 !important; }}
         .of-public-topbar {{ flex-direction: column; align-items: flex-start; }}
         .of-exec-grid, .of-metric-strip, .of-upload-promo-grid {{ grid-template-columns: 1fr; }}
         .of-stage-title-wrap {{ margin-left: 0; max-width: 100%; }}
         .of-stat-grid, .of-proof-v2, .of-feature-grid-v2, .of-proof-grid-v2, .of-price-grid {{ grid-template-columns: 1fr; }}
+        .of-stage-logo-wrap {{ min-height: auto; margin-bottom: 8px; }}
+        .of-logo-panel {{ width: 100%; min-height: 220px; }}
       }}
 
       /* Pill / badge */

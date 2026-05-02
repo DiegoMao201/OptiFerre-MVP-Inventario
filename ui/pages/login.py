@@ -96,12 +96,98 @@ def _render_plan_strip() -> None:
         st.markdown(f"<div class='of-plan-strip'>{''.join(cards)}</div>", unsafe_allow_html=True)
 
 
+def _render_trust_and_faq() -> None:
+        st.markdown("### Transparencia, seguridad y confianza")
+        st.markdown(
+                """
+                <div class='of-trust-grid'>
+                  <div class='of-trust-card'>
+                        <strong>Tus datos no se venden ni se comparten.</strong>
+                        <p class='of-mini-note'>Cada tenant opera con su propia cuenta y sus datos se usan únicamente para análisis internos de inventario.</p>
+                  </div>
+                  <div class='of-trust-card'>
+                        <strong>Subes archivos para analizar, no para perder control.</strong>
+                        <p class='of-mini-note'>El sistema valida columnas, limpia inconsistencias y conserva el foco en recomendaciones de compra y capital inmovilizado.</p>
+                  </div>
+                  <div class='of-trust-card'>
+                        <strong>Modelo claro de servicio.</strong>
+                        <p class='of-mini-note'>La suscripción cubre análisis y uso del SaaS. La integración ERP avanzada se cotiza por separado.</p>
+                  </div>
+                  <div class='of-trust-card'>
+                        <strong>Prueba antes de comprometerte.</strong>
+                        <p class='of-mini-note'>La prueba de 14 días está pensada para demostrar valor real con tus propios datos y sin fricción técnica inicial.</p>
+                  </div>
+                </div>
+                """,
+                unsafe_allow_html=True,
+        )
+
+        st.markdown("### Preguntas frecuentes")
+        st.markdown(
+                "<div class='of-faq-shell'><p class='of-mini-note'>"
+                "Abre cada ventana para entender exactamente qué hace la app, cómo trata tus datos y cómo evoluciona a suscripción."
+                "</p></div>",
+                unsafe_allow_html=True,
+        )
+
+        faq_cols = st.columns(3)
+        with faq_cols[0]:
+                with st.popover("¿Qué hace la app exactamente?"):
+                        st.write(
+                                "OptiFerre SaaS analiza inventario y ventas para mostrar capital inmovilizado,"
+                                " riesgo de quiebre, punto de reorden, stock de seguridad y sugerencia de compra."
+                        )
+                        st.write(
+                                "El objetivo es ayudarte a comprar mejor, reducir sobrestock y evitar quedarte sin producto clave."
+                        )
+        with faq_cols[1]:
+                with st.popover("¿Cómo se sube y procesa la información?"):
+                        st.write(
+                                "Descargas plantillas oficiales, subes tus archivos CSV o Excel y el sistema valida las columnas requeridas."
+                        )
+                        st.write(
+                                "Luego normaliza fechas, cantidades y notas crédito para correr el motor analítico de forma consistente."
+                        )
+        with faq_cols[2]:
+                with st.popover("¿Dónde se guarda la información?"):
+                        st.write(
+                                "La configuración de la cuenta y las suscripciones se guardan en base de datos."
+                        )
+                        st.write(
+                                "Los archivos cargados se usan para generar el análisis del tenant actual dentro de la sesión de trabajo."
+                        )
+
+        faq_cols_2 = st.columns(3)
+        with faq_cols_2[0]:
+                with st.popover("¿Quién puede ver mis datos?"):
+                        st.write(
+                                "Tus datos no están pensados para ser visibles por otros clientes. La experiencia es multitenant y cada cuenta opera separada."
+                        )
+        with faq_cols_2[1]:
+                with st.popover("¿Qué seguridad ofrece la app?"):
+                        st.write(
+                                "La app usa autenticación por usuario, despliegue en contenedor, configuración separada por entorno y base de datos dedicada."
+                        )
+                        st.write(
+                                "Además, los secretos deben administrarse fuera del repositorio, por ejemplo en Coolify."
+                        )
+        with faq_cols_2[2]:
+                with st.popover("¿Qué pasa después de la prueba?"):
+                        st.write(
+                                "Si el resultado te demuestra valor, activas un plan y mantienes acceso al análisis."
+                        )
+                        st.write(
+                                "Si luego quieres integrar ERP, automatizar abastecimiento o ampliar branding, eso se maneja como evolución premium."
+                        )
+
+
 def render() -> None:
         left, right = st.columns([1.35, 0.95], gap="large")
 
         with left:
                 _render_hero()
                 _render_plan_strip()
+                _render_trust_and_faq()
 
         with right:
                 st.markdown(

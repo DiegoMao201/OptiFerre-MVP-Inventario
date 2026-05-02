@@ -17,9 +17,11 @@ OptiFerre SaaS resuelve cuatro problemas operativos críticos:
 
 - Multitenancy con aislamiento por empresa.
 - Registro e inicio de sesión con trial automático de 14 días.
+- Landing pública con propuesta de valor, FAQ y mensajes de confianza.
 - Paywall por suscripción activa.
 - Descarga de plantillas oficiales de Inventario, Ventas y Catálogo.
 - Validación estructural al subir archivos.
+- Popovers y guías contextuales para resolver dudas dentro del flujo.
 - Limpieza financiera de datos de ERP.
 - Clasificación ABC/XYZ.
 - Stock de seguridad dinámico.
@@ -93,12 +95,13 @@ Si no hay suficiente histórico, el sistema usa una heurística conservadora bas
 ### Flujo de uso del cliente final
 
 1. Crear cuenta e iniciar trial.
-2. Descargar las plantillas oficiales.
-3. Completar las columnas obligatorias.
-4. Cargar Inventario y Ventas.
-5. Ir a Dashboard para ver capital inmovilizado y alertas.
-6. Ir a Análisis para revisar SS, ROP y sugerencia de compra.
-7. Exportar resultados y ejecutar compras o acciones correctivas.
+2. Revisar FAQ, confianza y alcance directamente desde la portada pública.
+3. Descargar las plantillas oficiales.
+4. Completar las columnas obligatorias.
+5. Cargar Inventario y Ventas con ayuda contextual en pantalla.
+6. Ir a Dashboard para ver capital inmovilizado y alertas.
+7. Ir a Análisis para revisar SS, ROP y sugerencia de compra.
+8. Exportar resultados y ejecutar compras o acciones correctivas.
 
 ### Qué debe cargar el cliente
 
@@ -150,6 +153,26 @@ Columnas mínimas:
 - `SOBRESTOCK`: demasiados días de cobertura o demanda nula.
 - `OK`: inventario controlado dentro de parámetros sanos.
 
+## Transparencia y confianza para el cliente
+
+La aplicación ya incorpora un enfoque explícito de confianza para ayudar a conversión y adopción:
+
+- portada pública con propuesta de valor clara,
+- preguntas frecuentes en ventanas emergentes,
+- explicación del uso de la información cargada,
+- aclaración de que la integración ERP no es obligatoria al inicio,
+- guía contextual en la sección de carga de archivos,
+- separación comercial entre suscripción SaaS e integración premium.
+
+Preguntas que la app responde directamente:
+
+- qué hace exactamente,
+- cómo se suben y procesan los archivos,
+- dónde se guarda la información,
+- quién puede ver los datos,
+- qué seguridad ofrece,
+- qué pasa después de la prueba.
+
 ## Guía de despliegue en Coolify
 
 La app queda lista para desplegar en Coolify con Docker Compose.
@@ -169,7 +192,7 @@ Usa exactamente estos valores:
 3. Build Pack: `Docker Compose`.
 4. Base Directory: `/`.
 5. Docker Compose Location: `/docker-compose.yml`.
-6. Dominio público: `https://optiferredatovatenexuspro.com`.
+6. Dominio público recomendado: `https://optiferre.datovatenexuspro.com`.
 
 ### Variables de entorno en Coolify
 
@@ -180,7 +203,7 @@ Variables mínimas:
 - `APP_NAME=OptiFerre SaaS`
 - `APP_ENV=production`
 - `APP_SECRET_KEY=<clave-larga-y-segura>`
-- `APP_BASE_URL=https://optiferredatovatenexuspro.com`
+- `APP_BASE_URL=https://optiferre.datovatenexuspro.com`
 - `DATABASE_URL=<tu-postgresql+psycopg2://...>`
 - `STRIPE_SECRET_KEY=<tu-clave>`
 - `STRIPE_PUBLISHABLE_KEY=<tu-clave>`

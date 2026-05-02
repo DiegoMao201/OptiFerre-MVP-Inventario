@@ -166,9 +166,28 @@ def inject_brand_css(primary_color: str = "#FF6B1A", theme_mode: str = "dark") -
         margin-bottom: 12px;
       }}
       .of-mini-note {{ color: var(--muted); font-size: .86rem; line-height: 1.55; }}
+      .of-trust-grid {{
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+        margin-top: 16px;
+      }}
+      .of-trust-card {{
+        background: var(--bg2);
+        border: 1px solid var(--card-border);
+        border-radius: 16px;
+        padding: 16px 18px;
+      }}
+      .of-faq-shell {{
+        background: rgba(255,255,255,0.02);
+        border: 1px solid var(--card-border);
+        border-radius: 18px;
+        padding: 18px;
+        margin-top: 18px;
+      }}
 
       @media (max-width: 900px) {{
-        .of-grid, .of-proof, .of-plan-strip {{ grid-template-columns: 1fr; }}
+        .of-grid, .of-proof, .of-plan-strip, .of-trust-grid {{ grid-template-columns: 1fr; }}
       }}
 
       /* Pill / badge */

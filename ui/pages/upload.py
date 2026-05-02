@@ -26,6 +26,51 @@ def render() -> None:
     st.markdown("## 📤 Cargar datos")
     st.caption("Sube tu inventario y ventas. El motor procesa millones de filas en segundos.")
 
+    help_cols = st.columns(4)
+    with help_cols[0]:
+        with st.popover("¿Qué pasa con mis archivos?"):
+            st.write(
+                "Tus archivos se usan para validar estructura, limpiar datos y ejecutar el análisis de tu tenant actual."
+            )
+            st.write(
+                "La idea del flujo es ayudarte a obtener recomendaciones sin obligarte a integrar ERP desde el primer día."
+            )
+    with help_cols[1]:
+        with st.popover("¿Cómo sé qué columnas necesito?"):
+            st.write(
+                "La app valida columnas obligatorias contra las plantillas oficiales. Si algo falta, te lo indica antes del análisis."
+            )
+    with help_cols[2]:
+        with st.popover("¿Se comparten mis datos?"):
+            st.write(
+                "No. El modelo es multitenant y cada empresa trabaja sobre su propia cuenta y su propia sesión de análisis."
+            )
+    with help_cols[3]:
+        with st.popover("¿Qué obtengo después de subir?"):
+            st.write(
+                "Dashboard ejecutivo, clasificación ABC/XYZ, capital inmovilizado, stock de seguridad, ROP y sugerencia de compra exportable."
+            )
+
+    with st.expander("Ver guía rápida de carga y transparencia", expanded=False):
+        st.markdown(
+            """
+            **Cómo funciona el proceso**
+
+            1. Descargas o replicas la estructura de las plantillas oficiales.
+            2. Subes inventario y ventas en CSV o Excel.
+            3. El sistema revisa columnas mínimas, tipos y consistencia básica.
+            4. Luego normaliza ventas, notas crédito y unidades para analizar mejor.
+            5. El resultado se presenta en dashboard y tabla analítica exportable.
+
+            **Transparencia sobre tus datos**
+
+            - La información se usa para generar el análisis del tenant actual.
+            - Las credenciales y configuración viven en la base de datos de la aplicación.
+            - Los archivos deben cargarse con las columnas definidas para evitar ambigüedad.
+            - Si deseas automatización ERP o integraciones continuas, eso se implementa como servicio adicional.
+            """
+        )
+
     cols = st.columns(2)
     with cols[0]:
         st.markdown("### 1) Inventario maestro")

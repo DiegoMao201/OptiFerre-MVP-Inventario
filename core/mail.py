@@ -110,6 +110,61 @@ def send_subscription_status_email(to_email: str, company_name: str, plan_name: 
     return _send_email(to_email, f"Nexus Pro | Suscripción {status}", html)
 
 
+def send_trial_ending_email(to_email: str, full_name: str, company_name: str, days_left: int, upgrade_url: str) -> MailResult:
+    html = _wrap_html(
+        title="Tu prueba está por terminar",
+        intro=f"{full_name}, la prueba de {company_name} termina en {days_left} día(s).",
+        bullets=[
+            "Mantén acceso al dashboard, análisis, soporte y evolución del diagnóstico.",
+            f"Activa un plan aquí: {upgrade_url}",
+            "Puedes elegir Starter, Pro o Enterprise según el momento operativo del negocio.",
+        ],
+        closing="Si el producto ya te mostró valor, este es el mejor momento para convertir la prueba en operación real.",
+    )
+    return _send_email(to_email, "Nexus Pro | Tu prueba está por vencer", html)
+
+
+def send_payment_due_email(to_email: str, full_name: str, company_name: str, plan_name: str, pay_url: str) -> MailResult:
+    html = _wrap_html(
+        title="Tu suscripción necesita atención",
+        intro=f"{full_name}, la suscripción {plan_name} de {company_name} requiere acción para mantener el acceso activo.",
+        bullets=[
+            "Revisa el medio de pago asociado a la suscripción.",
+            f"Activa o actualiza el plan aquí: {pay_url}",
+            "Mantener la suscripción activa evita interrupciones en análisis y soporte.",
+        ],
+        closing="Queremos que sigas operando sin fricción ni pérdida de continuidad.",
+    )
+    return _send_email(to_email, "Nexus Pro | Acción requerida en tu suscripción", html)
+
+
+def send_payment_success_email(to_email: str, full_name: str, company_name: str, plan_name: str) -> MailResult:
+    html = _wrap_html(
+        title="Pago confirmado correctamente",
+        intro=f"{full_name}, confirmamos el pago del plan {plan_name} para {company_name}.",
+        bullets=[
+            "Tu acceso sigue activo con las capacidades del plan contratado.",
+            "Puedes seguir operando sin interrupciones.",
+            "Si quieres más profundidad o alcance, puedes evaluar un plan superior.",
+        ],
+        closing="Gracias por seguir apostando por una operación de inventario más clara, rentable y accionable.",
+    )
+    return _send_email(to_email, "Nexus Pro | Pago recibido", html)
+
+
+def send_upgrade_nudge_email(to_email: str, full_name: str, company_name: str, current_plan: str, upgrade_url: str) -> MailResult:
+    html = _wrap_html(
+        title="Puedes llevar tu operación al siguiente nivel",
+        intro=f"{full_name}, {company_name} ya está usando el plan {current_plan}.",
+        bullets=[
+            "Si necesitas mayor volumen, más usuarios o más profundidad operativa, vale la pena revisar el siguiente plan.",
+            f"Revisa opciones aquí: {upgrade_url}",
+        ],
+        closing="El objetivo es que el plan acompañe el momento operativo del negocio, no que se quede corto.",
+    )
+    return _send_email(to_email, "Nexus Pro | Evalúa un plan superior", html)
+
+
 def send_password_reset_email(to_email: str, full_name: str, reset_url: str) -> MailResult:
     html = _wrap_html(
         title="Recupera el acceso a tu cuenta",

@@ -34,8 +34,8 @@ st.set_page_config(
 # Inicializar DB al arrancar
 init_db()
 
-# Tema base (puede ser sobrescrito por marca del tenant)
-inject_brand_css("#10B7C4", "dark")
+# Tema base inicial
+inject_brand_css("#10B7C4", "light")
 
 
 PUBLIC_ROUTES = {
@@ -57,12 +57,17 @@ def _sidebar_user_block(user: dict) -> None:
     sub = get_subscription(user["tenant_id"])
     plan = sub["plan"].upper() if sub else "—"
     badge = "🟢" if (sub and sub["is_active"]) else "🔴"
+    operator_emails = {settings.support_email.lower().strip(), settings.sales_email.lower().strip()}
+    operator_badge = ""
+    if user["email"].lower().strip() in operator_emails:
+        operator_badge = "<div style='margin-top:8px; color:#0F6C7A; font-size:.82rem; font-weight:700;'>Operador habilitado: entra a Soporte para gestionar tickets globales</div>"
     st.sidebar.markdown(
         f"""
         <div style="padding: 12px; border-radius: 12px; background: var(--bg2); border: 1px solid var(--card-border); margin-bottom: 12px;">
           <div style="font-weight:700;">{user['company_name']}</div>
           <div style="color: var(--muted); font-size:.85rem;">{user['email']}</div>
           <div style="margin-top:6px;"><span class='of-pill'>{badge} {plan}</span></div>
+          {operator_badge}
         </div>
         """,
         unsafe_allow_html=True,
@@ -80,7 +85,7 @@ def main() -> None:
         # Aplicar branding del tenant
         tenant = get_tenant(user["tenant_id"])
         if tenant:
-            inject_brand_css(tenant["brand_primary_color"], tenant["theme_mode"])
+            inject_brand_css(tenant["brand_primary_color"], "light")
             render_brand_header(tenant["company_name"], tenant["brand_logo_url"])
 
         st.sidebar.title("OptiFerre")

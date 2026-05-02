@@ -12,7 +12,7 @@ from sqlalchemy import select
 
 from core.config import get_settings
 from core.database import session_scope, tenant_select, tenant_session_scope
-from core.mail import send_subscription_status_email
+from core.mail import send_payment_success_email, send_subscription_status_email
 from core.models import Subscription, Tenant, User
 
 try:
@@ -143,6 +143,7 @@ def _simulate_activation(tenant_id: int, plan: str) -> None:
         tenant = db.get(Tenant, tenant_id)
         if user and tenant:
             send_subscription_status_email(user.email, tenant.company_name, PLAN_CATALOG[plan]["name"], sub.status)
+            send_payment_success_email(user.email, user.full_name, tenant.company_name, PLAN_CATALOG[plan]["name"])
 
 
 def handle_webhook_event(payload: bytes, sig_header: str) -> dict:
@@ -184,5 +185,7 @@ def handle_webhook_event(payload: bytes, sig_header: str) -> dict:
         plan_name = PLAN_CATALOG.get(sub.plan, {"name": sub.plan}).get("name", sub.plan)
         if user and tenant:
             send_subscription_status_email(user.email, tenant.company_name, plan_name, sub.status)
+            if etype in {"checkout.session.completed", "customer.subscription.created", "customer.subscription.updated"} and sub.status in {"active", "trialing"}:
+                send_payment_success_email(user.email, user.full_name, tenant.company_name, plan_name)
 
     return {"ok": True, "type": etype}

@@ -109,6 +109,11 @@ def render() -> None:
 
     st.markdown("## 🆘 Soporte y Tickets")
     st.caption("Abre un caso, deja contexto claro y haz seguimiento desde este mismo espacio.")
+    if operator_mode:
+        st.markdown(
+            "<div class='of-operator-banner'><strong>Modo operador activo.</strong> Desde esta misma pantalla puedes ver tickets globales, responder al cliente, dejar notas internas y mover el estado del caso.</div>",
+            unsafe_allow_html=True,
+        )
 
     with st.form("support_ticket_create", clear_on_submit=True):
         subject = st.text_input("Asunto del ticket", placeholder="Ejemplo: no pude completar la carga de inventario")

@@ -691,6 +691,14 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
         background: #FFFFFF;
         color: #0B2742;
       }}
+      .of-support-shell {{
+        margin-top: 16px;
+        padding: 24px 26px;
+        border-radius: 24px;
+        border: 1px solid rgba(167,204,233,0.18);
+        background: linear-gradient(180deg, rgba(18,35,61,0.96), rgba(8,17,31,0.98));
+        box-shadow: 0 20px 40px rgba(8,17,31,0.18);
+      }}
 
       div[data-testid="stPopover"] {{ width: 100%; }}
       div[data-testid="stPopover"] > button,

@@ -10,6 +10,7 @@ import streamlit as st
 from core.auth import authenticate, login, register_tenant
 from core.billing import PLAN_CATALOG
 from core.mail import send_account_created_email, send_login_notice_email
+from core.support import create_support_ticket
 
 
 ACTIONABLE_PILLARS = [
@@ -369,6 +370,39 @@ def _render_contact_section() -> None:
                 )
 
 
+def _render_public_support_form() -> None:
+                st.markdown("### Soporte <span class='of-shimmer-text'>directo</span>", unsafe_allow_html=True)
+                st.markdown(
+                                "<p class='of-mini-note' style='margin-bottom:16px'>Si necesitas ayuda antes de entrar o quieres dejarnos una solicitud desde esta página, crea el ticket aquí y lo enviaremos al canal operativo de soporte.</p>",
+                                unsafe_allow_html=True,
+                )
+                with st.form("public_support_form", clear_on_submit=True):
+                                cols = st.columns(2)
+                                with cols[0]:
+                                                requester_name = st.text_input("Tu nombre")
+                                                requester_email = st.text_input("Tu correo")
+                                with cols[1]:
+                                                company_name = st.text_input("Empresa")
+                                                subject = st.text_input("Asunto")
+                                message = st.text_area("¿Qué necesitas?", height=160)
+                                submitted = st.form_submit_button("Enviar ticket", use_container_width=True)
+
+                if submitted:
+                                if not all([requester_name.strip(), requester_email.strip(), subject.strip(), message.strip()]):
+                                                st.error("Completa nombre, correo, asunto y detalle para enviar el ticket.")
+                                else:
+                                                ticket = create_support_ticket(
+                                                                requester_name=requester_name,
+                                                                requester_email=requester_email,
+                                                                company_name=company_name,
+                                                                subject=subject,
+                                                                message=message,
+                                                                source="public_page",
+                                                                category="support",
+                                                )
+                                                st.success(f"Ticket #{ticket['id']} enviado. También enviamos confirmación al correo que registraste.")
+
+
 def render() -> None:
                 st.markdown(
                                 "<div class='of-landing-canvas'><div class='of-glow orb-a'></div><div class='of-glow orb-b'></div><div class='of-glow orb-c'></div>",
@@ -437,4 +471,5 @@ def render() -> None:
                 _render_faq()
                 _render_final_cta()
                 _render_contact_section()
+                _render_public_support_form()
                 st.markdown("</div>", unsafe_allow_html=True)

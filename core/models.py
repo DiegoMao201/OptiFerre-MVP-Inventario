@@ -94,3 +94,39 @@ class AuditLog(Base):
     entity: Mapped[str] = mapped_column(String(120), default="system")
     notes: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
     created_at: Mapped[datetime] = mapped_column(DateTime, server_default=func.now())
+
+
+class SupportTicket(Base):
+    __tablename__ = "support_tickets"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    tenant_id: Mapped[Optional[int]] = mapped_column(ForeignKey("tenants.id", ondelete="CASCADE"), nullable=True)
+    requester_name: Mapped[str] = mapped_column(String(120))
+    requester_email: Mapped[str] = mapped_column(String(180), index=True)
+    company_name: Mapped[Optional[str]] = mapped_column(String(120), nullable=True)
+    subject: Mapped[str] = mapped_column(String(180))
+    category: Mapped[str] = mapped_column(String(32), default="support")
+    priority: Mapped[str] = mapped_column(String(16), default="medium")
+    status: Mapped[str] = mapped_column(String(24), default="open")
+    source: Mapped[str] = mapped_column(String(24), default="portal")
+    created_at: Mapped[datetime] = mapped_column(DateTime, server_default=func.now())
+    updated_at: Mapped[datetime] = mapped_column(DateTime, server_default=func.now(), onupdate=func.now())
+
+    tenant: Mapped[Optional[Tenant]] = relationship()
+    messages: Mapped[list["SupportTicketMessage"]] = relationship(
+        back_populates="ticket", cascade="all, delete-orphan"
+    )
+
+
+class SupportTicketMessage(Base):
+    __tablename__ = "support_ticket_messages"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    ticket_id: Mapped[int] = mapped_column(ForeignKey("support_tickets.id", ondelete="CASCADE"))
+    author_name: Mapped[str] = mapped_column(String(120))
+    author_email: Mapped[str] = mapped_column(String(180))
+    body: Mapped[str] = mapped_column(Text)
+    is_internal: Mapped[bool] = mapped_column(Boolean, default=False)
+    created_at: Mapped[datetime] = mapped_column(DateTime, server_default=func.now())
+
+    ticket: Mapped[SupportTicket] = relationship(back_populates="messages")

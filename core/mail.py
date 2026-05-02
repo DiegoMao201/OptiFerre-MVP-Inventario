@@ -108,3 +108,57 @@ def send_subscription_status_email(to_email: str, company_name: str, plan_name: 
         closing="Gracias por seguir construyendo un proceso de inventario más claro, accionable y rentable.",
     )
     return _send_email(to_email, f"Nexus Pro | Suscripción {status}", html)
+
+
+def send_support_ticket_created_to_customer(to_email: str, requester_name: str, ticket_id: int, subject: str) -> MailResult:
+    html = _wrap_html(
+        title="Recibimos tu solicitud de ayuda",
+        intro=f"{requester_name}, tu solicitud fue registrada correctamente con el ticket #{ticket_id}.",
+        bullets=[
+            f"Asunto registrado: {subject}",
+            "Tu mensaje ya quedó enviado al equipo de soporte.",
+            "Te responderemos por correo al mismo email con el que abriste el caso.",
+        ],
+        closing="Gracias por escribirnos. Queremos que tu operación en Nexus Pro sea clara, estable y bien acompañada.",
+    )
+    return _send_email(to_email, f"Nexus Pro | Ticket #{ticket_id} recibido", html)
+
+
+def send_support_ticket_created_to_operator(
+    to_email: str,
+    ticket_id: int,
+    requester_name: str,
+    requester_email: str,
+    subject: str,
+    body: str,
+    company_name: str | None = None,
+) -> MailResult:
+    company_line = company_name or "No informada"
+    html = _wrap_html(
+        title=f"Nuevo ticket #{ticket_id}",
+        intro=f"{requester_name} abrió un ticket desde Nexus Pro.",
+        bullets=[
+            f"Email: {requester_email}",
+            f"Empresa: {company_line}",
+            f"Asunto: {subject}",
+            f"Mensaje inicial: {body}",
+        ],
+        closing="Revisa el caso y responde al cliente desde el canal operativo definido.",
+    )
+    return _send_email(to_email, f"Nexus Pro | Nuevo ticket #{ticket_id}", html)
+
+
+def send_support_ticket_reply_to_customer(
+    to_email: str,
+    requester_name: str,
+    ticket_id: int,
+    subject: str,
+    reply_body: str,
+) -> MailResult:
+    html = _wrap_html(
+        title=f"Actualización de tu ticket #{ticket_id}",
+        intro=f"{requester_name}, tu caso sobre '{subject}' tuvo una actualización.",
+        bullets=[reply_body],
+        closing="Si necesitas ampliar información, responde este correo o vuelve a tu espacio en Nexus Pro.",
+    )
+    return _send_email(to_email, f"Nexus Pro | Respuesta ticket #{ticket_id}", html)

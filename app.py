@@ -15,6 +15,7 @@ from ui.pages import (
     dashboard,
     login,
     settings_page,
+    support_page,
     templates_page,
     upload,
 )
@@ -46,6 +47,7 @@ PRIVATE_ROUTES = {
     "📤 Cargar Datos": upload.render,
     "🧠 Análisis": analysis.render,
     "📄 Plantillas": templates_page.render,
+    "🆘 Soporte": support_page.render,
     "💳 Planes y Suscripción": billing_page.render,
     "🎨 Marca (White-label)": settings_page.render,
 }

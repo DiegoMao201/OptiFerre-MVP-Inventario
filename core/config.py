@@ -41,6 +41,7 @@ class Settings:
     stripe_price_starter: str
     stripe_price_pro: str
     stripe_price_enterprise: str
+    support_email: str
     sales_email: str
     sales_phone: str
 
@@ -75,6 +76,7 @@ def get_settings() -> Settings:
         stripe_price_starter=os.getenv("STRIPE_PRICE_STARTER", ""),
         stripe_price_pro=os.getenv("STRIPE_PRICE_PRO", ""),
         stripe_price_enterprise=os.getenv("STRIPE_PRICE_ENTERPRISE", ""),
+        support_email=os.getenv("SUPPORT_CONTACT_EMAIL", "diegomao.201@gmail.com"),
         sales_email=os.getenv("SALES_CONTACT_EMAIL", "diegomao.201@gmail.com"),
         sales_phone=os.getenv("SALES_CONTACT_PHONE", "+57 300 000 0000"),
     )

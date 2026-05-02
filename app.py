@@ -86,10 +86,15 @@ def main() -> None:
 
         PRIVATE_ROUTES[choice]()
     else:
-        st.sidebar.title("OptiFerre SaaS")
-        st.sidebar.info("Inicia sesión o crea tu cuenta para comenzar.")
-        st.sidebar.caption(f"v0.1 · {settings.app_env}")
-        render_brand_header("OptiFerre SaaS")
+        st.markdown(
+            """
+            <style>
+              section[data-testid="stSidebar"] {display:none !important;}
+              [data-testid="collapsedControl"] {display:none !important;}
+            </style>
+            """,
+            unsafe_allow_html=True,
+        )
         login.render()
 
 

@@ -17,7 +17,7 @@ OptiFerre SaaS resuelve cuatro problemas operativos críticos:
 
 - Multitenancy con aislamiento por empresa.
 - Registro e inicio de sesión con trial automático de 14 días.
-- Landing pública con propuesta de valor, FAQ y mensajes de confianza.
+- Landing pública rediseñada con propuesta de valor, prueba guiada, FAQ y mensajes de confianza.
 - Paywall por suscripción activa.
 - Descarga de plantillas oficiales de Inventario, Ventas y Catálogo.
 - Validación estructural al subir archivos.
@@ -157,7 +157,9 @@ Columnas mínimas:
 
 La aplicación ya incorpora un enfoque explícito de confianza para ayudar a conversión y adopción:
 
-- portada pública con propuesta de valor clara,
+- portada pública rediseñada sin sidebar distractor,
+- hero ejecutivo con propuesta de valor clara,
+- bloque de capacidad del producto y planes,
 - preguntas frecuentes en ventanas emergentes,
 - explicación del uso de la información cargada,
 - aclaración de que la integración ERP no es obligatoria al inicio,

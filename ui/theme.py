@@ -44,6 +44,7 @@ def inject_brand_css(primary_color: str = "#FF6B1A", theme_mode: str = "dark") -
       }}
       .stApp {{ background-color: var(--bg); color: var(--text); }}
       section[data-testid="stSidebar"] {{ background-color: var(--bg2); }}
+      .block-container {{ max-width: 1320px; padding-top: 2rem; padding-bottom: 3rem; }}
       h1, h2, h3, h4 {{ color: var(--text); letter-spacing: -0.01em; }}
 
       /* Botones */
@@ -165,6 +166,24 @@ def inject_brand_css(primary_color: str = "#FF6B1A", theme_mode: str = "dark") -
         padding: 22px;
         margin-bottom: 12px;
       }}
+      .of-public-shell {{ margin-bottom: 18px; }}
+      .of-public-topbar {{
+        display: flex;
+        justify-content: space-between;
+        align-items: end;
+        gap: 18px;
+        padding: 0 2px 8px 2px;
+      }}
+      .of-public-badge {{
+        white-space: nowrap;
+        border: 1px solid var(--card-border);
+        border-radius: 999px;
+        padding: 10px 14px;
+        background: rgba(255,255,255,0.03);
+        color: var(--text);
+        font-size: .9rem;
+        font-weight: 600;
+      }}
       .of-mini-note {{ color: var(--muted); font-size: .86rem; line-height: 1.55; }}
       .of-trust-grid {{
         display: grid;
@@ -188,6 +207,7 @@ def inject_brand_css(primary_color: str = "#FF6B1A", theme_mode: str = "dark") -
 
       @media (max-width: 900px) {{
         .of-grid, .of-proof, .of-plan-strip, .of-trust-grid {{ grid-template-columns: 1fr; }}
+        .of-public-topbar {{ flex-direction: column; align-items: flex-start; }}
       }}
 
       /* Pill / badge */

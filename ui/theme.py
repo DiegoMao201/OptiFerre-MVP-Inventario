@@ -133,19 +133,40 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
       }}
       .of-priority-list {{ margin: 12px 0 0 0; padding-left: 18px; }}
       .of-priority-list li {{ margin-bottom: 8px; color: var(--text); }}
-      .of-chip-row {{ display:flex; flex-wrap:wrap; gap:10px; margin-top: 14px; }}
+      .of-chip-row {{
+        display:grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap:12px;
+        width: 100%;
+        max-width: 760px;
+        margin-top: 18px;
+        align-items: stretch;
+      }}
       .of-chip {{
         display:inline-flex;
         align-items:center;
+        justify-content:center;
         gap:8px;
         border:1px solid rgba(16,33,59,0.14);
         border-radius:999px;
-        padding:8px 12px;
+        padding:12px 16px;
         background: rgba(255,255,255,0.48);
         color: #123154;
-        font-size: .85rem;
+        font-size: .82rem;
         font-weight: 700;
+        line-height: 1.25;
+        min-height: 60px;
         box-shadow: 0 10px 28px rgba(10, 25, 47, 0.08);
+        white-space: normal;
+        text-align: center;
+        text-wrap: balance;
+        transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease, background .25s ease;
+      }}
+      .of-chip:hover {{
+        transform: translateY(-2px);
+        border-color: rgba(16,183,196,0.42);
+        background: rgba(255,255,255,0.68);
+        box-shadow: 0 16px 30px rgba(8, 17, 31, 0.12);
       }}
       .of-upload-promo {{
         background: linear-gradient(135deg, rgba(16,183,196,0.13), rgba(25,74,145,0.12));
@@ -297,6 +318,10 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
         0%, 100% {{ transform: translateY(0) scale(1); }}
         50% {{ transform: translateY(-24px) scale(1.08); }}
       }}
+      @keyframes of-shimmer {{
+        0% {{ background-position: -200% center; }}
+        100% {{ background-position: 200% center; }}
+      }}
       .card-hover {{ transition: transform .25s ease, box-shadow .25s ease; }}
       .card-hover:hover {{
         transform: translateY(-4px);
@@ -346,11 +371,16 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
         line-height: .96;
         margin: 10px 0 0 0;
         letter-spacing: -0.04em;
-        background: linear-gradient(180deg, #143153 0%, #214874 34%, #6E96C0 68%, #F2F7FD 100%);
+        color: #EFF5FC;
+        text-shadow: 0 12px 30px rgba(8, 17, 31, 0.12);
+      }}
+      .of-shimmer-text {{
+        background: linear-gradient(90deg, #EFF5FC 0%, #10B7C4 28%, #C0FF54 52%, #EFF5FC 76%, #EFF5FC 100%);
+        background-size: 220% auto;
         -webkit-background-clip: text;
         background-clip: text;
         color: transparent;
-        text-shadow: 0 12px 30px rgba(8, 17, 31, 0.08);
+        animation: of-shimmer 5s linear infinite;
       }}
       .of-stage-lead {{
         margin: 16px 0 0 0;
@@ -412,8 +442,8 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
       .of-stat-card .caption {{ color: rgba(18,49,84,0.78); font-size: .82rem; line-height: 1.4; margin-top: 6px; }}
       .of-feature-grid-v2 {{
         display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 12px;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 16px;
       }}
       .of-feature-card-v2 {{
         background: linear-gradient(180deg, rgba(255,255,255,0.18), rgba(255,255,255,0.06));
@@ -421,6 +451,14 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
         border-radius: 18px;
         padding: 18px;
         box-shadow: 0 14px 28px rgba(8, 17, 31, 0.08);
+        min-height: 220px;
+        transition: transform .28s ease, box-shadow .28s ease, border-color .28s ease, background .28s ease;
+      }}
+      .of-feature-card-v2:hover {{
+        transform: translateY(-5px);
+        border-color: rgba(16,183,196,0.45);
+        background: linear-gradient(180deg, rgba(255,255,255,0.24), rgba(16,183,196,0.08));
+        box-shadow: 0 22px 36px rgba(8, 17, 31, 0.12);
       }}
       .of-feature-card-v2 h4 {{ margin: 12px 0 8px 0; font-size: 1.05rem; color: #123154; }}
       .of-feature-card-v2 p {{ margin: 0; color: rgba(18,49,84,0.78); font-size: .92rem; line-height: 1.55; }}
@@ -483,11 +521,28 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
         border-radius: 22px;
         padding: 22px 20px;
         box-shadow: 0 16px 34px rgba(8, 17, 31, 0.08);
+        transition: transform .28s ease, box-shadow .28s ease, border-color .28s ease, background .28s ease;
+        cursor: pointer;
+      }}
+      .of-price-card:hover,
+      .of-price-card:focus,
+      .of-price-card:focus-visible {{
+        transform: translateY(-6px) scale(1.01);
+        border-color: rgba(16,183,196,0.5);
+        background: linear-gradient(180deg, rgba(255,255,255,0.24), rgba(16,183,196,0.08));
+        box-shadow: 0 26px 42px rgba(8, 17, 31, 0.14);
+        outline: none;
       }}
       .of-price-popular {{
         background: linear-gradient(180deg, rgba(16,183,196,0.09), rgba(255,255,255,0.03));
         border-color: rgba(16,183,196,0.55);
         box-shadow: 0 0 0 1px rgba(16,183,196,0.12) inset;
+      }}
+      .of-price-popular:hover,
+      .of-price-popular:focus,
+      .of-price-popular:focus-visible {{
+        border-color: rgba(16,183,196,0.78);
+        box-shadow: 0 0 0 1px rgba(16,183,196,0.18) inset, 0 28px 46px rgba(16,183,196,0.14);
       }}
       .of-popular-badge {{
         position: absolute;
@@ -522,28 +577,46 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
         letter-spacing: -0.04em;
         margin: 12px 0;
       }}
-
-      @media (max-width: 900px) {{
-        .of-grid, .of-proof, .of-plan-strip, .of-trust-grid {{ grid-template-columns: 1fr; }}
       .of-final-cta .of-eyebrow {{ color: #10B7C4; }}
       .of-final-cta p {{ color: rgba(234,242,251,0.86); }}
 
+      div[data-testid="stPopover"] {{ width: 100%; }}
       div[data-testid="stPopover"] > button,
       div[data-testid="stPopover"] button[kind="secondary"],
       button[kind="secondaryFormSubmit"],
       button[kind="secondary"] {{
-        background: linear-gradient(180deg, rgba(248,251,255,0.96), rgba(220,233,247,0.92)) !important;
+        width: 100% !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        background: linear-gradient(180deg, rgba(248,251,255,0.98), rgba(229,239,250,0.95)) !important;
         color: #123154 !important;
-        border: 1px solid rgba(16,33,59,0.14) !important;
+        border: 1px solid rgba(16,33,59,0.16) !important;
         border-radius: 16px !important;
         box-shadow: 0 10px 24px rgba(8, 17, 31, 0.08) !important;
         font-weight: 700 !important;
+        min-height: 64px !important;
+      }}
+      div[data-testid="stPopover"] > button p,
+      div[data-testid="stPopover"] button[kind="secondary"] p,
+      button[kind="secondary"] p {{
+        color: #123154 !important;
+        opacity: 1 !important;
+        font-weight: 700 !important;
+      }}
+      div[data-testid="stPopover"] > button svg,
+      div[data-testid="stPopover"] button[kind="secondary"] svg,
+      button[kind="secondary"] svg {{
+        color: #123154 !important;
+        opacity: 1 !important;
       }}
       div[data-testid="stPopover"] > button:hover,
+      div[data-testid="stPopover"] > button:focus,
       div[data-testid="stPopover"] button[kind="secondary"]:hover,
+      div[data-testid="stPopover"] button[kind="secondary"]:focus,
       button[kind="secondary"]:hover {{
         color: #0E2A48 !important;
         border-color: rgba(16,183,196,0.4) !important;
+        background: linear-gradient(180deg, rgba(255,255,255,1), rgba(236,245,252,0.98)) !important;
         box-shadow: 0 14px 28px rgba(8, 17, 31, 0.12) !important;
       }}
       div[data-testid="stPopoverContent"] {{
@@ -552,9 +625,13 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
         background: linear-gradient(180deg, rgba(246,250,255,0.98), rgba(218,232,247,0.96)) !important;
       }}
       div[data-testid="stPopoverContent"] * {{ color: #123154 !important; }}
+
+      @media (max-width: 900px) {{
+        .of-grid, .of-proof, .of-plan-strip, .of-trust-grid {{ grid-template-columns: 1fr; }}
         .of-public-topbar {{ flex-direction: column; align-items: flex-start; }}
         .of-exec-grid, .of-metric-strip, .of-upload-promo-grid {{ grid-template-columns: 1fr; }}
         .of-stage-title-wrap {{ margin-left: 0; max-width: 100%; }}
+        .of-chip-row {{ grid-template-columns: 1fr; width: 100%; }}
         .of-stat-grid, .of-proof-v2, .of-feature-grid-v2, .of-proof-grid-v2, .of-price-grid {{ grid-template-columns: 1fr; }}
         .of-stage-logo-wrap {{ min-height: auto; margin-bottom: 8px; }}
         .of-logo-panel {{ width: 100%; min-height: 220px; }}

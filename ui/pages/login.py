@@ -33,12 +33,12 @@ def _render_top_stage() -> None:
                                                                 """
                                                                 <div class="of-stage-title-wrap">
                                                                         <div class="of-eyebrow">OptiFerre SaaS</div>
-                                                                        <h1 class="of-stage-title">Diagnóstico ejecutivo de inventarios para empresas ferreteras e industriales</h1>
+                                                                        <h1 class="of-stage-title">Diagnóstico <span class="of-shimmer-text">ejecutivo</span> de inventarios para empresas ferreteras e industriales</h1>
                                                                         <p class="of-stage-lead">Sube inventario y ventas, obtén lectura ejecutiva de caja atrapada, riesgo de quiebre y compra sugerida con una puesta en escena mucho más clara y premium.</p>
                                                                         <div class="of-chip-row">
-                                                                                <span class="of-chip">Prueba gratuita de 14 días</span>
-                                                                                <span class="of-chip">Sin integración ERP obligatoria</span>
-                                                                                <span class="of-chip">Diseñado para ferretería e industria</span>
+                                                                                <span class="of-chip">14 días gratis</span>
+                                                                                <span class="of-chip">Cero integración ERP</span>
+                                                                                <span class="of-chip">Ferretería e industria</span>
                                                                         </div>
                                                                 </div>
                                                                 """
@@ -203,7 +203,7 @@ def _render_plan_strip() -> None:
                 cards.append(
                         dedent(
                                 f"""
-                                <div class="of-price-card{highlight} card-hover">
+                                                                                                                                <div class="of-price-card{highlight} card-hover" tabindex="0">
                                   {badge}
                                   <div class="of-pill">{plan['name']}</div>
                                   <div class="of-price-main">${plan['price_monthly_usd']}<span>/mes</span></div>

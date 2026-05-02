@@ -5,6 +5,7 @@ import math
 
 import pandas as pd
 
+from core.auth import hash_password, verify_password
 from engine import full_analysis
 from engine.optimization import (
     abc_classification,
@@ -67,3 +68,9 @@ def test_full_analysis_pipeline():
     # Sugerencia debe ser múltiplo del empaque mínimo
     tor = df[df["sku"] == "TOR1"].iloc[0]
     assert tor["sugerencia_compra"] % 100 == 0
+
+
+def test_password_hash_supports_long_passwords():
+    password = "Ferre-" + ("segura123!" * 12)
+    hashed = hash_password(password)
+    assert verify_password(password, hashed)

@@ -85,6 +85,92 @@ def inject_brand_css(primary_color: str = "#FF6B1A", theme_mode: str = "dark") -
       .of-banner h4 {{ margin: 0 0 4px 0; color: var(--primary); }}
       .of-banner p {{ margin: 0; color: var(--text); opacity: 0.92; }}
 
+      /* Landing */
+      .of-hero {{
+        background:
+          radial-gradient(circle at top right, var(--primary-soft), transparent 35%),
+          linear-gradient(180deg, rgba(255,255,255,0.02), transparent),
+          var(--bg2);
+        border: 1px solid var(--card-border);
+        border-radius: 20px;
+        padding: 28px;
+        margin-bottom: 16px;
+      }}
+      .of-eyebrow {{
+        color: var(--primary);
+        text-transform: uppercase;
+        letter-spacing: .12em;
+        font-size: .76rem;
+        font-weight: 700;
+      }}
+      .of-hero h1 {{
+        font-size: clamp(2rem, 3vw, 3.5rem);
+        line-height: 1.02;
+        margin: 10px 0 14px 0;
+      }}
+      .of-hero p {{ color: var(--muted); font-size: 1rem; line-height: 1.6; }}
+      .of-grid {{
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+        margin-top: 18px;
+      }}
+      .of-card {{
+        background: var(--bg2);
+        border: 1px solid var(--card-border);
+        border-radius: 16px;
+        padding: 16px 18px;
+      }}
+      .of-card strong {{ display:block; margin-bottom: 6px; font-size: 1rem; }}
+      .of-card p {{ margin: 0; color: var(--muted); font-size: .95rem; }}
+      .of-proof {{
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 10px;
+        margin-top: 20px;
+      }}
+      .of-proof .item {{
+        background: rgba(255,255,255,0.03);
+        border: 1px solid var(--card-border);
+        border-radius: 14px;
+        padding: 14px 16px;
+      }}
+      .of-proof .number {{ font-size: 1.5rem; font-weight: 700; color: var(--text); }}
+      .of-proof .caption {{ color: var(--muted); font-size: .85rem; margin-top: 4px; }}
+      .of-steps {{ margin-top: 18px; }}
+      .of-steps div {{
+        padding: 10px 0;
+        border-bottom: 1px solid var(--card-border);
+        color: var(--text);
+      }}
+      .of-steps div:last-child {{ border-bottom: 0; }}
+      .of-plan-strip {{
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 12px;
+        margin-top: 16px;
+      }}
+      .of-plan {{
+        background: var(--bg2);
+        border: 1px solid var(--card-border);
+        border-radius: 16px;
+        padding: 16px 18px;
+      }}
+      .of-plan.highlight {{ border-color: var(--primary); box-shadow: 0 0 0 1px var(--primary-soft) inset; }}
+      .of-plan .price {{ font-size: 1.6rem; font-weight: 700; margin: 8px 0; }}
+      .of-form-shell {{
+        background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent), var(--bg2);
+        border: 1px solid var(--card-border);
+        border-radius: 20px;
+        padding: 22px;
+        margin-bottom: 12px;
+      }}
+      .of-mini-note {{ color: var(--muted); font-size: .86rem; line-height: 1.55; }}
+
+      @media (max-width: 900px) {{
+        .of-grid, .of-proof, .of-plan-strip {{ grid-template-columns: 1fr; }}
+      }}
+
       /* Pill / badge */
       .of-pill {{
         display: inline-block; padding: 3px 10px; border-radius: 999px;

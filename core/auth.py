@@ -6,7 +6,7 @@ from datetime import datetime, timedelta
 from typing import Optional
 
 import streamlit as st
-from passlib.hash import bcrypt
+from passlib.hash import pbkdf2_sha256
 from sqlalchemy import select
 
 from core.database import session_scope
@@ -20,12 +20,12 @@ def _slugify(value: str) -> str:
 
 
 def hash_password(plain: str) -> str:
-    return bcrypt.hash(plain)
+    return pbkdf2_sha256.hash(plain)
 
 
 def verify_password(plain: str, hashed: str) -> bool:
     try:
-        return bcrypt.verify(plain, hashed)
+        return pbkdf2_sha256.verify(plain, hashed)
     except Exception:
         return False
 

@@ -9,6 +9,7 @@ import streamlit as st
 
 from core.auth import authenticate, login, register_tenant
 from core.billing import PLAN_CATALOG
+from core.mail import send_account_created_email, send_login_notice_email
 
 
 ACTIONABLE_PILLARS = [
@@ -396,6 +397,7 @@ def render() -> None:
                                                                 data = authenticate(email, password)
                                                                 if data:
                                                                                 login(data)
+                                                                                send_login_notice_email(data["email"], data["full_name"], data["company_name"])
                                                                                 st.success(f"Bienvenido, {data['full_name']}")
                                                                                 st.rerun()
                                                                 else:
@@ -420,6 +422,7 @@ def render() -> None:
                                                                                                 data = authenticate(email, password)
                                                                                                 if data:
                                                                                                                 login(data)
+                                                                                                                send_account_created_email(data["email"], data["full_name"], data["company_name"])
                                                                                                                 st.success("Cuenta creada. Tu prueba de 14 días ya está activa.")
                                                                                                                 st.rerun()
                                                                                 except Exception as exc:  # pragma: no cover

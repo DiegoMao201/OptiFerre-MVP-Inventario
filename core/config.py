@@ -30,6 +30,11 @@ class Settings:
     secret_key: str
     base_url: str
     database_url: str
+    mail_provider: str
+    mail_from_name: str
+    mail_from_email: str
+    mail_reply_to: str
+    sendgrid_api_key: str
     stripe_secret_key: str
     stripe_publishable_key: str
     stripe_webhook_secret: str
@@ -43,6 +48,12 @@ class Settings:
     def stripe_enabled(self) -> bool:
         return bool(self.stripe_secret_key) and not self.stripe_secret_key.endswith("xxx")
 
+    @property
+    def mail_enabled(self) -> bool:
+        if self.mail_provider != "sendgrid":
+            return False
+        return bool(self.sendgrid_api_key and self.mail_from_email)
+
 
 @lru_cache(maxsize=1)
 def get_settings() -> Settings:
@@ -53,12 +64,17 @@ def get_settings() -> Settings:
         secret_key=os.getenv("APP_SECRET_KEY", "dev-secret-change-me"),
         base_url=os.getenv("APP_BASE_URL", "http://localhost:8501"),
         database_url=database_url,
+        mail_provider=os.getenv("MAIL_PROVIDER", "sendgrid").strip().lower(),
+        mail_from_name=os.getenv("MAIL_FROM_NAME", "Nexus Pro").strip(),
+        mail_from_email=os.getenv("MAIL_FROM_EMAIL", "").strip(),
+        mail_reply_to=os.getenv("MAIL_REPLY_TO", "").strip(),
+        sendgrid_api_key=os.getenv("SENDGRID_API_KEY", "").strip(),
         stripe_secret_key=os.getenv("STRIPE_SECRET_KEY", ""),
         stripe_publishable_key=os.getenv("STRIPE_PUBLISHABLE_KEY", ""),
         stripe_webhook_secret=os.getenv("STRIPE_WEBHOOK_SECRET", ""),
         stripe_price_starter=os.getenv("STRIPE_PRICE_STARTER", ""),
         stripe_price_pro=os.getenv("STRIPE_PRICE_PRO", ""),
         stripe_price_enterprise=os.getenv("STRIPE_PRICE_ENTERPRISE", ""),
-        sales_email=os.getenv("SALES_CONTACT_EMAIL", "ventas@optiferre.com"),
+        sales_email=os.getenv("SALES_CONTACT_EMAIL", "diegomao.201@gmail.com"),
         sales_phone=os.getenv("SALES_CONTACT_PHONE", "+57 300 000 0000"),
     )

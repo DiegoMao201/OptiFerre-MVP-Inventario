@@ -12,7 +12,8 @@ from sqlalchemy import select
 
 from core.config import get_settings
 from core.database import session_scope, tenant_select, tenant_session_scope
-from core.models import Subscription, Tenant
+from core.mail import send_subscription_status_email
+from core.models import Subscription, Tenant, User
 
 try:
     import stripe  # type: ignore
@@ -138,6 +139,10 @@ def _simulate_activation(tenant_id: int, plan: str) -> None:
         sub.plan = plan
         sub.status = "active"
         sub.current_period_end = datetime.utcnow() + timedelta(days=30)
+        user = db.scalar(select(User).where(User.tenant_id == tenant_id).order_by(User.id.asc()))
+        tenant = db.get(Tenant, tenant_id)
+        if user and tenant:
+            send_subscription_status_email(user.email, tenant.company_name, PLAN_CATALOG[plan]["name"], sub.status)
 
 
 def handle_webhook_event(payload: bytes, sig_header: str) -> dict:
@@ -173,5 +178,11 @@ def handle_webhook_event(payload: bytes, sig_header: str) -> dict:
                 sub.current_period_end = datetime.utcfromtimestamp(cpe)
         elif etype == "customer.subscription.deleted":
             sub.status = "canceled"
+
+        user = db.scalar(select(User).where(User.tenant_id == tenant_id).order_by(User.id.asc()))
+        tenant = db.get(Tenant, tenant_id)
+        plan_name = PLAN_CATALOG.get(sub.plan, {"name": sub.plan}).get("name", sub.plan)
+        if user and tenant:
+            send_subscription_status_email(user.email, tenant.company_name, plan_name, sub.status)
 
     return {"ok": True, "type": etype}

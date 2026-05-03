@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type DragEvent } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { UploadCloud, FileSpreadsheet, Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -140,7 +140,7 @@ function DropZone({
   file: File | null;
   onChange: (f: File | null) => void;
 }) {
-  const onDrop = (e: React.DragEvent) => {
+  const onDrop = (e: DragEvent) => {
     e.preventDefault();
     const f = e.dataTransfer.files?.[0];
     if (f) onChange(f);

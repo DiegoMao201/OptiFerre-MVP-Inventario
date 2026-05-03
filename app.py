@@ -45,12 +45,11 @@ PUBLIC_ROUTES = {
 }
 
 PRIVATE_ROUTES = {
-    "📊 Dashboard": dashboard.render,
-    "📤 Cargar Datos": upload.render,
-    "🧠 Análisis": analysis.render,
-    "� Órdenes de Compra": purchase_orders.render,
+    "🏠 Inicio": dashboard.render,
+    "1. Carga de Datos": upload.render,
+    "2. Insights IA": analysis.render,
+    "3. Qué Comprar": purchase_orders.render,
     "🤖 Asistente IA": assistant.render,
-    "�📄 Plantillas": templates_page.render,
     "🆘 Soporte": support_page.render,
     "💳 Planes y Suscripción": billing_page.render,
     "🎨 Marca (White-label)": settings_page.render,
@@ -71,6 +70,7 @@ def _sidebar_user_block(user: dict) -> None:
           <div style="font-weight:700;">{user['company_name']}</div>
           <div style="color: var(--muted); font-size:.85rem;">{user['email']}</div>
           <div style="margin-top:6px;"><span class='of-pill'>{badge} {plan}</span></div>
+                    <div style="margin-top:8px; color:var(--muted); font-size:.82rem; line-height:1.5;">Flujo recomendado: 1) Carga de Datos 2) Insights IA 3) Qué Comprar</div>
           {operator_badge}
         </div>
         """,

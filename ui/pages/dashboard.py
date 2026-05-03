@@ -122,10 +122,30 @@ def render() -> None:
         return
 
     section_shell(
-        "Dashboard ejecutivo",
-        "Lectura rápida de riesgo, caja atrapada y acciones de abastecimiento para decidir hoy.",
-        eyebrow="Executive Control Tower",
+        "Bienvenido a OptiFerre",
+        "El sistema que convierte inventario en decisiones: menos pérdidas, menos caja atrapada y compras más claras.",
+        eyebrow="Golpe de valor",
     )
+    st.markdown(
+        """
+        <div class='of-lead-panel'>
+            <div class='of-lead-grid'>
+                <div>
+                    <div class='of-eyebrow'>Lo que deberías sentir en 5 segundos</div>
+                    <h3>Este sistema existe para reducir pérdidas, proteger ventas y ayudarte a comprar mejor.</h3>
+                    <p class='of-helper-line'>Si hoy tienes sobrestock, capital inmovilizado o compras hechas por intuición, aquí debería quedar claro qué está pasando y cuál es la siguiente acción.</p>
+                </div>
+                <div>
+                    <div class='of-stat-line'><strong>Impacto esperado</strong><span>Menos dinero atrapado en productos lentos y menos quiebres en SKUs críticos.</span></div>
+                    <div class='of-stat-line'><strong>Primer logro</strong><span>Detectar rápido el riesgo y bajar a una compra sugerida sin perderte en menús.</span></div>
+                    <div class='of-stat-line'><strong>Prueba social honesta</strong><span>Equipos que usan herramientas similares suelen mejorar visibilidad de inventario desde el primer ciclo de revisión.</span></div>
+                </div>
+            </div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+    st.info("Flujo recomendado: 1. Carga de Datos  2. Insights IA  3. Qué Comprar. Si ya cargaste archivos, este tablero debería mostrarte el problema y la oportunidad de inmediato.")
     st.markdown(
         """
         <div class='of-lead-panel'>
@@ -147,7 +167,7 @@ def render() -> None:
     )
     df = _ensure_analysis()
     if df is None or df.empty:
-        st.warning("Aún no has cargado datos. Ve a **📤 Cargar Datos**.")
+        st.warning("Aún no has cargado datos. Empieza por **1. Carga de Datos** para desbloquear insights, IA y compra sugerida.")
         return
 
     sales_rows = int(len(st.session_state.get("uploaded_sales", pd.DataFrame())))
@@ -161,6 +181,17 @@ def render() -> None:
     reponer = int((df["estado"] == "REPONER").sum())
     sobre = int((df["estado"] == "SOBRESTOCK").sum())
     summary_title, summary_text, chips, risk_score = _build_exec_summary(df)
+
+    action_cols = st.columns(3)
+    action_cols[0].metric("Dinero atrapado en stock", format_currency(inmov))
+    action_cols[1].metric("Productos en riesgo de quiebre", f"{quiebres:,}")
+    action_cols[2].metric("SKUs a revisar hoy", f"{int((df['estado'] != 'OK').sum()):,}")
+
+    st.markdown("### Pasos para el éxito")
+    step_cols = st.columns(3)
+    step_cols[0].info("1. Datos cargados. Si no confías en el resultado, vuelve a revisar la calidad de inventario y ventas.")
+    step_cols[1].info("2. Deja que la IA analice. Este tablero resume el riesgo real de caja y disponibilidad.")
+    step_cols[2].info("3. Ejecuta la compra sugerida. Lleva las prioridades a 3. Qué Comprar y genera la orden.")
 
     st.markdown(
         f"""
@@ -209,6 +240,11 @@ def render() -> None:
         kpi("SKUs en quiebre", f"{quiebres:,}", "Atención inmediata")
     with cols[3]:
         kpi("Costo oportunidad / mes", format_currency(monthly_opp), "Caja que no rota")
+
+    if can(user, "advanced_dashboard"):
+        st.caption("Insight IA desbloqueado: este diagnóstico ya está alimentando el centro de compra sugerida y el Asistente IA.")
+    else:
+        st.info("Tu plan actual te deja ver el diagnóstico base. Desbloquea el análisis explicado por IA para entender el porqué detrás de cada sugerencia.")
 
     st.markdown("### 🔥 Alertas operativas")
     a, b, c = st.columns(3)

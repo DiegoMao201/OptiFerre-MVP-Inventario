@@ -42,10 +42,16 @@ def render() -> None:
         return
 
     section_shell(
-        "Órdenes de Compra",
-        "Edita las cantidades sugeridas por la IA, marca lo que entra al pedido y genera la orden persistente.",
-        eyebrow="Decisión accionable",
+        "Qué Comprar",
+        "Este es el centro de decisión: aquí conviertes análisis en una compra clara, editable y lista para ejecutar.",
+        eyebrow="Paso 3 · Compra sugerida",
     )
+    st.info(
+        "Tu objetivo aquí no es revisar una tabla eterna. Es salir con una lista priorizada de compra que proteja ventas y libere caja donde hoy estás sobredimensionado."
+    )
+
+    if not list_suggestions(user["tenant_id"]) and st.session_state.get("analysis_result") is not None:
+        _refresh_from_analysis(user)
 
     cols = st.columns([1, 1, 4])
     if cols[0].button("🔄 Sincronizar con análisis", use_container_width=True):
@@ -55,14 +61,41 @@ def render() -> None:
     suggestions = list_suggestions(user["tenant_id"])
     if not suggestions:
         st.info(
-            "Aún no hay sugerencias persistidas. Ejecuta el análisis en Dashboard "
-            "y vuelve a sincronizar aquí."
+            "Aún no hay sugerencias persistidas. Primero carga datos y genera el diagnóstico en Inicio o Insights IA. Después vuelve aquí para decidir qué comprar."
         )
         return
 
     df = pd.DataFrame(suggestions)
     df["qty_user"] = df["qty_user"].fillna(df["qty_ai"])
     df["valor_linea"] = df["qty_user"].astype(float) * df["unit_cost"].astype(float)
+
+    st.markdown(
+        """
+        <div class='of-lead-panel'>
+            <div class='of-lead-grid'>
+                <div>
+                    <div class='of-eyebrow'>Cómo usar esta pantalla</div>
+                    <h3>1. Revisa lo sugerido por la IA. 2. Ajusta cantidades. 3. Marca lo que sí comprarás. 4. Guarda o genera la orden.</h3>
+                    <p class='of-helper-line'>La cantidad final es tu decisión. La IA propone; tu equipo aprueba y ajusta según caja, proveedor y estrategia comercial.</p>
+                </div>
+                <div>
+                    <div class='of-stat-line'><strong>Sugerido IA</strong><span>La cantidad calculada por el motor.</span></div>
+                    <div class='of-stat-line'><strong>Cantidad final</strong><span>Lo que realmente comprarás después de revisar caja y criterio comercial.</span></div>
+                    <div class='of-stat-line'><strong>Incluir en OC</strong><span>Marca solo lo que debe entrar al pedido.</span></div>
+                </div>
+            </div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+    priority = df[df["included"]].copy()
+    priority["qty_effective"] = priority["qty_user"]
+    priority["valor_linea"] = priority["qty_effective"].astype(float) * priority["unit_cost"].astype(float)
+    top_priority = priority.sort_values("valor_linea", ascending=False).head(5)
+    if not top_priority.empty:
+        spotlight = ", ".join(top_priority["sku"].astype(str).tolist())
+        st.caption(f"Prioridad visible ahora mismo: {spotlight}.")
 
     edited = st.data_editor(
         df[
@@ -100,6 +133,7 @@ def render() -> None:
     kpi_cols[0].metric("Líneas seleccionadas", int(edited["included"].sum()))
     kpi_cols[1].metric("Unidades totales", f"{total_units:,.0f}")
     kpi_cols[2].metric("Monto estimado", format_currency(total_amount))
+    st.caption("Consejo: si un SKU tiene sentido operativo pero no financiero, bájale cantidad final antes de generar la orden.")
 
     if st.button("💾 Guardar cambios", use_container_width=True):
         apply_suggestion_edits(

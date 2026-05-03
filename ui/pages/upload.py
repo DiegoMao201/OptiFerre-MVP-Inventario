@@ -1,4 +1,4 @@
-"""Carga y validación de archivos del cliente."""
+"""Carga y validación guiada de archivos del cliente."""
 from __future__ import annotations
 
 import io
@@ -6,7 +6,7 @@ import io
 import pandas as pd
 import streamlit as st
 
-from core.templates import INVENTORY_TEMPLATE, SALES_TEMPLATE, validate_columns
+from core.templates import ALL_TEMPLATES, INVENTORY_TEMPLATE, SALES_TEMPLATE, validate_columns
 from engine.cleaning import apply_smart_column_mapping
 from engine.demo_data import get_demo_dataset
 from ui.components import section_shell
@@ -25,11 +25,73 @@ def _read_any(uploaded) -> pd.DataFrame | None:
     raise ValueError("Formato no soportado. Usa CSV o XLSX.")
 
 
+def _human_validation_error(file_label: str, missing: list[str], template_key: str) -> str:
+    missing_text = ", ".join(missing)
+    return (
+        f"No pude entender el archivo de {file_label} porque faltan estas columnas: {missing_text}. "
+        f"Descarga la plantilla oficial de {template_key}, compara los encabezados y vuelve a subirlo. "
+        "Si tu ERP usa otros nombres, el sistema intentará mapearlos automáticamente, pero la estructura base debe existir."
+    )
+
+
+def _render_template_hub() -> None:
+    st.markdown("### Plantillas oficiales en el mismo flujo")
+    st.info(
+        "Todo empieza aquí. Descarga la plantilla correcta, completa tus datos y súbelos en esta misma pantalla. "
+        "No necesitas salir a otra página para entender qué archivo usar."
+    )
+    for tpl in ALL_TEMPLATES.values():
+        with st.expander(f"{tpl.title} · {tpl.description}", expanded=False):
+            required_columns = ", ".join(tpl.required_columns)
+            st.caption(f"Columnas obligatorias: {required_columns}")
+            preview = tpl.to_dataframe().head(3)
+            st.dataframe(preview, use_container_width=True, hide_index=True)
+            dl_cols = st.columns(2)
+            dl_cols[0].download_button(
+                f"Descargar {tpl.title} CSV",
+                tpl.to_csv_bytes(),
+                file_name=f"plantilla_{tpl.key}.csv",
+                mime="text/csv",
+                use_container_width=True,
+                key=f"dl_inline_csv_{tpl.key}",
+            )
+            dl_cols[1].download_button(
+                f"Descargar {tpl.title} XLSX",
+                tpl.to_xlsx_bytes(),
+                file_name=f"plantilla_{tpl.key}.xlsx",
+                mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                use_container_width=True,
+                key=f"dl_inline_xlsx_{tpl.key}",
+            )
+
+
 def render() -> None:
     section_shell(
-        "Onboarding de datos",
-        "Carga archivos reales o activa una demo guiada y obtén un diagnóstico ejecutivo en minutos.",
-        eyebrow="Smart Importer + Demo Mode",
+        "Paso 1 · Carga de datos",
+        "Esta es la puerta de entrada: aquí entiendes qué archivos usar, cómo corregirlos y qué resultado obtendrás después.",
+        eyebrow="Onboarding guiado",
+    )
+    st.markdown(
+        """
+        <div class='of-lead-panel'>
+            <div class='of-lead-grid'>
+                <div>
+                    <div class='of-eyebrow'>Pasos para el éxito</div>
+                    <h3>1. Carga tus datos. 2. Deja que la IA analice. 3. Ejecuta tu primera compra optimizada.</h3>
+                    <p class='of-helper-line'>OptiFerre existe para reducir pérdidas por sobrestock y quiebres antes de que se conviertan en caja atrapada. Si hoy solo haces una cosa, empieza por subir inventario y ventas aquí.</p>
+                </div>
+                <div>
+                    <div class='of-stat-line'><strong>Qué resuelve</strong><span>Te dice qué comprar, qué está drenando caja y qué puede dejarte sin ventas.</span></div>
+                    <div class='of-stat-line'><strong>Para quién</strong><span>Dueños, compradores y gerentes de ferretería o distribución industrial.</span></div>
+                    <div class='of-stat-line'><strong>Qué sigue</strong><span>Después de cargar, la app te lleva a insights y luego a compra sugerida.</span></div>
+                </div>
+            </div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+    st.info(
+        "Beneficio inmediato: en menos de unos minutos deberías ver dinero atrapado en stock, SKUs en riesgo y una compra sugerida priorizada."
     )
     st.markdown(
         """
@@ -121,17 +183,20 @@ def render() -> None:
             """
         )
 
+    _render_template_hub()
+
     st.markdown("<div class='of-section-space'></div>", unsafe_allow_html=True)
     cols = st.columns(2)
     with cols[0]:
         st.markdown("### 1) Inventario maestro")
+        st.caption("Base para saber cuánto stock tienes, cuánto cuesta y cuánto tarda en reponerse.")
         if st.button("Cargar demo guiada", use_container_width=True, key="load_demo_inventory"):
             demo_inventory, demo_sales = get_demo_dataset()
             st.session_state["uploaded_inventory"] = demo_inventory
             st.session_state["uploaded_sales"] = demo_sales
             st.session_state.pop("analysis_result", None)
             st.session_state["demo_mode"] = True
-            st.success("Demo guiada cargada. Ya puedes ir a Dashboard o Análisis.")
+            st.success("Demo guiada cargada. Siguiente paso recomendado: entra a 2. Insights IA.")
         inv_file = st.file_uploader(
             "Inventario (CSV o XLSX)", type=["csv", "xlsx", "xls"], key="inv_uploader"
         )
@@ -141,7 +206,7 @@ def render() -> None:
                 df, mapping = apply_smart_column_mapping(df, schema="inventory")
                 ok, missing = validate_columns(df, INVENTORY_TEMPLATE)
                 if not ok:
-                    st.error(f"❌ Faltan columnas obligatorias: {', '.join(missing)}")
+                    st.error(_human_validation_error("inventario", missing, INVENTORY_TEMPLATE.title))
                 else:
                     st.session_state["uploaded_inventory"] = df
                     st.session_state.pop("analysis_result", None)
@@ -151,13 +216,16 @@ def render() -> None:
                             "Smart Importer aplicó estas equivalencias: "
                             + ", ".join(f"{src} → {dst}" for src, dst in mapping.items())
                         )
-                    st.success(f"✅ Inventario cargado: {len(df):,} filas.")
+                    st.success(f"✅ Inventario cargado: {len(df):,} filas. Ya tenemos la base para calcular stock óptimo.")
                     st.dataframe(df.head(10), use_container_width=True, hide_index=True)
             except Exception as exc:
-                st.error(f"Error leyendo el archivo: {exc}")
+                st.error(
+                    "No pude procesar ese archivo de inventario. Revisa que sea CSV o XLSX, que la primera fila tenga encabezados y que no venga exportado con celdas fusionadas."
+                )
 
     with cols[1]:
         st.markdown("### 2) Histórico de ventas")
+        st.caption("Es la señal que usa la IA para detectar rotación, reposición y riesgo de quiebre.")
         sales_file = st.file_uploader(
             "Ventas (CSV o XLSX)", type=["csv", "xlsx", "xls"], key="sales_uploader"
         )
@@ -167,7 +235,7 @@ def render() -> None:
                 df, mapping = apply_smart_column_mapping(df, schema="sales")
                 ok, missing = validate_columns(df, SALES_TEMPLATE)
                 if not ok:
-                    st.error(f"❌ Faltan columnas obligatorias: {', '.join(missing)}")
+                    st.error(_human_validation_error("ventas", missing, SALES_TEMPLATE.title))
                 else:
                     st.session_state["uploaded_sales"] = df
                     st.session_state.pop("analysis_result", None)
@@ -177,15 +245,17 @@ def render() -> None:
                             "Smart Importer aplicó estas equivalencias: "
                             + ", ".join(f"{src} → {dst}" for src, dst in mapping.items())
                         )
-                    st.success(f"✅ Ventas cargadas: {len(df):,} filas.")
+                    st.success(f"✅ Ventas cargadas: {len(df):,} filas. Ya podemos identificar rotación y urgencias de compra.")
                     st.dataframe(df.head(10), use_container_width=True, hide_index=True)
             except Exception as exc:
-                st.error(f"Error leyendo el archivo: {exc}")
+                st.error(
+                    "No pude procesar ese archivo de ventas. Asegúrate de subir un CSV o XLSX con fechas, SKU, cantidad vendida y tipo de documento."
+                )
 
     st.divider()
     inv_ready = "uploaded_inventory" in st.session_state
     sales_ready = "uploaded_sales" in st.session_state
     if inv_ready and sales_ready:
-        st.success("🟢 Todo listo. Ve a **📊 Dashboard** o **🧠 Análisis** para ver los resultados.")
+        st.success("🟢 Todo listo. Siguiente paso recomendado: entra a **2. Insights IA** para ver dónde estás perdiendo dinero y luego a **3. Qué Comprar** para ejecutar tu primera orden.")
     else:
-        st.info("Necesitas cargar **inventario** y **ventas** para ejecutar el análisis.")
+        st.info("Para obtener recomendaciones reales necesitas cargar al menos **inventario** y **ventas**. El catálogo maestro es opcional, pero ayuda a enriquecer el contexto comercial.")

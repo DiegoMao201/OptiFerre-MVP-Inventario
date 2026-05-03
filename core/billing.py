@@ -14,6 +14,7 @@ from core.config import get_settings
 from core.database import session_scope, tenant_select, tenant_session_scope
 from core.mail import send_payment_success_email, send_subscription_status_email
 from core.models import Subscription, Tenant, User
+from core.plans import PLAN_CATALOG  # re-export para retrocompatibilidad
 
 try:
     import stripe  # type: ignore
@@ -21,38 +22,13 @@ except Exception:  # pragma: no cover
     stripe = None  # type: ignore
 
 
-PLAN_CATALOG = {
-    "starter": {
-        "name": "Starter",
-        "price_monthly_usd": 49,
-        "features": [
-            "Hasta 2.000 SKUs",
-            "Análisis ABC/XYZ",
-            "Stock de seguridad y ROP",
-            "Soporte por email",
-        ],
-    },
-    "pro": {
-        "name": "Pro",
-        "price_monthly_usd": 149,
-        "features": [
-            "Hasta 25.000 SKUs",
-            "Multi-bodega",
-            "Reglas de compra avanzadas",
-            "Soporte prioritario",
-        ],
-    },
-    "enterprise": {
-        "name": "Enterprise",
-        "price_monthly_usd": 499,
-        "features": [
-            "SKUs ilimitados",
-            "Usuarios ilimitados",
-            "White-label completo",
-            "Onboarding dedicado",
-        ],
-    },
-}
+__all__ = [
+    "PLAN_CATALOG",
+    "get_subscription",
+    "has_active_access",
+    "create_checkout_session",
+    "handle_webhook_event",
+]
 
 
 def _configure_stripe() -> bool:

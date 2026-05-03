@@ -46,6 +46,11 @@ class Settings:
     support_email: str
     sales_email: str
     sales_phone: str
+    openrouter_api_key: str
+    openrouter_base_url: str
+    openrouter_model: str
+    ai_request_timeout_seconds: int
+    ai_max_retries: int
 
     @property
     def stripe_enabled(self) -> bool:
@@ -56,6 +61,10 @@ class Settings:
         if self.mail_provider != "sendgrid":
             return False
         return bool(self.sendgrid_api_key and self.mail_from_email)
+
+    @property
+    def ai_enabled(self) -> bool:
+        return bool(self.openrouter_api_key and self.openrouter_api_key.strip())
 
 
 @lru_cache(maxsize=1)
@@ -83,4 +92,9 @@ def get_settings() -> Settings:
         support_email=os.getenv("SUPPORT_CONTACT_EMAIL", "diegomao.201@gmail.com"),
         sales_email=os.getenv("SALES_CONTACT_EMAIL", "diegomao.201@gmail.com"),
         sales_phone=os.getenv("SALES_CONTACT_PHONE", "+57 300 000 0000"),
+        openrouter_api_key=os.getenv("OPENROUTER_API_KEY", "").strip(),
+        openrouter_base_url=os.getenv("OPENROUTER_BASE_URL", "https://openrouter.ai/api/v1").strip(),
+        openrouter_model=os.getenv("OPENROUTER_DEEPSEEK_MODEL", "deepseek/deepseek-chat").strip(),
+        ai_request_timeout_seconds=int(os.getenv("AI_REQUEST_TIMEOUT_SECONDS", "30")),
+        ai_max_retries=int(os.getenv("AI_MAX_RETRIES", "2")),
     )

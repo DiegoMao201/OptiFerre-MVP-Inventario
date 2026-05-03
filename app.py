@@ -11,9 +11,11 @@ from core.logging_config import clear_log_context, configure_logging, set_log_co
 from core.tenancy import get_tenant
 from ui.pages import (
     analysis,
+    assistant,
     billing_page,
     dashboard,
     login,
+    purchase_orders,
     settings_page,
     support_page,
     templates_page,
@@ -46,7 +48,9 @@ PRIVATE_ROUTES = {
     "📊 Dashboard": dashboard.render,
     "📤 Cargar Datos": upload.render,
     "🧠 Análisis": analysis.render,
-    "📄 Plantillas": templates_page.render,
+    "� Órdenes de Compra": purchase_orders.render,
+    "🤖 Asistente IA": assistant.render,
+    "�📄 Plantillas": templates_page.render,
     "🆘 Soporte": support_page.render,
     "💳 Planes y Suscripción": billing_page.render,
     "🎨 Marca (White-label)": settings_page.render,
@@ -90,7 +94,16 @@ def main() -> None:
 
         st.sidebar.title("OptiFerre")
         _sidebar_user_block(user)
-        choice = st.sidebar.radio("Navegación", list(PRIVATE_ROUTES.keys()), label_visibility="collapsed")
+        route_keys = list(PRIVATE_ROUTES.keys())
+        default_idx = 0
+        if st.session_state.pop("_jump_to_billing", False):
+            for i, key in enumerate(route_keys):
+                if "Planes" in key:
+                    default_idx = i
+                    break
+        choice = st.sidebar.radio(
+            "Navegación", route_keys, index=default_idx, label_visibility="collapsed"
+        )
         st.sidebar.divider()
         if st.sidebar.button("Cerrar sesión", use_container_width=True):
             logout()

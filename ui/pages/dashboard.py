@@ -8,12 +8,18 @@ import plotly.express as px
 import streamlit as st
 
 from core.auth import require_login
+from core.access import can
 from core.billing import has_active_access
 from core.database import tenant_session_scope
 from core.models import AnalysisRun, AuditLog
 from engine import full_analysis
 from engine.demo_data import get_demo_dataset
 from engine.optimization import AnalysisConfig, simulate_service_level_impact
+from services.inventory_store import (
+    upsert_inventory_snapshot,
+    upsert_sales_snapshot,
+    upsert_suggestions_from_analysis,
+)
 from ui.components import format_currency, integration_banner, kpi, paywall, section_shell
 
 
@@ -43,18 +49,18 @@ def _persist_run(tenant_id: int, email: str, df: pd.DataFrame, sales_rows: int) 
     ).hexdigest()
     if st.session_state.get("_last_persisted_analysis_signature") == signature:
         return
+    run_id: int | None = None
     try:
         with tenant_session_scope(tenant_id=tenant_id) as db:
-            db.add(
-                AnalysisRun(
-                    tenant_id=tenant_id,
-                    user_email=email,
-                    rows_inventory=int(len(df)),
-                    rows_sales=int(sales_rows),
-                    capital_total=float(df["valor_inventario"].sum()),
-                    capital_inmovilizado=float(df["capital_inmovilizado"].sum()),
-                )
+            run = AnalysisRun(
+                tenant_id=tenant_id,
+                user_email=email,
+                rows_inventory=int(len(df)),
+                rows_sales=int(sales_rows),
+                capital_total=float(df["valor_inventario"].sum()),
+                capital_inmovilizado=float(df["capital_inmovilizado"].sum()),
             )
+            db.add(run)
             db.add(
                 AuditLog(
                     tenant_id=tenant_id,
@@ -64,7 +70,23 @@ def _persist_run(tenant_id: int, email: str, df: pd.DataFrame, sales_rows: int) 
                     notes=f"rows_inventory={len(df)} rows_sales={sales_rows}",
                 )
             )
+            db.flush()
+            run_id = run.id
         st.session_state["_last_persisted_analysis_signature"] = signature
+    except Exception:
+        pass
+
+    # Snapshots persistentes y sugerencias UPSERT — solo si el plan lo habilita.
+    user = st.session_state.get("auth") or {"tenant_id": tenant_id, "email": email}
+    try:
+        if user and can(user, "snapshots_persisted"):
+            inv_df = st.session_state.get("uploaded_inventory")
+            sales_df = st.session_state.get("uploaded_sales")
+            if inv_df is not None:
+                upsert_inventory_snapshot(tenant_id, inv_df)
+            if sales_df is not None:
+                upsert_sales_snapshot(tenant_id, sales_df)
+            upsert_suggestions_from_analysis(tenant_id, df, run_id=run_id, updated_by=email)
     except Exception:
         pass
 

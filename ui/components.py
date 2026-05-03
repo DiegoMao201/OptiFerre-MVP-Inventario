@@ -48,6 +48,56 @@ def paywall(plan: str | None = None) -> None:
     )
 
 
+def paywall_card(
+    *,
+    current_plan: str,
+    required_plan: str,
+    feature_key: str,
+    title: str | None = None,
+    description: str | None = None,
+) -> None:
+    """Paywall elegante para features bloqueadas por plan.
+
+    No depende de session_state ni de Stripe; solo invita a ir a Planes.
+    """
+    from core.plans import plan_info  # diferido para evitar ciclos
+
+    target = plan_info(required_plan) or {}
+    target_name = target.get("name", required_plan.capitalize())
+    tagline = target.get("tagline", "")
+    bullets = target.get("ai_capabilities") or target.get("features") or []
+    bullets_html = "".join(f"<li>{b}</li>" for b in bullets[:5])
+    title = title or f"Esta función requiere el plan {target_name}"
+    description = description or (
+        f"Estás en el plan <b>{current_plan.upper()}</b>. "
+        f"Sube a <b>{target_name}</b> para desbloquear esta capacidad ahora."
+    )
+    st.markdown(
+        f"""
+        <div class='of-paywall-card'>
+            <div class='of-paywall-eyebrow'>Función bloqueada · {feature_key}</div>
+            <h3 class='of-paywall-title'>{title}</h3>
+            <p class='of-paywall-desc'>{description}</p>
+            <div class='of-paywall-tagline'>{target_name} · {tagline}</div>
+            <ul class='of-paywall-list'>{bullets_html}</ul>
+            <div class='of-paywall-cta-row'>
+                <span class='of-paywall-price'>${target.get('price_monthly_usd','—')}/mes</span>
+                <span class='of-paywall-hint'>Activación inmediata desde Planes y Suscripción</span>
+            </div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+    if st.button(
+        f"Actualizar a {target_name} ahora",
+        key=f"paywall_cta_{feature_key}",
+        use_container_width=True,
+        type="primary",
+    ):
+        st.session_state["_jump_to_billing"] = True
+        st.rerun()
+
+
 def format_currency(value: float, prefix: str = "$") -> str:
     try:
         return f"{prefix}{value:,.0f}"

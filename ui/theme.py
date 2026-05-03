@@ -241,6 +241,56 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
       }}
       .of-banner h4 {{ margin: 0 0 4px 0; color: var(--primary); }}
       .of-banner p {{ margin: 0; color: var(--text); opacity: 0.92; }}
+
+      /* Paywall card */
+      .of-paywall-card {{
+        background: {panel_bg};
+        border: 1px solid rgba(16,183,196,0.35);
+        border-radius: 22px;
+        padding: 22px 24px;
+        margin: 12px 0 14px 0;
+        box-shadow: {panel_shadow};
+        position: relative;
+        overflow: hidden;
+      }}
+      .of-paywall-card::after {{
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(circle at 80% -20%, rgba(16,183,196,0.18), transparent 55%);
+        pointer-events: none;
+      }}
+      .of-paywall-eyebrow {{
+        text-transform: uppercase;
+        letter-spacing: .12em;
+        font-size: .72rem;
+        color: var(--primary);
+        font-weight: 700;
+      }}
+      .of-paywall-title {{ margin: 6px 0 4px 0; font-size: 1.4rem; }}
+      .of-paywall-desc {{ color: var(--text); opacity: .9; margin: 0 0 8px 0; }}
+      .of-paywall-tagline {{
+        display: inline-block;
+        background: rgba(16,183,196,0.12);
+        border: 1px solid rgba(16,183,196,0.35);
+        color: var(--primary);
+        padding: 4px 10px;
+        border-radius: 999px;
+        font-size: .82rem;
+        font-weight: 700;
+        margin: 6px 0 10px 0;
+      }}
+      .of-paywall-list {{ margin: 6px 0 12px 18px; line-height: 1.7; }}
+      .of-paywall-cta-row {{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        margin-top: 6px;
+      }}
+      .of-paywall-price {{ font-size: 1.3rem; font-weight: 800; color: var(--text); }}
+      .of-paywall-hint {{ font-size: .82rem; color: var(--muted); }}
+
       .of-section-shell {{ margin: 0 0 14px 0; }}
       .of-page-block {{ margin: 0 0 24px 0; }}
       .of-soft-panel {{

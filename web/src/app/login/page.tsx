@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useState, type FormEvent, type ReactNode } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { MapPin, MessageCircle, ShieldCheck } from "lucide-react";
@@ -141,7 +141,7 @@ export default function LoginPage() {
   );
 }
 
-function TrustPill({ icon, label }: { icon: JSX.Element; label: string }) {
+function TrustPill({ icon, label }: { icon: ReactNode; label: string }) {
   return (
     <div className="rounded-2xl border border-white/10 bg-white/5 px-3 py-3 text-sm text-muted-foreground flex items-center gap-2">
       <span className="text-primary">{icon}</span>

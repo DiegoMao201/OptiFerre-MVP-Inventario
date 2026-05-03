@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, AlertTriangle, Bot, MapPin, MessageCircle, PackageOpen, ShieldCheck, Wallet, Sparkles } from "lucide-react";
 import { PublicAiFaq } from "@/components/public-ai-faq";
 
-const salesPhone = process.env.SALES_CONTACT_PHONE || "+57 300 000 0000";
+const salesPhone = process.env.NEXT_PUBLIC_SALES_CONTACT_PHONE || "+57 300 000 0000";
 const whatsappHref = `https://wa.me/${salesPhone.replace(/\D/g, "")}`;
 
 const helpPlanCards = [

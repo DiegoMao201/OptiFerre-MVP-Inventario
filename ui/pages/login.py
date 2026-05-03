@@ -181,10 +181,6 @@ def _render_stats_bar() -> None:
                                                                 for benefit in item["benefits"]:
                                                                                 st.write(f"- {benefit}")
                                                                 st.info(item["cta"])
-                                                st.markdown(
-                                                                f"<div class='of-stat-caption-card'>{item['caption']}</div>",
-                                                                unsafe_allow_html=True,
-                                                )
                 st.markdown("</div></div>", unsafe_allow_html=True)
 
 

@@ -1097,26 +1097,44 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
         width: 100% !important;
         justify-content: space-between !important;
         align-items: center !important;
-        background: linear-gradient(180deg, rgba(248,251,255,0.98), rgba(229,239,250,0.95)) !important;
+        background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(226,239,254,0.92)) !important;
         color: #123154 !important;
-        border: 1px solid rgba(16,33,59,0.16) !important;
-        border-radius: 16px !important;
-        box-shadow: 0 10px 24px rgba(8, 17, 31, 0.08) !important;
-        font-weight: 700 !important;
-        min-height: 64px !important;
+        border: 1px solid rgba(0,224,255,0.22) !important;
+        border-radius: 20px !important;
+        box-shadow: 0 18px 36px rgba(8, 17, 31, 0.14), 0 0 0 1px rgba(255,255,255,0.14) inset !important;
+        font-weight: 800 !important;
+        min-height: 92px !important;
+        padding: 18px 18px !important;
+        position: relative !important;
+        overflow: hidden !important;
+      }}
+      div[data-testid="stPopover"] > button::before,
+      div[data-testid="stPopover"] button[kind="secondary"]::before,
+      button[kind="secondary"]::before {{
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(115deg, transparent 0%, rgba(255,255,255,0.12) 26%, rgba(0,224,255,0.18) 50%, rgba(0,255,163,0.10) 68%, transparent 100%);
+        transform: translateX(-120%);
+        animation: of-chip-sweep 6.2s ease-in-out infinite;
+        pointer-events: none;
       }}
       div[data-testid="stPopover"] > button p,
       div[data-testid="stPopover"] button[kind="secondary"] p,
       button[kind="secondary"] p {{
         color: #123154 !important;
         opacity: 1 !important;
-        font-weight: 700 !important;
+        font-weight: 800 !important;
+        font-size: 1rem !important;
+        line-height: 1.35 !important;
       }}
       div[data-testid="stPopover"] > button svg,
       div[data-testid="stPopover"] button[kind="secondary"] svg,
       button[kind="secondary"] svg {{
         color: #123154 !important;
         opacity: 1 !important;
+        width: 1.15rem !important;
+        height: 1.15rem !important;
       }}
       div[data-testid="stPopover"] > button:hover,
       div[data-testid="stPopover"] > button:focus,
@@ -1124,9 +1142,10 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
       div[data-testid="stPopover"] button[kind="secondary"]:focus,
       button[kind="secondary"]:hover {{
         color: #0E2A48 !important;
-        border-color: rgba(16,183,196,0.4) !important;
+        border-color: rgba(16,183,196,0.44) !important;
         background: linear-gradient(180deg, rgba(255,255,255,1), rgba(236,245,252,0.98)) !important;
-        box-shadow: 0 14px 28px rgba(8, 17, 31, 0.12) !important;
+        box-shadow: 0 24px 42px rgba(8, 17, 31, 0.18), 0 0 0 1px rgba(0,224,255,0.10) inset !important;
+        transform: translateY(-4px) !important;
       }}
       div[data-testid="stPopoverContent"] {{
         border-radius: 18px !important;

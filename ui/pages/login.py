@@ -148,6 +148,7 @@ def _render_value_stage() -> None:
 
 
 def _render_stats_bar() -> None:
+                st.markdown("<div class='of-page-block'><div class='of-soft-panel'>", unsafe_allow_html=True)
                 st.markdown(
                                 "<p class='of-actionable-intro'>Haz clic en cada bloque para entender qué resuelve, cómo se aplica y por qué conviene iniciar la prueba.</p>",
                                 unsafe_allow_html=True,
@@ -173,6 +174,7 @@ def _render_stats_bar() -> None:
                                                                 f"<div class='of-stat-caption-card'>{item['caption']}</div>",
                                                                 unsafe_allow_html=True,
                                                 )
+                st.markdown("</div></div>", unsafe_allow_html=True)
 
 
 def _render_feature_grid() -> None:

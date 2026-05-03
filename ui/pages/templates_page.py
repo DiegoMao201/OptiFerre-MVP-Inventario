@@ -19,7 +19,11 @@ def render() -> None:
         with st.container(border=True):
             st.markdown(f"### {tpl.title}")
             st.caption(tpl.description)
-            st.markdown("**Columnas obligatorias:** " + ", ".join(f"`{c}`" for c in tpl.required_columns))
+            required_columns = "".join(f"<span class='of-pill' style='margin:0 8px 8px 0; display:inline-flex'>{c}</span>" for c in tpl.required_columns)
+            st.markdown(
+                f"<div class='of-helper-line' style='margin:10px 0 14px 0'><strong style='color:var(--text)'>Columnas obligatorias:</strong> {required_columns}</div>",
+                unsafe_allow_html=True,
+            )
             st.dataframe(tpl.to_dataframe(), use_container_width=True, hide_index=True)
             cols = st.columns(2)
             with cols[0]:

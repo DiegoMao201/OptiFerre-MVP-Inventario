@@ -136,6 +136,39 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
         box-shadow: 0 18px 36px rgba(0,224,255,0.24) !important;
         filter: brightness(1.03);
       }}
+      .stFormSubmitButton > button {{
+        position: relative !important;
+        overflow: hidden !important;
+        min-height: 54px !important;
+        border-radius: 18px !important;
+        border: 1px solid rgba(157,255,240,0.42) !important;
+        background: linear-gradient(135deg, rgba(0,224,255,0.98), rgba(0,255,163,0.94), rgba(139,92,246,0.86)) !important;
+        background-size: 220% auto !important;
+        color: #04101F !important;
+        font-weight: 900 !important;
+        letter-spacing: 0.01em !important;
+        box-shadow: 0 0 0 1px rgba(255,255,255,0.12) inset, 0 18px 34px rgba(0,224,255,0.22) !important;
+        transition: transform .16s ease, box-shadow .2s ease, filter .2s ease !important;
+        animation: of-shimmer 6.4s linear infinite;
+      }}
+      .stFormSubmitButton > button::before {{
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(115deg, transparent 6%, rgba(255,255,255,0.18) 28%, rgba(255,255,255,0.42) 48%, rgba(255,255,255,0.16) 64%, transparent 84%);
+        transform: translateX(-120%);
+        animation: of-chip-sweep 4.8s ease-in-out infinite;
+        pointer-events: none;
+      }}
+      .stFormSubmitButton > button:hover {{
+        transform: translateY(-3px) scale(1.01) !important;
+        box-shadow: 0 24px 42px rgba(0,224,255,0.30) !important;
+        filter: saturate(1.08) brightness(1.03) !important;
+      }}
+      .stFormSubmitButton > button p {{
+        color: #04101F !important;
+        font-weight: 900 !important;
+      }}
 
       /* KPI cards */
       .of-kpi {{

@@ -141,6 +141,8 @@ La página `ui/pages/upload.py` fue reestructurada como puerta de entrada real:
 La página `ui/pages/purchase_orders.py` se convirtió en el centro de decisión:
 
 - muestra sugerencias persistidas,
+- cruza catálogo maestro cuando existe,
+- muestra proveedor, marca y línea,
 - permite editar cantidades finales,
 - permite marcar qué entra en la orden,
 - guarda cambios,
@@ -162,6 +164,19 @@ El contexto de IA hoy incluye:
 - sugerencias persistidas,
 - KPIs principales,
 - y ahora también contexto de catálogo maestro si fue cargado.
+
+#### Insights IA
+
+La página `ui/pages/analysis.py` ya no debe interpretarse como una tabla técnica cruda. Hoy ya quedó orientada a:
+
+- explicar el problema antes de comprar,
+- mostrar KPIs de impacto rápidos,
+- enriquecer la lectura con proveedor, marca y línea si existe catálogo,
+- guiar al usuario desde insight hacia compra sugerida.
+
+#### Soporte y Marca
+
+Las páginas `ui/pages/support_page.py` y `ui/pages/settings_page.py` ya incluyen más contexto de uso, más guía explícita y mejor narrativa para un usuario no técnico.
 
 ## Arquitectura funcional vigente
 
@@ -316,7 +331,15 @@ Nota importante:
 - billing más persuasivo,
 - errores de carga más humanos,
 - catálogo maestro integrado al flujo real,
+- catálogo maestro visible también en insights y compra sugerida,
 - contraste reforzado en la app logueada.
+
+### UX adicional ya cerrada
+
+- `Insights IA` simplificado para leerse como explicación y no como hoja técnica,
+- `Qué Comprar` enriquecido con proveedor, marca y línea,
+- `Soporte` más guiado para clientes sin contexto técnico,
+- `Marca` más alineada con valor y confianza comercial.
 
 ### IA y operación accionable
 
@@ -333,7 +356,7 @@ Nota importante:
 1. El webhook Stripe aún necesita un endpoint HTTP público y productivo fuera de Streamlit.
 2. Los recordatorios automáticos de billing y trial requieren ejecución programada real en Coolify o cron.
 3. El catálogo maestro aún no alimenta todas las pantallas ni todo el motor; hoy enriquece contexto, pero no domina la experiencia completa.
-4. La guía dentro de `2. Insights IA` y `🤖 Asistente IA` todavía puede ser más pedagógica para un usuario cero técnico.
+4. La guía dentro de `2. Insights IA` y `🤖 Asistente IA` mejoró, pero aún puede volverse más conversacional e interactiva.
 5. Falta una experiencia más madura de helpdesk / bandeja operativa.
 6. No existe verificación de correo al alta.
 7. La autenticación sigue basada en sesión de Streamlit, no en backend desacoplado.

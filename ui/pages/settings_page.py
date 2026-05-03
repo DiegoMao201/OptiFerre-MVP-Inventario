@@ -16,6 +16,27 @@ def render() -> None:
 
     st.markdown("## 🎨 Marca y apariencia")
     st.caption("Cada empresa cliente ve la app con sus propios colores, logo y nombre comercial.")
+    st.info("Esta pantalla existe para que tu cliente sienta que la plataforma es propia. Cambia nombre, color y logo, y la experiencia autenticada se adapta al tenant.")
+
+    st.markdown(
+        """
+        <div class='of-lead-panel'>
+            <div class='of-lead-grid'>
+                <div>
+                    <div class='of-eyebrow'>Qué cambia realmente</div>
+                    <h3>El branding no es decorativo. Aumenta confianza, percepción de control y sensación de producto propio.</h3>
+                    <p class='of-helper-line'>Si estás vendiendo la plataforma a otra empresa, esta pantalla debe ayudarte a cerrar la brecha entre 'herramienta genérica' y 'plataforma de mi operación'.</p>
+                </div>
+                <div>
+                    <div class='of-stat-line'><strong>Nombre</strong><span>Se refleja en encabezados y contexto de tenant.</span></div>
+                    <div class='of-stat-line'><strong>Color</strong><span>Controla el acento visual principal de la app autenticada.</span></div>
+                    <div class='of-stat-line'><strong>Logo</strong><span>Refuerza identidad y confianza frente al usuario final.</span></div>
+                </div>
+            </div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
 
     with st.form("brand_form"):
         company = st.text_input("Nombre comercial", tenant["company_name"])

@@ -66,6 +66,11 @@ def render() -> None:
         return
 
     df = pd.DataFrame(suggestions)
+    catalog = st.session_state.get("uploaded_catalog")
+    if isinstance(catalog, pd.DataFrame) and not catalog.empty and "sku" in catalog.columns:
+        catalog_cols = [c for c in ["sku", "marca", "proveedor", "linea"] if c in catalog.columns]
+        if len(catalog_cols) > 1:
+            df = df.merge(catalog[catalog_cols].drop_duplicates(subset=["sku"]), on="sku", how="left")
     df["qty_user"] = df["qty_user"].fillna(df["qty_ai"])
     df["valor_linea"] = df["qty_user"].astype(float) * df["unit_cost"].astype(float)
 
@@ -76,7 +81,7 @@ def render() -> None:
                 <div>
                     <div class='of-eyebrow'>Cómo usar esta pantalla</div>
                     <h3>1. Revisa lo sugerido por la IA. 2. Ajusta cantidades. 3. Marca lo que sí comprarás. 4. Guarda o genera la orden.</h3>
-                    <p class='of-helper-line'>La cantidad final es tu decisión. La IA propone; tu equipo aprueba y ajusta según caja, proveedor y estrategia comercial.</p>
+                    <p class='of-helper-line'>La cantidad final es tu decisión. La IA propone; tu equipo aprueba y ajusta según caja, proveedor, marca y estrategia comercial.</p>
                 </div>
                 <div>
                     <div class='of-stat-line'><strong>Sugerido IA</strong><span>La cantidad calculada por el motor.</span></div>
@@ -97,11 +102,27 @@ def render() -> None:
         spotlight = ", ".join(top_priority["sku"].astype(str).tolist())
         st.caption(f"Prioridad visible ahora mismo: {spotlight}.")
 
+    if {"proveedor", "marca", "linea"}.intersection(set(df.columns)):
+        st.markdown("### Resumen comercial de la compra")
+        summary_cols = st.columns(3)
+        if "proveedor" in df.columns:
+            top_supplier = df[df["included"]]["proveedor"].dropna().astype(str)
+            summary_cols[0].metric("Proveedor dominante", top_supplier.mode().iloc[0] if not top_supplier.empty else "Sin dato")
+        if "marca" in df.columns:
+            top_brand = df[df["included"]]["marca"].dropna().astype(str)
+            summary_cols[1].metric("Marca dominante", top_brand.mode().iloc[0] if not top_brand.empty else "Sin dato")
+        if "linea" in df.columns:
+            top_line = df[df["included"]]["linea"].dropna().astype(str)
+            summary_cols[2].metric("Línea dominante", top_line.mode().iloc[0] if not top_line.empty else "Sin dato")
+
     edited = st.data_editor(
         df[
             [
                 "sku",
                 "name",
+                "proveedor",
+                "marca",
+                "linea",
                 "qty_ai",
                 "qty_user",
                 "unit_cost",
@@ -115,6 +136,9 @@ def render() -> None:
         column_config={
             "sku": st.column_config.TextColumn("SKU", disabled=True),
             "name": st.column_config.TextColumn("Nombre", disabled=True),
+            "proveedor": st.column_config.TextColumn("Proveedor", disabled=True),
+            "marca": st.column_config.TextColumn("Marca", disabled=True),
+            "linea": st.column_config.TextColumn("Línea", disabled=True),
             "qty_ai": st.column_config.NumberColumn("Sugerido IA", disabled=True),
             "qty_user": st.column_config.NumberColumn("Cantidad final", min_value=0),
             "unit_cost": st.column_config.NumberColumn("Costo unit.", disabled=True, format="$ %.2f"),
@@ -134,6 +158,7 @@ def render() -> None:
     kpi_cols[1].metric("Unidades totales", f"{total_units:,.0f}")
     kpi_cols[2].metric("Monto estimado", format_currency(total_amount))
     st.caption("Consejo: si un SKU tiene sentido operativo pero no financiero, bájale cantidad final antes de generar la orden.")
+    st.info("La mejor orden no es la más grande. Es la que protege ventas con el menor sacrificio de caja posible.")
 
     if st.button("💾 Guardar cambios", use_container_width=True):
         apply_suggestion_edits(

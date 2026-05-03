@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { api } from "@/lib/api";
 import { persistSession } from "@/lib/auth-storage";
+import { PLAN_PREVIEW } from "@/lib/plan-copy";
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -35,12 +36,38 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-6">
-      <div className="card-glass w-full max-w-md p-8">
+    <div className="min-h-screen grid lg:grid-cols-[1.05fr_0.95fr] gap-6 p-6 lg:p-10 items-center">
+      <section className="space-y-6 max-w-2xl">
         <Link href="/" className="text-xs text-muted-foreground hover:text-foreground">
           ← Volver
         </Link>
-        <h1 className="text-2xl font-bold mt-3 mb-1">Empieza gratis 14 días</h1>
+        <div>
+          <div className="text-xs uppercase tracking-widest text-primary font-bold mb-3">Prueba guiada de 14 días</div>
+          <h1 className="text-4xl font-black leading-tight">Empieza con tus archivos y termina con decisiones claras de compra.</h1>
+          <p className="text-muted-foreground mt-3 max-w-xl">
+            Crea la cuenta, sube tu Excel y mira en pesos qué te está dejando plata quieta, qué se te va a acabar y qué deberías pedir primero.
+          </p>
+        </div>
+        <div className="grid gap-4 md:grid-cols-3">
+          {PLAN_PREVIEW.map((plan) => (
+            <div key={plan.key} className="card-glass p-5">
+              <div className="flex items-center justify-between gap-3">
+                <div className="font-bold">{plan.name}</div>
+                <div className="text-xs text-primary font-semibold">{plan.price}</div>
+              </div>
+              <p className="text-sm text-muted-foreground mt-3">{plan.hook}</p>
+              <ul className="space-y-2 mt-4 text-sm text-muted-foreground list-disc pl-5">
+                {plan.bullets.map((bullet) => (
+                  <li key={bullet}>{bullet}</li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="card-glass w-full max-w-md p-8 justify-self-center">
+        <h1 className="text-2xl font-bold mb-1">Empieza gratis 14 días</h1>
         <p className="text-sm text-muted-foreground mb-6">
           Sin tarjeta. Sin compromiso. Mira tu plata atrapada.
         </p>
@@ -79,7 +106,7 @@ export default function RegisterPage() {
             Entrar
           </Link>
         </div>
-      </div>
+      </section>
     </div>
   );
 }

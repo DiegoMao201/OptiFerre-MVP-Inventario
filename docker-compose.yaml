@@ -43,32 +43,5 @@ services:
     environment:
       NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-https://api.optiferre.datovatenexuspro.com}
 
-  optiferre-streamlit:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: optiferre-streamlit
-    restart: unless-stopped
-    profiles:
-      - legacy
-    expose:
-      - "8501"
-    environment:
-      APP_NAME: ${APP_NAME:-OptiFerre SaaS}
-      APP_ENV: ${APP_ENV:-production}
-      APP_SECRET_KEY: ${APP_SECRET_KEY:-change-me-in-coolify}
-      APP_BASE_URL: ${APP_BASE_URL:-https://optiferre.datovatenexuspro.com}
-      DATABASE_URL: ${DATABASE_URL:-postgresql://user:password@host:5432/database}
-      STRIPE_SECRET_KEY: ${STRIPE_SECRET_KEY:-}
-      STRIPE_PUBLISHABLE_KEY: ${STRIPE_PUBLISHABLE_KEY:-}
-      STRIPE_WEBHOOK_SECRET: ${STRIPE_WEBHOOK_SECRET:-}
-      STRIPE_PRICE_STARTER: ${STRIPE_PRICE_STARTER:-}
-      STRIPE_PRICE_PRO: ${STRIPE_PRICE_PRO:-}
-      STRIPE_PRICE_ENTERPRISE: ${STRIPE_PRICE_ENTERPRISE:-}
-      SALES_CONTACT_EMAIL: ${SALES_CONTACT_EMAIL:-ventas@optiferre.com}
-      SALES_CONTACT_PHONE: ${SALES_CONTACT_PHONE:-+57 300 000 0000}
-    volumes:
-      - optiferre_data:/app/data
-
 volumes:
   optiferre_data:

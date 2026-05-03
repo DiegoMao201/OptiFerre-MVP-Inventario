@@ -1,4 +1,4 @@
-"""Autenticación: hashing bcrypt + helpers de sesión Streamlit."""
+"""Autenticación central y utilidades legacy opcionales para Streamlit."""
 from __future__ import annotations
 
 import re
@@ -6,7 +6,10 @@ import secrets
 from datetime import datetime, timedelta
 from typing import Optional
 
-import streamlit as st
+try:
+    import streamlit as st
+except Exception:  # pragma: no cover
+    st = None  # type: ignore
 from passlib.hash import pbkdf2_sha256
 from sqlalchemy import select
 
@@ -160,10 +163,14 @@ def reset_password_with_token(token: str, new_password: str) -> Optional[dict]:
 
 
 def login(session_data: dict) -> None:
+    if st is None:
+        raise RuntimeError("Streamlit no está disponible en este runtime.")
     st.session_state["auth"] = session_data
 
 
 def logout() -> None:
+    if st is None:
+        raise RuntimeError("Streamlit no está disponible en este runtime.")
     for key in (
         "auth",
         "uploaded_inventory",
@@ -178,10 +185,14 @@ def logout() -> None:
 
 
 def current_user() -> Optional[dict]:
+    if st is None:
+        return None
     return st.session_state.get("auth")
 
 
 def require_login() -> dict:
+    if st is None:
+        raise RuntimeError("Streamlit no está disponible en este runtime.")
     user = current_user()
     if not user:
         st.warning("🔒 Debes iniciar sesión para acceder.")

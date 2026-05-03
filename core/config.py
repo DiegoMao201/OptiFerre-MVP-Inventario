@@ -74,7 +74,7 @@ def get_settings() -> Settings:
         app_name=os.getenv("APP_NAME", "OptiFerre SaaS"),
         app_env=os.getenv("APP_ENV", "development"),
         secret_key=os.getenv("APP_SECRET_KEY", "dev-secret-change-me"),
-        base_url=os.getenv("APP_BASE_URL", "http://localhost:8501"),
+        base_url=os.getenv("APP_BASE_URL", "http://localhost:3000"),
         database_url=database_url,
         mail_provider=os.getenv("MAIL_PROVIDER", "sendgrid").strip().lower(),
         mail_from_name=os.getenv("MAIL_FROM_NAME", "Nexus Pro").strip(),

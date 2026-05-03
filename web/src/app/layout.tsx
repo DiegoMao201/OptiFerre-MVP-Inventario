@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   title: "OptiFerre | Mira en minutos cuánta plata tienes muerta en bodega",
   description:
     "Sube tu Excel y descubre qué productos están quietos, cuáles se van a acabar y cuánto deberías comprar. Para ferreterías, materiales y depósitos.",
-  metadataBase: new URL("https://optiferre.app")
+  metadataBase: new URL("https://optiferre.datovatenexuspro.com")
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

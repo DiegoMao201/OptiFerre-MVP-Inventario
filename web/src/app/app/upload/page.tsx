@@ -1,15 +1,21 @@
 "use client";
 
 import { useState } from "react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { UploadCloud, FileSpreadsheet } from "lucide-react";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { UploadCloud, FileSpreadsheet, Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { api } from "@/lib/api";
+
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
 export default function UploadPage() {
   const qc = useQueryClient();
   const [inventoryFile, setInventoryFile] = useState<File | null>(null);
   const [salesFile, setSalesFile] = useState<File | null>(null);
+  const { data: templates } = useQuery({
+    queryKey: ["templates"],
+    queryFn: api.templates,
+  });
 
   const upload = useMutation({
     mutationFn: () => {
@@ -45,6 +51,47 @@ export default function UploadPage() {
           onChange={setSalesFile}
         />
       </div>
+
+      <section className="space-y-4">
+        <div>
+          <div className="text-xs uppercase tracking-widest text-primary font-bold">Formatos oficiales</div>
+          <h2 className="text-2xl font-black mt-1">Descarga la plantilla correcta antes de subir.</h2>
+          <p className="text-muted-foreground mt-2 max-w-2xl">
+            Así evitas errores de columnas, reduces idas y vueltas y el cliente entiende exactamente qué debe entregar.
+          </p>
+        </div>
+        <div className="grid gap-4 lg:grid-cols-3">
+          {templates?.items.map((template) => (
+            <div key={template.key} className="card-glass p-5 space-y-4">
+              <div>
+                <div className="font-bold text-lg">{template.title}</div>
+                <p className="text-sm text-muted-foreground mt-2">{template.description}</p>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {template.required_columns.map((column) => (
+                  <span key={column} className="rounded-full border border-white/10 px-3 py-1 text-xs text-muted-foreground">
+                    {column}
+                  </span>
+                ))}
+              </div>
+              <div className="flex gap-3">
+                <Button asChild variant="outline" size="sm">
+                  <a href={`${BASE_URL}${template.csv_url}`} target="_blank" rel="noreferrer">
+                    <Download className="h-4 w-4" />
+                    CSV
+                  </a>
+                </Button>
+                <Button asChild variant="outline" size="sm">
+                  <a href={`${BASE_URL}${template.xlsx_url}`} target="_blank" rel="noreferrer">
+                    <Download className="h-4 w-4" />
+                    XLSX
+                  </a>
+                </Button>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
 
       <div className="flex items-center gap-3">
         <Button size="lg" onClick={() => upload.mutate()} disabled={!inventoryFile || upload.isPending}>

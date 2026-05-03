@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { api } from "@/lib/api";
 import { persistSession } from "@/lib/auth-storage";
+import { PLAN_PREVIEW } from "@/lib/plan-copy";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -45,6 +46,17 @@ export default function LoginPage() {
           <p className="text-muted-foreground">
             Entra a tu cuenta y mira de una qué productos están muertos, qué se te va a acabar y cuánto deberías comprar.
           </p>
+          <div className="space-y-3 mt-8">
+            {PLAN_PREVIEW.map((plan) => (
+              <div key={plan.key} className="card-glass p-4">
+                <div className="flex items-center justify-between gap-3">
+                  <div className="font-bold">{plan.name}</div>
+                  <div className="text-xs text-primary font-semibold">{plan.price}</div>
+                </div>
+                <p className="text-sm text-muted-foreground mt-2">{plan.hook}</p>
+              </div>
+            ))}
+          </div>
         </div>
         <div className="text-xs text-muted-foreground">© OptiFerre · diegomao.201@gmail.com</div>
       </section>
@@ -75,6 +87,11 @@ export default function LoginPage() {
                 onChange={(e) => setPassword(e.target.value)}
                 required
               />
+            </div>
+            <div className="flex justify-end">
+              <Link href="/forgot-password" className="text-sm text-primary font-semibold">
+                Recuperar contraseña
+              </Link>
             </div>
             {error ? <p className="text-sm text-destructive">{error}</p> : null}
             <Button type="submit" className="w-full" size="lg" disabled={loading}>

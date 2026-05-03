@@ -3,7 +3,7 @@
 import { ReactNode } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { LayoutDashboard, PackageX, Sparkles, UploadCloud, ShoppingCart, LogOut } from "lucide-react";
+import { LayoutDashboard, PackageX, Sparkles, UploadCloud, ShoppingCart, LogOut, LifeBuoy, BadgeDollarSign } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { clearSession, getUser } from "@/lib/auth-storage";
@@ -13,7 +13,9 @@ const NAV = [
   { href: "/app/dead-products", label: "Productos muertos", icon: PackageX },
   { href: "/app/opportunities", label: "Qué comprar", icon: Sparkles },
   { href: "/app/upload", label: "Subir Excel", icon: UploadCloud },
-  { href: "/app/purchase-orders", label: "Órdenes de compra", icon: ShoppingCart }
+  { href: "/app/purchase-orders", label: "Órdenes de compra", icon: ShoppingCart },
+  { href: "/app/support", label: "Soporte", icon: LifeBuoy },
+  { href: "/app/plans", label: "Planes", icon: BadgeDollarSign }
 ];
 
 export function AppShell({ children }: { children: ReactNode }) {

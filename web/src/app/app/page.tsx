@@ -13,6 +13,10 @@ export default function DashboardPage() {
     queryKey: ["dashboard-summary"],
     queryFn: api.dashboardSummary
   });
+  const { data: subscription } = useQuery({
+    queryKey: ["subscription"],
+    queryFn: api.subscription,
+  });
 
   const runAnalysis = useMutation({
     mutationFn: api.runAnalysis,
@@ -104,6 +108,26 @@ export default function DashboardPage() {
               text="Convierte la sugerencia en una orden lista para enviar al proveedor."
               href="/app/purchase-orders"
             />
+          </section>
+
+          <section className="card-glass p-6 flex flex-wrap items-start justify-between gap-4">
+            <div>
+              <div className="text-xs uppercase tracking-widest text-primary font-bold">Plan actual</div>
+              <h2 className="text-2xl font-black mt-1">
+                {subscription?.subscription?.plan ? `Estás en ${subscription.subscription.plan}` : "Prueba guiada activa"}
+              </h2>
+              <p className="text-muted-foreground mt-2 max-w-2xl">
+                Mantén visibles los planes dentro de la app para que el cliente entienda qué compra, qué desbloquea y por qué vale la pena seguir.
+              </p>
+            </div>
+            <div className="flex gap-3">
+              <Button asChild variant="outline">
+                <a href="/app/support">Hablar con soporte</a>
+              </Button>
+              <Button asChild>
+                <a href="/app/plans">Ver planes</a>
+              </Button>
+            </div>
           </section>
         </>
       )}

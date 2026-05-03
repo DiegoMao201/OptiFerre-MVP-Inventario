@@ -71,7 +71,62 @@ export const api = {
       auth: false,
       body: JSON.stringify(data)
     }),
+  forgotPassword: (email: string) =>
+    apiFetch<{ message: string }>(`/auth/forgot-password`, {
+      method: "POST",
+      auth: false,
+      body: JSON.stringify({ email })
+    }),
+  resetPassword: (token: string, password: string) =>
+    apiFetch<{ message: string }>(`/auth/reset-password`, {
+      method: "POST",
+      auth: false,
+      body: JSON.stringify({ token, password })
+    }),
   me: () => apiFetch<import("./auth-storage").AuthUser>(`/auth/me`),
+  plans: () =>
+    apiFetch<{
+      plans: Array<{
+        key: string;
+        name: string;
+        tagline: string;
+        summary: string;
+        price_monthly_usd: number;
+        features: string[];
+        ai_capabilities: string[];
+        sales_email: string;
+        sales_phone: string;
+      }>;
+    }>(`/billing/plans`, { auth: false }),
+  subscription: () =>
+    apiFetch<{
+      subscription: {
+        plan: string;
+        status: string;
+        is_active: boolean;
+        current_period_end?: string | null;
+        trial_ends_at?: string | null;
+      } | null;
+      sales_email: string;
+      sales_phone: string;
+    }>(`/billing/subscription`),
+  createCheckout: (plan: string) =>
+    apiFetch<{ url?: string | null; mode: string; message?: string }>(`/billing/checkout`, {
+      method: "POST",
+      body: JSON.stringify({ plan })
+    }),
+  templates: () =>
+    apiFetch<{
+      items: Array<{
+        key: string;
+        title: string;
+        description: string;
+        required_columns: string[];
+        sample_rows: Array<Record<string, string | number | boolean>>;
+        csv_url: string;
+        xlsx_url: string;
+      }>;
+    }>(`/templates`, { auth: false }),
   dashboardSummary: () =>
     apiFetch<{
       has_data: boolean;
@@ -144,5 +199,44 @@ export const api = {
       sales_rows: number;
       sales_upserted: number;
     }>(`/inventory/upload`, { method: "POST", body: form, isForm: true });
-  }
+  },
+  supportTickets: () =>
+    apiFetch<{
+      items: Array<{
+        id: number;
+        subject: string;
+        category: string;
+        priority: string;
+        status: string;
+        created_at: string;
+        updated_at: string;
+      }>;
+    }>(`/support/tickets`),
+  supportTicket: (ticketId: number) =>
+    apiFetch<{
+      ticket: {
+        id: number;
+        subject: string;
+        category: string;
+        priority: string;
+        status: string;
+      };
+      messages: Array<{
+        id: number;
+        author_name: string;
+        author_email: string;
+        body: string;
+        created_at: string;
+      }>;
+    }>(`/support/tickets/${ticketId}`),
+  createSupportTicket: (data: { subject: string; message: string; category: string; priority: string }) =>
+    apiFetch<{ ticket: { id: number } }>(`/support/tickets`, {
+      method: "POST",
+      body: JSON.stringify(data)
+    }),
+  replySupportTicket: (ticketId: number, body: string) =>
+    apiFetch<{ ticket: { id: number }; messages: Array<{ id: number; body: string }> }>(`/support/tickets/${ticketId}/messages`, {
+      method: "POST",
+      body: JSON.stringify({ body })
+    })
 };

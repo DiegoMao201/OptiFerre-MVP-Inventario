@@ -28,18 +28,29 @@ class MailResult:
 
 
 def _wrap_html(title: str, intro: str, bullets: list[str], closing: str) -> str:
-    bullet_html = "".join(f"<li style='margin:0 0 8px 0'>{item}</li>" for item in bullets)
-    return f"""
-    <div style="font-family:Arial,sans-serif;background:#f4f8fc;padding:24px;color:#102c49;">
-      <div style="max-width:640px;margin:0 auto;background:#ffffff;border-radius:18px;padding:28px;border:1px solid #d8e6f3;">
-        <div style="display:inline-block;padding:6px 12px;border-radius:999px;background:#e6f8fa;color:#0a7a89;font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;">Nexus Pro</div>
-        <h1 style="font-size:30px;line-height:1.05;margin:16px 0 12px 0;color:#102c49;">{title}</h1>
-        <p style="font-size:16px;line-height:1.65;margin:0 0 16px 0;color:#24486e;">{intro}</p>
-        <ul style="padding-left:18px;margin:0 0 18px 0;color:#24486e;font-size:15px;line-height:1.6;">{bullet_html}</ul>
-        <p style="font-size:15px;line-height:1.65;margin:0;color:#24486e;">{closing}</p>
-      </div>
+        settings = get_settings()
+        bullet_html = "".join(
+                f"<li style='margin:0 0 8px 0'>{item}</li>" for item in bullets
+        )
+        return f"""
+<div style="font-family:Arial,sans-serif;background:#eef4fb;padding:32px 16px;color:#102c49;">
+    <div style="max-width:680px;margin:0 auto;background:#ffffff;border-radius:28px;overflow:hidden;border:1px solid #d8e6f3;box-shadow:0 20px 45px rgba(16,44,73,.10);">
+        <div style="padding:32px;background:radial-gradient(circle at top right, rgba(16,183,196,.18), transparent 30%), linear-gradient(180deg, #08111f 0%, #0b1730 100%);">
+            <div style="display:inline-block;padding:7px 14px;border-radius:999px;background:#dff8fb;color:#0a7a89;font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;">OptiFerre</div>
+            <h1 style="font-size:32px;line-height:1.05;margin:18px 0 10px 0;color:#f4f8fc;">{title}</h1>
+            <p style="font-size:16px;line-height:1.7;margin:0;color:#d7e4f3;">{intro}</p>
+        </div>
+        <div style="padding:28px;">
+            <ul style="padding-left:18px;margin:0 0 18px 0;color:#24486e;font-size:15px;line-height:1.7;">{bullet_html}</ul>
+            <p style="font-size:15px;line-height:1.7;margin:0 0 18px 0;color:#24486e;">{closing}</p>
+            <div style="padding:18px 20px;border-radius:20px;background:#f6fbff;border:1px solid #d9e8f5;">
+                <div style="font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#0a7a89;margin-bottom:8px;">Soporte directo</div>
+                <div style="font-size:14px;line-height:1.6;color:#24486e;">Si necesitas ayuda para seguir, responde este correo o escríbenos a {settings.support_email}.</div>
+            </div>
+        </div>
     </div>
-    """
+</div>
+"""
 
 
 def _send_email(to_email: str, subject: str, html_content: str) -> MailResult:
@@ -79,7 +90,7 @@ def send_account_created_email(to_email: str, full_name: str, company_name: str)
         ],
         closing="Entra a Nexus Pro y convierte tus archivos en una conversación clara de caja, abastecimiento y retorno.",
     )
-    return _send_email(to_email, "Nexus Pro | Cuenta creada y prueba activada", html)
+    return _send_email(to_email, "OptiFerre | Tu prueba quedó activa", html)
 
 
 def send_login_notice_email(to_email: str, full_name: str, company_name: str) -> MailResult:
@@ -93,7 +104,7 @@ def send_login_notice_email(to_email: str, full_name: str, company_name: str) ->
         ],
         closing="Este aviso busca darte trazabilidad y confianza sobre el uso de tu cuenta.",
     )
-    return _send_email(to_email, "Nexus Pro | Inicio de sesión confirmado", html)
+    return _send_email(to_email, "OptiFerre | Inicio de sesión confirmado", html)
 
 
 def send_subscription_status_email(to_email: str, company_name: str, plan_name: str, status: str) -> MailResult:
@@ -107,7 +118,7 @@ def send_subscription_status_email(to_email: str, company_name: str, plan_name: 
         ],
         closing="Gracias por seguir construyendo un proceso de inventario más claro, accionable y rentable.",
     )
-    return _send_email(to_email, f"Nexus Pro | Suscripción {status}", html)
+    return _send_email(to_email, f"OptiFerre | Suscripción {status}", html)
 
 
 def send_trial_ending_email(to_email: str, full_name: str, company_name: str, days_left: int, upgrade_url: str) -> MailResult:
@@ -121,7 +132,7 @@ def send_trial_ending_email(to_email: str, full_name: str, company_name: str, da
         ],
         closing="Si el producto ya te mostró valor, este es el mejor momento para convertir la prueba en operación real.",
     )
-    return _send_email(to_email, "Nexus Pro | Tu prueba está por vencer", html)
+    return _send_email(to_email, "OptiFerre | Tu prueba está por vencer", html)
 
 
 def send_payment_due_email(to_email: str, full_name: str, company_name: str, plan_name: str, pay_url: str) -> MailResult:
@@ -135,7 +146,7 @@ def send_payment_due_email(to_email: str, full_name: str, company_name: str, pla
         ],
         closing="Queremos que sigas operando sin fricción ni pérdida de continuidad.",
     )
-    return _send_email(to_email, "Nexus Pro | Acción requerida en tu suscripción", html)
+    return _send_email(to_email, "OptiFerre | Acción requerida en tu suscripción", html)
 
 
 def send_payment_success_email(to_email: str, full_name: str, company_name: str, plan_name: str) -> MailResult:
@@ -149,7 +160,7 @@ def send_payment_success_email(to_email: str, full_name: str, company_name: str,
         ],
         closing="Gracias por seguir apostando por una operación de inventario más clara, rentable y accionable.",
     )
-    return _send_email(to_email, "Nexus Pro | Pago recibido", html)
+    return _send_email(to_email, "OptiFerre | Pago recibido", html)
 
 
 def send_upgrade_nudge_email(to_email: str, full_name: str, company_name: str, current_plan: str, upgrade_url: str) -> MailResult:
@@ -162,13 +173,13 @@ def send_upgrade_nudge_email(to_email: str, full_name: str, company_name: str, c
         ],
         closing="El objetivo es que el plan acompañe el momento operativo del negocio, no que se quede corto.",
     )
-    return _send_email(to_email, "Nexus Pro | Evalúa un plan superior", html)
+    return _send_email(to_email, "OptiFerre | Evalúa un plan superior", html)
 
 
 def send_password_reset_email(to_email: str, full_name: str, reset_url: str) -> MailResult:
     html = _wrap_html(
         title="Recupera el acceso a tu cuenta",
-        intro=f"{full_name}, recibimos una solicitud para restablecer la contraseña de tu cuenta en Nexus Pro.",
+        intro=f"{full_name}, recibimos una solicitud para restablecer la contraseña de tu cuenta en OptiFerre.",
         bullets=[
             "Este enlace te permitirá definir una nueva contraseña.",
             "Por seguridad, el enlace expira pronto y solo sirve una vez.",
@@ -176,7 +187,7 @@ def send_password_reset_email(to_email: str, full_name: str, reset_url: str) -> 
         ],
         closing="Si no fuiste tú, puedes ignorar este correo y tu contraseña actual seguirá intacta.",
     )
-    return _send_email(to_email, "Nexus Pro | Recuperación de contraseña", html)
+    return _send_email(to_email, "OptiFerre | Recuperación de contraseña", html)
 
 
 def send_password_changed_email(to_email: str, full_name: str) -> MailResult:
@@ -189,7 +200,7 @@ def send_password_changed_email(to_email: str, full_name: str) -> MailResult:
         ],
         closing="Queremos que tengas visibilidad total sobre la seguridad de tu acceso.",
     )
-    return _send_email(to_email, "Nexus Pro | Contraseña actualizada", html)
+    return _send_email(to_email, "OptiFerre | Contraseña actualizada", html)
 
 
 def send_support_ticket_created_to_customer(to_email: str, requester_name: str, ticket_id: int, subject: str) -> MailResult:
@@ -203,7 +214,7 @@ def send_support_ticket_created_to_customer(to_email: str, requester_name: str, 
         ],
         closing="Gracias por escribirnos. Queremos que tu operación en Nexus Pro sea clara, estable y bien acompañada.",
     )
-    return _send_email(to_email, f"Nexus Pro | Ticket #{ticket_id} recibido", html)
+    return _send_email(to_email, f"OptiFerre | Ticket #{ticket_id} recibido", html)
 
 
 def send_support_ticket_created_to_operator(
@@ -218,7 +229,7 @@ def send_support_ticket_created_to_operator(
     company_line = company_name or "No informada"
     html = _wrap_html(
         title=f"Nuevo ticket #{ticket_id}",
-        intro=f"{requester_name} abrió un ticket desde Nexus Pro.",
+        intro=f"{requester_name} abrió un ticket desde OptiFerre.",
         bullets=[
             f"Email: {requester_email}",
             f"Empresa: {company_line}",
@@ -227,7 +238,7 @@ def send_support_ticket_created_to_operator(
         ],
         closing="Revisa el caso y responde al cliente desde el canal operativo definido.",
     )
-    return _send_email(to_email, f"Nexus Pro | Nuevo ticket #{ticket_id}", html)
+    return _send_email(to_email, f"OptiFerre | Nuevo ticket #{ticket_id}", html)
 
 
 def send_support_ticket_reply_to_customer(
@@ -243,7 +254,7 @@ def send_support_ticket_reply_to_customer(
         bullets=[reply_body],
         closing="Si necesitas ampliar información, responde este correo o vuelve a tu espacio en Nexus Pro.",
     )
-    return _send_email(to_email, f"Nexus Pro | Respuesta ticket #{ticket_id}", html)
+    return _send_email(to_email, f"OptiFerre | Respuesta ticket #{ticket_id}", html)
 
 
 def send_support_ticket_status_email(
@@ -262,7 +273,7 @@ def send_support_ticket_status_email(
         ],
         closing="Queremos mantenerte informado en cada cambio relevante del soporte.",
     )
-    return _send_email(to_email, f"Nexus Pro | Estado ticket #{ticket_id}: {status}", html)
+    return _send_email(to_email, f"OptiFerre | Estado ticket #{ticket_id}: {status}", html)
 
 
 def send_support_ticket_reply_to_operator(
@@ -280,6 +291,6 @@ def send_support_ticket_reply_to_operator(
             f"Email del cliente: {requester_email}",
             f"Mensaje: {reply_body}",
         ],
-        closing="Revisa el ticket y continúa la gestión operativa desde Nexus Pro.",
+        closing="Revisa el ticket y continúa la gestión operativa desde OptiFerre.",
     )
-    return _send_email(to_email, f"Nexus Pro | Cliente respondió ticket #{ticket_id}", html)
+    return _send_email(to_email, f"OptiFerre | Cliente respondió ticket #{ticket_id}", html)

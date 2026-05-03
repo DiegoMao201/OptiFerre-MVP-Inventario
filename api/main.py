@@ -9,10 +9,13 @@ from fastapi.middleware.cors import CORSMiddleware
 from api.routes import (
     analysis,
     auth,
+    billing,
     dashboard,
     inventory,
     products,
     purchase_orders,
+    support,
+    templates,
 )
 
 
@@ -42,6 +45,9 @@ def create_app() -> FastAPI:
     app.include_router(dashboard.router, prefix="/dashboard", tags=["dashboard"])
     app.include_router(products.router, prefix="/products", tags=["products"])
     app.include_router(purchase_orders.router, prefix="/purchase-orders", tags=["purchase-orders"])
+    app.include_router(billing.router, prefix="/billing", tags=["billing"])
+    app.include_router(support.router, prefix="/support", tags=["support"])
+    app.include_router(templates.router, prefix="/templates", tags=["templates"])
 
     @app.get("/health", tags=["meta"])
     def health() -> dict[str, str]:

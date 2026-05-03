@@ -102,6 +102,8 @@ def _render_top_stage() -> None:
                 with logo_col:
                                 st.markdown(
                                                                 f"<div class='of-stage-logo-wrap'><div class='of-logo-panel'>{_build_logo_markup()}<div class='of-logo-caption'>Mira tu inventario en plata, no en corazonadas.</div></div></div>",
+                                                                unsafe_allow_html=True,
+                                )
 
                 with title_col:
                                 st.markdown(

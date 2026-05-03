@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 from fastapi import APIRouter, Depends, HTTPException, status
+from sqlalchemy.exc import IntegrityError
 
 from api.deps.security import create_access_token, get_current_user
 from api.schemas.auth import (
@@ -35,6 +36,11 @@ def register(payload: RegisterRequest) -> TokenResponse:
             payload.password,
             payload.full_name,
         )
+    except IntegrityError as exc:  # pragma: no cover - integridad/duplicados
+        raise HTTPException(
+            status.HTTP_409_CONFLICT,
+            "Ya existe una cuenta registrada con ese correo.",
+        ) from exc
     except Exception as exc:  # pragma: no cover - integridad/duplicados
         raise HTTPException(status.HTTP_400_BAD_REQUEST, f"No fue posible crear la cuenta: {exc}") from exc
 

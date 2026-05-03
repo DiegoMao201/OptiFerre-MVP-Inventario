@@ -28,52 +28,52 @@ from core.support import create_support_ticket
 
 ACTIONABLE_PILLARS = [
         {
-                "title": "14 días",
-                "caption": "Prueba real para validar valor sin fricción técnica.",
-                "eyebrow": "Prueba guiada",
-                "summary": "Activas una prueba de 14 días para cargar archivos, revisar el diagnóstico y entender el retorno antes de pagar.",
+                "title": "14 días gratis",
+                "caption": "Pruébalo con tu propio Excel y mira tu plata atrapada.",
+                "eyebrow": "Empieza sin pagar",
+                "summary": "En 14 días subes tus archivos, ves dónde tienes plata muerta en bodega y decides si te sirve antes de soltar un peso.",
                 "benefits": [
-                        "Te deja ver rápidamente caja atrapada, quiebres y sugerencias de compra.",
-                        "Sirve para demostrar valor interno antes de comprometer presupuesto.",
-                        "Empiezas con archivos sin depender de una integración compleja desde el día uno.",
+                        "Ves de una qué productos no se mueven y cuánto dinero te están comiendo.",
+                        "Sirve para que tú o tu socio vean el problema con números claros, no con corazonadas.",
+                        "No necesitas otro sistema: arrancas con el mismo Excel que ya manejas.",
                 ],
-                "cta": "Crea tu cuenta para activar la prueba y ver beneficios reales con tus datos o con la demo guiada.",
+                "cta": "Crea tu cuenta y mira tu inventario con otros ojos hoy mismo.",
         },
         {
-                "title": "ABC/XYZ",
-                "caption": "Clasificación para ordenar foco, caja y riesgo.",
-                "eyebrow": "Prioridad operativa",
-                "summary": "ABC/XYZ te ayuda a separar lo más importante por valor e identificar qué referencias tienen demanda más estable o más impredecible.",
+                "title": "💰 Plata muerta",
+                "caption": "Qué productos llevan meses quietos y cuánto te cuestan.",
+                "eyebrow": "Lo que no rota",
+                "summary": "Te decimos exactamente qué referencias están durmiendo en la bodega y cuánto dinero tienes congelado en ellas.",
                 "benefits": [
-                        "Te enfoca en los productos que más afectan caja y disponibilidad.",
-                        "Facilita reuniones más claras entre compras, finanzas y operaciones.",
-                        "Permite definir políticas distintas según criticidad y variabilidad.",
+                        "Sabes qué rematar, devolver al proveedor o dejar de pedir.",
+                        "Dejas de comprar más de lo mismo que ya está muerto en bodega.",
+                        "Liberas plata para invertirla en lo que sí se vende rápido.",
                 ],
-                "cta": "Ingresa para ver cómo la clasificación aterriza decisiones concretas en tu inventario.",
+                "cta": "Entra y descubre qué productos te están comiendo el flujo de caja.",
         },
         {
-                "title": "ROP + SS",
-                "caption": "Reposición basada en demanda y lead time.",
-                "eyebrow": "Compra con criterio",
-                "summary": "ROP y stock de seguridad convierten la intuición en una regla clara de reposición para reducir quiebres y evitar compras infladas.",
+                "title": "📦 Qué comprar",
+                "caption": "Cuánto y cuándo pedir, sin quedarte sin stock.",
+                "eyebrow": "Comprar con cabeza",
+                "summary": "En vez de pedir 'a ojo', te damos un número claro de cuánto comprar de cada producto para no quebrarte y no sobrar.",
                 "benefits": [
-                        "Da una referencia concreta de cuándo comprar y cuánto proteger.",
-                        "Reduce la dependencia de decisiones urgentes de último minuto.",
-                        "Mejora equilibrio entre nivel de servicio y capital inmovilizado.",
+                        "Dejas de perder ventas porque no tenías el producto que el cliente pidió.",
+                        "Dejas de meter plata en cosas que se van a quedar quietas 6 meses.",
+                        "Le bajas presión a las compras de último minuto y a los pedidos urgentes.",
                 ],
-                "cta": "Activa tu acceso para ver la sugerencia calculada con tus propias referencias y movimientos.",
+                "cta": "Activa tu cuenta y mira la lista de compra recomendada para tu negocio.",
         },
         {
-                "title": "ROI mensual",
-                "caption": "Costo de oportunidad sobre capital inmovilizado.",
-                "eyebrow": "Impacto financiero",
-                "summary": "Este indicador muestra cuánto dinero podrías liberar o dejar de castigar cada mes si corriges sobrestock, rotación y abastecimiento.",
+                "title": "⚠️ Cuánto pierdes",
+                "caption": "En pesos: cuánta plata tienes congelada cada mes.",
+                "eyebrow": "Tu plata atrapada",
+                "summary": "Te mostramos en pesos cuánto dinero está parado en bodega que podrías estar usando para comprar lo que sí se vende.",
                 "benefits": [
-                        "Aterriza el problema de inventario en lenguaje financiero y gerencial.",
-                        "Ayuda a priorizar acciones por impacto económico, no solo por percepción.",
-                        "Sirve para justificar decisiones frente a dirección o socios.",
+                        "Entiendes cuánto te cuesta cada mes seguir comprando como hoy.",
+                        "Tienes un número claro para hablar con tu socio, contador o banco.",
+                        "Decides con cabeza fría qué hacer primero para recuperar caja.",
                 ],
-                "cta": "Entra a la prueba para convertir el problema operativo en una conversación clara de retorno y caja.",
+                "cta": "Empieza la prueba y mira tu negocio en plata, no en corazonadas.",
         },
 ]
 
@@ -101,22 +101,20 @@ def _render_top_stage() -> None:
                 logo_col, title_col = st.columns([1, 1], gap="large")
                 with logo_col:
                                 st.markdown(
-                                                f"<div class='of-stage-logo-wrap'><div class='of-logo-panel'>{_build_logo_markup()}<div class='of-logo-caption'>Analítica de inventarios con visibilidad clara, contraste limpio y presencia comercial.</div></div></div>",
-                                                unsafe_allow_html=True,
-                                )
+                                                                f"<div class='of-stage-logo-wrap'><div class='of-logo-panel'>{_build_logo_markup()}<div class='of-logo-caption'>Mira tu inventario en plata, no en corazonadas.</div></div></div>",
 
                 with title_col:
                                 st.markdown(
                                                 dedent(
                                                                 """
                                                                 <div class="of-stage-title-wrap">
-                                                                        <div class="of-eyebrow">OptiFerre</div>
-                                                                        <h1 class="of-stage-title of-shimmer-title">Diagnóstico ejecutivo de inventarios para empresas que gestionan stock</h1>
-                                                                        <p class="of-stage-lead">Sube inventario y movimientos, obtén lectura ejecutiva de caja atrapada, riesgo de quiebre y compra sugerida con una experiencia más clara, visible y tecnológica.</p>
+                                                                        <div class="of-eyebrow">OptiFerre · Para ferreterías y depósitos</div>
+                                                                        <h1 class="of-stage-title of-shimmer-title">Tienes plata muerta en tu bodega y todavía no lo sabes.</h1>
+                                                                        <p class="of-stage-lead">Sube tu Excel de inventario y de ventas. En minutos te decimos qué productos están quietos, cuáles se te van a acabar y cuánto deberías comprar la próxima vez. Sin instalar nada y sin tecnicismos.</p>
                                                                         <div class="of-chip-row">
-                                                                                <span class="of-chip">14 días gratis</span>
-                                                                                <span class="of-chip">Cero integración ERP</span>
-                                                                                <span class="of-chip">Cualquier tipo de inventario</span>
+                                                                                <span class="of-chip">💰 14 días gratis</span>
+                                                                                <span class="of-chip">📄 Funciona con tu Excel</span>
+                                                                                <span class="of-chip">🔧 Para ferreterías, materiales y depósitos</span>
                                                                         </div>
                                                                 </div>
                                                                 """
@@ -130,25 +128,25 @@ def _render_value_stage() -> None:
                                 dedent(
                                                 """
                                                 <div class="of-hero-v2 card-hover">
-                                                        <div class="of-eyebrow">Optimización B2B para cualquier operación con inventario</div>
-                                                        <h2 class="of-shimmer-title">Reduce capital inmovilizado y repone con criterio.</h2>
+                                                        <div class="of-eyebrow">Para ferreterías, depósitos, materiales y distribuidores</div>
+                                                        <h2 class="of-shimmer-title">Deja de tener tu plata muerta en la bodega.</h2>
                                                         <p>
-                                                                OptiFerre convierte archivos de inventario y movimientos en una lectura ejecutiva de riesgo,
-                                                                rotación y abastecimiento. En pocos minutos sabes dónde tienes dinero atrapado,
-                                                                qué referencias están por quebrarse y cuánto deberías comprar realmente.
+                                                                Subes tu archivo de inventario y de ventas. En minutos te mostramos qué productos llevan meses quietos,
+                                                                cuáles se te van a acabar y cuánto deberías comprar de cada uno. Todo en pesos, en español claro,
+                                                                y sin necesidad de cambiar de sistema.
                                                         </p>
                                                         <div class="of-proof-v2">
                                                                 <div class="item">
-                                                                        <div class="number">ABC/XYZ</div>
-                                                                        <div class="caption">Prioriza por inversión y previsibilidad.</div>
+                                                                        <div class="number">💰 Plata muerta</div>
+                                                                        <div class="caption">Qué productos llevan meses sin moverse y cuánto te cuestan.</div>
                                                                 </div>
                                                                 <div class="item">
-                                                                        <div class="number">ROP + SS</div>
-                                                                        <div class="caption">Repone con reglas de ingeniería y no por intuición.</div>
+                                                                        <div class="number">📦 Compra justa</div>
+                                                                        <div class="caption">Cuánto pedir de cada producto para no quebrarte y no sobrar.</div>
                                                                 </div>
                                                                 <div class="item">
-                                                                        <div class="number">14 días</div>
-                                                                        <div class="caption">Prueba guiada para validar valor antes de pagar.</div>
+                                                                        <div class="number">🆓 14 días</div>
+                                                                        <div class="caption">Pruébalo con tu propio Excel antes de pagar un peso.</div>
                                                                 </div>
                                                         </div>
                                                 </div>
@@ -161,7 +159,7 @@ def _render_value_stage() -> None:
 def _render_stats_bar() -> None:
                 st.markdown("<div class='of-page-block'><div class='of-soft-panel'>", unsafe_allow_html=True)
                 st.markdown(
-                                "<p class='of-actionable-intro'>Haz clic en cada bloque para entender qué resuelve, cómo se aplica y por qué conviene iniciar la prueba.</p>",
+                                "<p class='of-actionable-intro'>Toca cada bloque y mira cómo te ayuda a recuperar plata, vender más y comprar con cabeza.</p>",
                                 unsafe_allow_html=True,
                 )
                 cols = st.columns(4)
@@ -185,9 +183,9 @@ def _render_stats_bar() -> None:
 
 
 def _render_feature_grid() -> None:
-                st.markdown("### <span class='of-shimmer-title'>¿Por qué OptiFerre?</span>", unsafe_allow_html=True)
+                st.markdown("### <span class='of-shimmer-title'>¿Por qué lo usan tantos ferreteros?</span>", unsafe_allow_html=True)
                 st.markdown(
-                                "<p class='of-mini-note' style='margin-bottom:18px'>Todo lo necesario para pasar de archivos desordenados a decisiones concretas de abastecimiento.</p>",
+                                "<p class='of-mini-note' style='margin-bottom:18px'>Todo lo que necesitas para dejar de comprar a ojo y empezar a vender lo que sí rota.</p>",
                                 unsafe_allow_html=True,
                 )
                 st.markdown(
@@ -196,33 +194,33 @@ def _render_feature_grid() -> None:
                                                 <div class="of-feature-grid-v2">
                                                         <div class="of-feature-card-v2 card-hover">
                                                                 <div class="of-feature-icon">01</div>
-                                                                <h4>Smart Importer</h4>
-                                                                <p>Reconoce aliases comunes de ERP y reduce fricción de carga desde el primer intento.</p>
+                                                                <h4>Sube tu Excel y listo</h4>
+                                                                <p>Carga el mismo archivo que ya manejas. No tienes que comprar otro programa ni cambiar tu sistema.</p>
                                                         </div>
                                                         <div class="of-feature-card-v2 card-hover">
                                                                 <div class="of-feature-icon">02</div>
-                                                                <h4>Motor adaptable</h4>
-                                                                <p>Se ajusta a distintos tipos de inventario, políticas de compra y estructuras de catálogo.</p>
+                                                                <h4>Funciona con tu negocio</h4>
+                                                                <p>Ferretería, materiales, agro, distribuidor o tienda de barrio. Si vendes con stock, te sirve.</p>
                                                         </div>
                                                         <div class="of-feature-card-v2 card-hover">
                                                                 <div class="of-feature-icon">03</div>
-                                                                <h4>Dashboard ejecutivo</h4>
-                                                                <p>Muestra health score, tareas prioritarias, caja atrapada y presión sobre SKUs clase A.</p>
+                                                                <h4>Tablero claro en pesos</h4>
+                                                                <p>Ves de una cuánta plata tienes muerta, qué se va a acabar y por dónde empezar a sacar caja.</p>
                                                         </div>
                                                         <div class="of-feature-card-v2 card-hover">
                                                                 <div class="of-feature-icon">04</div>
-                                                                <h4>Simulación operativa</h4>
-                                                                <p>Compara escenarios de nivel de servicio para evitar sobrecomprar por reflejo.</p>
+                                                                <h4>Simula sin riesgo</h4>
+                                                                <p>Mira qué pasaría si bajas stock o cambias proveedor, antes de tocar la bodega real.</p>
                                                         </div>
                                                         <div class="of-feature-card-v2 card-hover">
                                                                 <div class="of-feature-icon">05</div>
-                                                                <h4>Demo guiada</h4>
-                                                                <p>Demuestra valor comercial sin esperar la data real del cliente en la primera reunión.</p>
+                                                                <h4>Demo de prueba</h4>
+                                                                <p>Si todavía no quieres subir tu data, prueba con un negocio de ejemplo y mira cómo se ve.</p>
                                                         </div>
                                                         <div class="of-feature-card-v2 card-hover">
                                                                 <div class="of-feature-icon">06</div>
-                                                                <h4>Crecimiento por etapas</h4>
-                                                                <p>Empiezas con una prueba guiada y luego sumas automatizaciones o integraciones solo cuando ya ves valor real.</p>
+                                                                <h4>Crece a tu ritmo</h4>
+                                                                <p>Empiezas con archivos. Cuando ya veas la plata recuperada, decides si quieres conectar más cosas.</p>
                                                         </div>
                                                 </div>
                                                 """
@@ -236,9 +234,9 @@ def _render_form_shell() -> None:
                                 dedent(
                                                 """
                                                 <div class="of-auth-card card-hover">
-                                                        <div class="of-eyebrow">Empieza hoy</div>
-                                                        <h3>Crea tu cuenta o entra a tu espacio</h3>
-                                                        <p class="of-mini-note">La prueba incluye dashboard ejecutivo, clasificación ABC/XYZ, stock de seguridad, punto de reorden y exportación de resultados con lectura clara en cada campo.</p>
+                                                        <div class="of-eyebrow">Empieza ya · 14 días gratis</div>
+                                                        <h3>Mira dónde tienes la plata atrapada</h3>
+                                                        <p class="of-mini-note">Crea tu cuenta gratis y sube tu Excel. En minutos vas a ver qué productos están muertos, cuáles se te van a acabar y cuánto deberías comprar la próxima vez.</p>
                                                 </div>
                                                 """
                                 ),
@@ -247,20 +245,20 @@ def _render_form_shell() -> None:
 
 
 def _render_trust_and_proof() -> None:
-                st.markdown("### <span class='of-shimmer-title'>Confianza y claridad</span>", unsafe_allow_html=True)
+                st.markdown("### <span class='of-shimmer-title'>Negocios como el tuyo tienen millones quietos sin saberlo</span>", unsafe_allow_html=True)
                 st.markdown(
                                 dedent(
                                                 """
                                                 <div class="of-proof-grid-v2">
                                                         <div class="of-proof-card-v2 testimonial-card">
-                                                                <div class="of-eyebrow">Qué resuelve</div>
-                                                                <p>"Pasas de hojas dispersas a una lectura accionable de quiebres, sobrestock, ROP y compra sugerida."</p>
-                                                                <div class="of-proof-person">Pensado para equipos de compras, operaciones, finanzas y gerencia.</div>
+                                                                <div class="of-eyebrow">Lo que te resuelve</div>
+                                                                <p>"Pasas de un Excel desordenado a saber con números qué productos te están haciendo perder plata y cuáles te están haciendo perder ventas."</p>
+                                                                <div class="of-proof-person">Hecho para el dueño, el comprador y el que maneja la caja.</div>
                                                         </div>
                                                         <div class="of-proof-card-v2 testimonial-card">
-                                                                <div class="of-eyebrow">Cómo tratamos tu información</div>
-                                                                <p>"Tus datos no se venden ni se comparten. Cada empresa trabaja en un espacio privado y el análisis se usa solo para su propia toma de decisiones."</p>
-                                                                <div class="of-proof-person">Transparencia primero, venta después.</div>
+                                                                <div class="of-eyebrow">Tu información es tuya</div>
+                                                                <p>"Tu Excel y tus ventas no se venden ni se comparten. Cada negocio trabaja en su propio espacio privado y nadie más lo ve."</p>
+                                                                <div class="of-proof-person">Primero la confianza, después la plata.</div>
                                                         </div>
                                                 </div>
                                                 """
@@ -289,9 +287,9 @@ def _render_plan_strip() -> None:
                         ).strip()
                 )
 
-        st.markdown("### <span class='of-shimmer-title'>Planes claros, sin letra pequeña</span>", unsafe_allow_html=True)
+        st.markdown("### <span class='of-shimmer-title'>Planes claros, sin sorpresas en la factura</span>", unsafe_allow_html=True)
         st.markdown(
-                "<p class='of-mini-note' style='margin-bottom:18px'>Empieza con trial, comprueba valor y escala a servicios avanzados solo cuando tenga sentido.</p>",
+                "<p class='of-mini-note' style='margin-bottom:18px'>Empiezas gratis 14 días. Si te sirve, eliges plan. Si no, no pagas nada. Sin letra chiquita.</p>",
                 unsafe_allow_html=True,
         )
         cols = st.columns(3)
@@ -301,52 +299,52 @@ def _render_plan_strip() -> None:
 
 
 def _render_faq() -> None:
-                st.markdown("### <span class='of-shimmer-title'>Preguntas frecuentes</span>", unsafe_allow_html=True)
+                st.markdown("### <span class='of-shimmer-title'>Lo que más nos preguntan</span>", unsafe_allow_html=True)
                 st.markdown(
-                                "<div class='of-faq-shell'><p class='of-mini-note'>Abre cada respuesta y entiende qué hace la app, cómo procesa la información y cómo evolucionas a suscripción sin sorpresas.</p></div>",
+                                "<div class='of-faq-shell'><p class='of-mini-note'>Lo que todo ferretero pregunta antes de probar la app. Abélo y mira la respuesta.</p></div>",
                                 unsafe_allow_html=True,
                 )
 
                 faqs = [
                                 (
-                                                "¿Qué hace la app exactamente?",
+                                                "¿Qué hace exactamente esta app?",
                                                 [
-                                                                "Analiza inventario y ventas para mostrar capital inmovilizado, quiebres, punto de reorden, stock de seguridad y sugerencia de compra.",
-                                                                "Su objetivo es ayudarte a comprar mejor, reducir sobrestock y proteger disponibilidad de referencias clave.",
+                                                                "Toma tu inventario y tus ventas y te dice cuánta plata tienes muerta, qué productos te van a faltar y cuánto deberías comprar la próxima vez.",
+                                                                "El objetivo es claro: que dejes de tener dinero quieto y que vendas más de lo que sí rota.",
                                                 ],
                                 ),
                                 (
-                                                "¿Cómo se sube y procesa la información?",
+                                                "¿Es complicado subir mi Excel?",
                                                 [
-                                                                "Descargas plantillas oficiales, subes CSV o Excel y el sistema valida las columnas requeridas.",
-                                                                "Luego normaliza fechas, cantidades, notas crédito y estructura base para correr el análisis con consistencia.",
+                                                                "No. Descargas la plantilla, pegas tu información o subes tu propio archivo y la app revisa que esté bien.",
+                                                                "Si te falta una columna o una fecha, te avisa para arreglarlo en segundos.",
                                                 ],
                                 ),
                                 (
-                                                "¿Dónde se guarda la información?",
+                                                "¿Dónde queda guardada mi información?",
                                                 [
-                                                                "La cuenta, configuración y suscripción viven en base de datos.",
-                                                                "Los archivos cargados se usan para construir el análisis de tu empresa dentro del flujo de trabajo de la aplicación.",
+                                                                "Tu cuenta y tus análisis quedan en una base de datos privada de tu empresa.",
+                                                                "Solo se usan para mostrarte tus resultados. No los compartimos con nadie más.",
                                                 ],
                                 ),
                                 (
-                                                "¿Quién puede ver mis datos?",
+                                                "¿Otra ferretería va a ver mi inventario?",
                                                 [
-                                                                "Cada empresa tiene su espacio separado. La app no comparte información entre clientes.",
+                                                                "No. Cada negocio tiene su espacio aparte. Tu competencia no ve nada de lo tuyo.",
                                                 ],
                                 ),
                                 (
-                                                "¿Qué seguridad ofrece la app?",
+                                                "¿Qué tan segura es la app?",
                                                 [
-                                                                "Usa autenticación por usuario, despliegue en contenedor, variables separadas por entorno y una base de datos dedicada.",
-                                                                "Los secretos se administran fuera del repositorio, por ejemplo en Coolify.",
+                                                                "Entras con usuario y contraseña, los datos viajan encriptados y cada empresa tiene su propio espacio.",
+                                                                "Nadie ve tus archivos sin que tú lo autorices.",
                                                 ],
                                 ),
                                 (
-                                                "¿Qué pasa después de la prueba?",
+                                                "¿Qué pasa cuando se acaba la prueba gratis?",
                                                 [
-                                                                "Si el resultado te demuestra valor, activas un plan y mantienes acceso al análisis y al dashboard.",
-                                                                "Si luego quieres integrar ERP, automatizar abastecimiento o ampliar el alcance, eso se gestiona como evolución premium.",
+                                                                "Si te sirvió, eliges plan y sigues viendo tu negocio claro mes a mes.",
+                                                                "Si no te sirvió, no pagas nada y listo. Sin letra chiquita ni cobros sorpresa.",
                                                 ],
                                 ),
                 ]
@@ -365,9 +363,9 @@ def _render_final_cta() -> None:
                                 dedent(
                                                 """
                                                 <div class="of-final-cta">
-                                                        <div class="of-eyebrow">OptiFerre</div>
-                                                        <h3 class="of-shimmer-title">Empieza con archivos. Escala a plataforma.</h3>
-                                                        <p class="of-mini-note">Primero validas valor con la prueba y el dashboard. Luego decides si activas suscripción, integración ERP o automatización avanzada.</p>
+                                                        <div class="of-eyebrow">Hoy mismo · Sin instalar nada</div>
+                                                        <h3 class="of-shimmer-title">Hoy puedes saber cuánta plata tienes muerta en bodega.</h3>
+                                                        <p class="of-mini-note">Subes tu Excel, miras los números y decides qué hacer. En 14 días gratis lo pruebas con tu propia data, sin tarjeta y sin compromiso.</p>
                                                 </div>
                                                 """
                                 ),
@@ -380,10 +378,10 @@ def _render_contact_section() -> None:
                                 dedent(
                                                 """
                                                 <div class="of-contact-panel">
-                                                        <div class="of-eyebrow">Contacto directo</div>
+                                                        <div class="of-eyebrow">¿Quieres que te lo muestre yo mismo?</div>
                                                         <div class="of-contact-name">DIEGO MAURICIO GARCIA</div>
-                                                        <div class="of-contact-meta">Arquitecto y desarrollador de OptiFerre</div>
-                                                        <p class="of-mini-note">Si quieres revisar integración, despliegue, demo guiada, automatización o una implementación más potente, este es el punto de contacto directo.</p>
+                                                        <div class="of-contact-meta">Creador de OptiFerre</div>
+                                                        <p class="of-mini-note">Si quieres que te lo enseñe en una llamada o que te ayude a subir tu primer Excel, escríbeme directo. Te respondo personalmente.</p>
                                                         <a class="of-contact-link" href="mailto:diegomao.201@gmail.com">diegomao.201@gmail.com</a>
                                                 </div>
                                                 """
@@ -393,9 +391,9 @@ def _render_contact_section() -> None:
 
 
 def _render_public_support_form() -> None:
-                st.markdown("### <span class='of-shimmer-title'>Soporte directo</span>", unsafe_allow_html=True)
+                st.markdown("### <span class='of-shimmer-title'>¿Necesitas ayuda antes de entrar?</span>", unsafe_allow_html=True)
                 st.markdown(
-                                "<p class='of-mini-note' style='margin-bottom:16px'>Si necesitas ayuda antes de entrar o quieres dejarnos una solicitud desde esta página, crea el ticket aquí y lo enviaremos al canal operativo de soporte.</p>",
+                                "<p class='of-mini-note' style='margin-bottom:16px'>Déjanos tu mensaje y te respondemos por correo. No tienes que crear cuenta para escribirnos.</p>",
                                 unsafe_allow_html=True,
                 )
                 with st.form("public_support_form", clear_on_submit=True):
@@ -404,14 +402,14 @@ def _render_public_support_form() -> None:
                                                 requester_name = st.text_input("Tu nombre")
                                                 requester_email = st.text_input("Tu correo")
                                 with cols[1]:
-                                                company_name = st.text_input("Empresa")
-                                                subject = st.text_input("Asunto")
-                                message = st.text_area("¿Qué necesitas?", height=160)
-                                submitted = st.form_submit_button("Enviar ticket", use_container_width=True)
+                                                company_name = st.text_input("Nombre del negocio")
+                                                subject = st.text_input("¿Sobre qué es?")
+                                message = st.text_area("Cuéntanos qué necesitas", height=160)
+                                submitted = st.form_submit_button("Enviar mensaje", use_container_width=True)
 
                 if submitted:
                                 if not all([requester_name.strip(), requester_email.strip(), subject.strip(), message.strip()]):
-                                                st.error("Completa nombre, correo, asunto y detalle para enviar el ticket.")
+                                                st.error("Llena tu nombre, correo, asunto y mensaje para que podamos ayudarte.")
                                 else:
                                                 ticket = create_support_ticket(
                                                                 requester_name=requester_name,
@@ -422,7 +420,7 @@ def _render_public_support_form() -> None:
                                                                 source="public_page",
                                                                 category="support",
                                                 )
-                                                st.success(f"Ticket #{ticket['id']} enviado. También enviamos confirmación al correo que registraste.")
+                                                st.success(f"Listo, recibimos tu mensaje #{ticket['id']}. Te respondemos al correo que dejaste.")
 
 
 def _get_reset_token() -> str:
@@ -463,57 +461,57 @@ def render() -> None:
                                                 token_data = validate_password_reset_token(reset_token)
                                                 st.markdown("### <span class='of-shimmer-title'>Recupera tu acceso</span>", unsafe_allow_html=True)
                                                 if not token_data:
-                                                                st.error("El enlace de recuperación ya no es válido o expiró.")
+                                                                st.error("El enlace ya no sirve o expiró. Pide otro desde 'Olvidé mi contraseña'.")
                                                 else:
-                                                                st.caption(f"Restableciendo acceso para {token_data['email']}")
+                                                                st.caption(f"Cambiando la contraseña de {token_data['email']}")
                                                                 with st.form("password_reset_form", clear_on_submit=True):
                                                                                 new_password = st.text_input("Nueva contraseña", type="password")
                                                                                 confirm_password = st.text_input("Confirma la nueva contraseña", type="password")
-                                                                                submitted_reset = st.form_submit_button("Actualizar contraseña", use_container_width=True)
+                                                                                submitted_reset = st.form_submit_button("Guardar nueva contraseña", use_container_width=True)
                                                                 if submitted_reset:
                                                                                 if len(new_password) < 8:
-                                                                                                st.error("La nueva contraseña debe tener al menos 8 caracteres.")
+                                                                                                st.error("La contraseña debe tener al menos 8 caracteres.")
                                                                                 elif new_password != confirm_password:
-                                                                                                st.error("Las contraseñas no coinciden.")
+                                                                                                st.error("Las contraseñas no son iguales.")
                                                                                 else:
                                                                                                 result = reset_password_with_token(reset_token, new_password)
                                                                                                 if not result:
-                                                                                                                st.error("No fue posible actualizar la contraseña. Solicita un nuevo enlace.")
+                                                                                                                st.error("No pudimos cambiar la contraseña. Pide otro enlace.")
                                                                                                 else:
                                                                                                                 send_password_changed_email(result["email"], result["full_name"])
                                                                                                                 _clear_reset_token()
-                                                                                                                st.success("Contraseña actualizada. Ya puedes iniciar sesión con la nueva clave.")
+                                                                                                                st.success("Listo, contraseña cambiada. Ya puedes entrar con la nueva clave.")
                                 else:
-                                                tabs = st.tabs(["Iniciar sesión", "Crear cuenta", "Recuperar acceso"])
+                                                tabs = st.tabs(["Entrar", "Crear cuenta gratis", "Olvidé mi contraseña"])
 
                                                 with tabs[0]:
                                                                 with st.form("login_form", clear_on_submit=False):
-                                                                                email = st.text_input("Email corporativo", placeholder="tu@empresa.com")
+                                                                                email = st.text_input("Tu correo", placeholder="tu@correo.com")
                                                                                 password = st.text_input("Contraseña", type="password")
-                                                                                submitted = st.form_submit_button("Entrar", use_container_width=True)
+                                                                                submitted = st.form_submit_button("Entrar a mi cuenta", use_container_width=True)
                                                                 if submitted:
                                                                                 data = authenticate(email, password)
                                                                                 if data:
                                                                                                 login(data)
                                                                                                 send_login_notice_email(data["email"], data["full_name"], data["company_name"])
-                                                                                                st.success(f"Bienvenido, {data['full_name']}")
+                                                                                                st.success(f"¡Bienvenido, {data['full_name']}!")
                                                                                                 st.rerun()
                                                                                 else:
-                                                                                                st.error("Credenciales inválidas.")
+                                                                                                st.error("Correo o contraseña incorrectos.")
 
                                                 with tabs[1]:
                                                                 with st.form("signup_form", clear_on_submit=False):
-                                                                                company = st.text_input("Nombre de la empresa")
-                                                                                full_name = st.text_input("Tu nombre completo")
-                                                                                email = st.text_input("Email corporativo", key="signup_email")
-                                                                                password = st.text_input("Contraseña segura (min. 8)", type="password", key="signup_pwd")
-                                                                                accept = st.checkbox("Acepto términos, política de privacidad y tratamiento de datos.")
-                                                                                submitted = st.form_submit_button("Activar mi prueba gratis", use_container_width=True)
+                                                                                company = st.text_input("Nombre de tu negocio")
+                                                                                full_name = st.text_input("Tu nombre")
+                                                                                email = st.text_input("Tu correo", key="signup_email")
+                                                                                password = st.text_input("Crea tu contraseña (mínimo 8 caracteres)", type="password", key="signup_pwd")
+                                                                                accept = st.checkbox("Acepto términos y política de datos.")
+                                                                                submitted = st.form_submit_button("🚀 Empezar mi prueba gratis de 14 días", use_container_width=True)
                                                                 if submitted:
                                                                                 if not all([company, full_name, email, password]) or len(password) < 8:
-                                                                                                st.error("Completa todos los campos. La contraseña debe tener al menos 8 caracteres.")
+                                                                                                st.error("Llena todos los campos. La contraseña debe tener mínimo 8 caracteres.")
                                                                                 elif not accept:
-                                                                                                st.error("Debes aceptar los términos.")
+                                                                                                st.error("Tienes que aceptar los términos para continuar.")
                                                                                 else:
                                                                                                 try:
                                                                                                                 register_tenant(company, email, password, full_name)
@@ -521,27 +519,27 @@ def render() -> None:
                                                                                                                 if data:
                                                                                                                                 login(data)
                                                                                                                                 send_account_created_email(data["email"], data["full_name"], data["company_name"])
-                                                                                                                                st.success("Cuenta creada. Tu prueba de 14 días ya está activa.")
+                                                                                                                                st.success("¡Cuenta creada! Ya tienes 14 días gratis para ver tu inventario en plata.")
                                                                                                                                 st.rerun()
                                                                                                 except Exception as exc:  # pragma: no cover
-                                                                                                                st.error(f"No fue posible crear la cuenta: {exc}")
+                                                                                                                st.error(f"No pudimos crear la cuenta: {exc}")
 
                                                 with tabs[2]:
                                                                 with st.form("password_reset_request", clear_on_submit=True):
-                                                                                recovery_email = st.text_input("Email de tu cuenta", placeholder="tu@empresa.com")
-                                                                                submitted_recovery = st.form_submit_button("Enviar enlace de recuperación", use_container_width=True)
+                                                                                recovery_email = st.text_input("Tu correo", placeholder="tu@correo.com")
+                                                                                submitted_recovery = st.form_submit_button("Mandarme el enlace para recuperar", use_container_width=True)
                                                                 if submitted_recovery:
                                                                                 if not recovery_email.strip():
-                                                                                                st.error("Indica el correo con el que accedes a tu cuenta.")
+                                                                                                st.error("Escribe el correo con el que entras a tu cuenta.")
                                                                                 else:
                                                                                                 reset_data = create_password_reset_request(recovery_email)
                                                                                                 if reset_data:
                                                                                                                 reset_url = f"{settings.base_url}/?reset_token={reset_data['token']}"
                                                                                                                 send_password_reset_email(reset_data["email"], reset_data["full_name"], reset_url)
-                                                                                                st.success("Si el correo existe en el sistema, enviamos un enlace de recuperación.")
+                                                                                                st.success("Si tu correo está registrado, te mandamos un enlace para cambiar la contraseña.")
 
                                 st.caption(
-                                                "Sin instalación local. Sin integración ERP obligatoria al inicio. Empiezas con archivos y escalas cuando el valor esté comprobado."
+                                                "Sin instalar nada. Sin sistemas raros. Subes tu Excel y empiezas a ver tu plata."
                                 )
 
                 _render_trust_and_proof()

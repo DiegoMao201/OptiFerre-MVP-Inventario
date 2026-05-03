@@ -5,6 +5,8 @@ services:
       dockerfile: Dockerfile.api
     container_name: optiferre-api
     restart: unless-stopped
+    expose:
+      - "8000"
     environment:
       APP_NAME: ${APP_NAME:-OptiFerre SaaS}
       APP_ENV: ${APP_ENV:-production}
@@ -36,6 +38,8 @@ services:
     restart: unless-stopped
     depends_on:
       - optiferre-api
+    expose:
+      - "3000"
     environment:
       NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-https://api.optiferre.datovatenexuspro.com}
 
@@ -47,6 +51,8 @@ services:
     restart: unless-stopped
     profiles:
       - legacy
+    expose:
+      - "8501"
     environment:
       APP_NAME: ${APP_NAME:-OptiFerre SaaS}
       APP_ENV: ${APP_ENV:-production}

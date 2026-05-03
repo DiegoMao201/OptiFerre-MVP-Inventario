@@ -1,18 +1,64 @@
 services:
-  optiferre-app:
+  optiferre-api:
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    container_name: optiferre-api
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      APP_NAME: ${APP_NAME:-OptiFerre SaaS}
+      APP_ENV: ${APP_ENV:-production}
+      APP_SECRET_KEY: ${APP_SECRET_KEY:-change-me-in-coolify}
+      APP_BASE_URL: ${APP_BASE_URL:-https://optiferre.datovatenexuspro.com}
+      DATABASE_URL: ${DATABASE_URL:-postgresql://user:password@host:5432/database}
+      API_CORS_ORIGINS: ${API_CORS_ORIGINS:-https://optiferre.datovatenexuspro.com}
+      API_JWT_EXPIRES_MINUTES: ${API_JWT_EXPIRES_MINUTES:-1440}
+      STRIPE_SECRET_KEY: ${STRIPE_SECRET_KEY:-}
+      STRIPE_PUBLISHABLE_KEY: ${STRIPE_PUBLISHABLE_KEY:-}
+      STRIPE_WEBHOOK_SECRET: ${STRIPE_WEBHOOK_SECRET:-}
+      STRIPE_PRICE_STARTER: ${STRIPE_PRICE_STARTER:-}
+      STRIPE_PRICE_PRO: ${STRIPE_PRICE_PRO:-}
+      STRIPE_PRICE_ENTERPRISE: ${STRIPE_PRICE_ENTERPRISE:-}
+      SENDGRID_API_KEY: ${SENDGRID_API_KEY:-}
+      MAIL_FROM_EMAIL: ${MAIL_FROM_EMAIL:-}
+      MAIL_FROM_NAME: ${MAIL_FROM_NAME:-OptiFerre}
+      OPENROUTER_API_KEY: ${OPENROUTER_API_KEY:-}
+    volumes:
+      - optiferre_data:/app/data
+
+  optiferre-web:
+    build:
+      context: .
+      dockerfile: Dockerfile.web
+      args:
+        NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-https://api.optiferre.datovatenexuspro.com}
+    container_name: optiferre-web
+    restart: unless-stopped
+    depends_on:
+      - optiferre-api
+    ports:
+      - "3000:3000"
+    environment:
+      NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-https://api.optiferre.datovatenexuspro.com}
+
+  optiferre-streamlit:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: optiferre-app
+    container_name: optiferre-streamlit
     restart: unless-stopped
+    profiles:
+      - legacy
     ports:
       - "8501:8501"
     environment:
       APP_NAME: ${APP_NAME:-OptiFerre SaaS}
       APP_ENV: ${APP_ENV:-production}
-      APP_SECRET_KEY: ${APP_SECRET_KEY:-define-una-clave-larga-y-segura}
-      APP_BASE_URL: ${APP_BASE_URL:-https://optiferredatovatenexuspro.com}
-      DATABASE_URL: ${DATABASE_URL:-sqlite:///optiferre.db}
+      APP_SECRET_KEY: ${APP_SECRET_KEY:-change-me-in-coolify}
+      APP_BASE_URL: ${APP_BASE_URL:-https://optiferre.datovatenexuspro.com}
+      DATABASE_URL: ${DATABASE_URL:-postgresql://user:password@host:5432/database}
       STRIPE_SECRET_KEY: ${STRIPE_SECRET_KEY:-}
       STRIPE_PUBLISHABLE_KEY: ${STRIPE_PUBLISHABLE_KEY:-}
       STRIPE_WEBHOOK_SECRET: ${STRIPE_WEBHOOK_SECRET:-}

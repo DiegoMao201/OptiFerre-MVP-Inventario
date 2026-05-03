@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import type { ReactNode } from "react";
 import { QueryProvider } from "@/lib/query-provider";
 import "./globals.css";
 
@@ -9,7 +10,7 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://optiferre.datovatenexuspro.com")
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="es" className="dark">
       <head>

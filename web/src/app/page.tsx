@@ -1,4 +1,5 @@
 import Link from "next/link";
+import type { ReactNode } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, AlertTriangle, Bot, MapPin, MessageCircle, PackageOpen, ShieldCheck, Wallet, Sparkles } from "lucide-react";
 import { PublicAiFaq } from "@/components/public-ai-faq";
@@ -177,7 +178,7 @@ export default function LandingPage() {
   );
 }
 
-function TrustBadge({ icon, label }: { icon: React.ReactNode; label: string }) {
+function TrustBadge({ icon, label }: { icon: ReactNode; label: string }) {
   return (
     <div className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-muted-foreground flex items-center gap-2">
       <span className="text-primary">{icon}</span>
@@ -195,7 +196,7 @@ function ProofCard({ value, label }: { value: string; label: string }) {
   );
 }
 
-function FeatureBox({ icon, title, text }: { icon: React.ReactNode; title: string; text: string }) {
+function FeatureBox({ icon, title, text }: { icon: ReactNode; title: string; text: string }) {
   return (
     <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
       <div className="h-10 w-10 rounded-xl bg-primary/15 text-primary grid place-content-center mb-3">{icon}</div>

@@ -91,6 +91,9 @@ export const api = {
         name: string;
         tagline: string;
         summary: string;
+        sales_pitch: string;
+        upgrade_trigger: string;
+        cta_label: string;
         price_monthly_usd: number;
         features: string[];
         ai_capabilities: string[];

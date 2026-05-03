@@ -48,6 +48,9 @@ export default function PlansPage() {
             </div>
 
             <p className="text-sm text-muted-foreground mt-4">{plan.summary}</p>
+            <div className="rounded-2xl border border-white/10 bg-white/5 p-4 mt-4 text-sm text-muted-foreground">
+              {plan.sales_pitch}
+            </div>
 
             <div className="mt-5 space-y-2 flex-1">
               {plan.features.map((feature) => (
@@ -66,7 +69,7 @@ export default function PlansPage() {
                 </Button>
               )}
               <p className="text-xs text-muted-foreground">
-                {plan.key === "pro" ? "El plan más vendible cuando el cliente ya quiere decisiones claras." : "Si necesitas ayuda para decidir, soporte te orienta sin presión."}
+                {plan.upgrade_trigger}
               </p>
               {checkout.data?.message && checkout.variables === plan.key ? <p className="text-sm text-accent">{checkout.data.message}</p> : null}
             </div>

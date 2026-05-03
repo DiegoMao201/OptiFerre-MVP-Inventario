@@ -5,6 +5,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { UploadCloud, FileSpreadsheet, Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { api } from "@/lib/api";
+import { UpgradeLadder } from "@/components/upgrade-ladder";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
@@ -15,6 +16,14 @@ export default function UploadPage() {
   const { data: templates } = useQuery({
     queryKey: ["templates"],
     queryFn: api.templates,
+  });
+  const { data: plans } = useQuery({
+    queryKey: ["plans"],
+    queryFn: api.plans,
+  });
+  const { data: subscription } = useQuery({
+    queryKey: ["subscription"],
+    queryFn: api.subscription,
   });
 
   const upload = useMutation({
@@ -108,6 +117,14 @@ export default function UploadPage() {
           </span>
         ) : null}
       </div>
+
+      <UpgradeLadder
+        plans={plans?.plans || []}
+        currentPlan={subscription?.subscription?.plan || "trial"}
+        compact
+        title="Después de cargar bien, el siguiente paso es sacarle decisiones al dato"
+        intro="Aquí es donde la app debe llevar al cliente de ordenar archivos a recuperar caja y luego a ejecutar compras con menos fricción."
+      />
     </div>
   );
 }

@@ -6,6 +6,7 @@ import { api } from "@/lib/api";
 import { formatCurrency, formatNumber } from "@/lib/utils";
 import { KpiCard } from "@/components/kpi-card";
 import { Button } from "@/components/ui/button";
+import { UpgradeLadder } from "@/components/upgrade-ladder";
 
 export default function DashboardPage() {
   const qc = useQueryClient();
@@ -16,6 +17,10 @@ export default function DashboardPage() {
   const { data: subscription } = useQuery({
     queryKey: ["subscription"],
     queryFn: api.subscription,
+  });
+  const { data: plans } = useQuery({
+    queryKey: ["plans"],
+    queryFn: api.plans,
   });
 
   const runAnalysis = useMutation({
@@ -129,6 +134,13 @@ export default function DashboardPage() {
               </Button>
             </div>
           </section>
+
+          <UpgradeLadder
+            plans={plans?.plans || []}
+            currentPlan={subscription?.subscription?.plan || "trial"}
+            title="Qué sigue después de ver tu inventario en plata"
+            intro="Si el cliente ya entendió el problema, la app debe mostrarle el siguiente paso natural para resolver más y depender menos de la intuición."
+          />
         </>
       )}
     </div>

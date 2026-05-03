@@ -24,19 +24,28 @@ PLAN_KEYS: tuple[str, ...] = ("starter", "pro", "enterprise")
 PLAN_CATALOG: dict[str, dict] = {
     "starter": {
         "name": "Starter",
-        "tagline": "El Concierge",
+        "tagline": "Empieza bien sin enredarte",
         "price_monthly_usd": 15,
         "ai_persona": "concierge",
         "ai_persona_label": "Concierge Onboarding",
         "summary": (
-            "Bienvenida guiada, mapeo de columnas y soporte conversacional. "
-            "Aún no analiza tus datos en profundidad."
+            "Te ordena la entrada de datos, te evita errores de carga y te acompaña "
+            "para que en pocos minutos puedas ver el negocio sin fricción."
         ),
+        "sales_pitch": (
+            "Para el cliente que hoy sigue peleando con archivos sueltos, columnas mal puestas "
+            "y tiempo perdido antes de poder decidir algo útil."
+        ),
+        "upgrade_trigger": (
+            "Cuando ya lograste subir bien la información y quieres saber qué producto te está "
+            "dejando plata quieta, el siguiente paso natural es Pro."
+        ),
+        "cta_label": "Quiero ordenar mi operación",
         "features": [
-            "Carga inventario y ventas con plantillas validadas",
-            "Smart Importer con mapeo automático de columnas",
-            "Concierge IA que te guía paso a paso",
-            "Soporte por email + tickets",
+            "Carga inventario y ventas con plantillas claras",
+            "Te guiamos para dejar los archivos listos sin ensayo y error",
+            "Acompañamiento por tickets y onboarding guiado",
+            "Base lista para crecer sin volver a empezar",
         ],
         "ai_capabilities": [
             "Onboarding conversacional",
@@ -52,20 +61,29 @@ PLAN_CATALOG: dict[str, dict] = {
     },
     "pro": {
         "name": "Pro",
-        "tagline": "El Analista de Inventarios",
+        "tagline": "Decide qué comprar y qué dejar de mover",
         "price_monthly_usd": 40,
         "ai_persona": "analyst",
         "ai_persona_label": "Analista de Inventarios",
         "summary": (
-            "Análisis ABC/XYZ con explicación del por qué de cada decisión. "
-            "Stock de seguridad y ROP justificados con lenguaje ejecutivo."
+            "Te muestra en pesos qué tienes quieto, qué se te va a acabar y cuánto deberías "
+            "comprar para vender mejor sin inflar la bodega."
         ),
+        "sales_pitch": (
+            "Para el negocio que ya no quiere mirar el inventario a punta de intuición, sino con "
+            "decisiones concretas que cuiden caja, rotación y ventas."
+        ),
+        "upgrade_trigger": (
+            "Cuando ya ves el problema y quieres que la plataforma te ayude a ejecutar órdenes, "
+            "correos y acciones reales, el siguiente paso es Enterprise."
+        ),
+        "cta_label": "Quiero decisiones claras",
         "features": [
             "Todo lo de Starter",
-            "Análisis ABC/XYZ con narrativa explicada por la IA",
-            "Stock de seguridad y punto de reorden razonados",
-            "Chat sobre el porqué de cada sugerencia",
-            "Snapshots persistentes de inventario y ventas",
+            "Productos muertos, quiebres y compra sugerida con contexto",
+            "Análisis explicado en lenguaje de negocio, no técnico",
+            "Punto de reorden y stock sugerido con justificación",
+            "Historial persistente para seguir afinando decisiones",
         ],
         "ai_capabilities": [
             "Lee snapshots reales del tenant",
@@ -82,21 +100,29 @@ PLAN_CATALOG: dict[str, dict] = {
     },
     "enterprise": {
         "name": "Enterprise",
-        "tagline": "El Director de Operaciones (COO)",
+        "tagline": "Convierte análisis en ejecución real",
         "price_monthly_usd": 100,
         "ai_persona": "coo",
         "ai_persona_label": "COO Autónomo",
         "summary": (
-            "Toma acciones reales: genera órdenes de compra listas para firma, "
-            "exporta Excel/PDF y prepara correos de reposición."
+            "Te ayuda a pasar del diagnóstico a la operación: órdenes listas, comunicación con "
+            "proveedores y control para equipos con más volumen."
         ),
+        "sales_pitch": (
+            "Para empresas que ya no necesitan solo ver el problema, sino mover compras, equipos y "
+            "proveedores con menos fricción y más control."
+        ),
+        "upgrade_trigger": (
+            "Este es el nivel para cuando el cliente ya confía en la plataforma y quiere delegar "
+            "más trabajo operativo sin perder visibilidad."
+        ),
+        "cta_label": "Quiero operar más rápido",
         "features": [
             "Todo lo de Pro",
-            "IA con function calling: genera Excel y PDF",
-            "Órdenes de compra editables y persistentes",
-            "Correos de reposición listos para enviar",
-            "SKUs y usuarios ilimitados",
-            "Soporte prioritario",
+            "Órdenes de compra editables y listas para trabajar",
+            "Correos de reposición listos para enviar al proveedor",
+            "Mayor volumen, más usuarios y menos fricción operativa",
+            "Soporte prioritario para equipos que no pueden frenar",
         ],
         "ai_capabilities": [
             "Function calling: genera órdenes, exporta Excel, redacta correos",

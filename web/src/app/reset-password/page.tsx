@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { Suspense, useMemo, useState } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
@@ -9,6 +9,14 @@ import { Label } from "@/components/ui/label";
 import { api } from "@/lib/api";
 
 export default function ResetPasswordPage() {
+  return (
+    <Suspense fallback={<ResetPasswordFallback />}>
+      <ResetPasswordContent />
+    </Suspense>
+  );
+}
+
+function ResetPasswordContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const token = useMemo(() => searchParams.get("token") || "", [searchParams]);
@@ -71,6 +79,19 @@ export default function ResetPasswordPage() {
             {loading ? "Actualizando..." : "Guardar nueva contraseña"}
           </Button>
         </form>
+      </div>
+    </div>
+  );
+}
+
+function ResetPasswordFallback() {
+  return (
+    <div className="min-h-screen flex items-center justify-center p-6">
+      <div className="card-glass w-full max-w-md p-8">
+        <h1 className="text-2xl font-bold mb-2">Cargando recuperación</h1>
+        <p className="text-sm text-muted-foreground">
+          Estamos preparando el enlace para que cambies tu contraseña.
+        </p>
       </div>
     </div>
   );

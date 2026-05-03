@@ -529,13 +529,13 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
       .of-logo-orbit {{
         position: absolute;
         border-radius: 999px;
-        border: 1px solid rgba(0,224,255,0.16);
-        box-shadow: 0 0 22px rgba(0,224,255,0.10);
+        border: 1px solid rgba(20,66,112,0.24);
+        box-shadow: 0 0 26px rgba(13,57,102,0.10);
         pointer-events: none;
       }}
-      .of-logo-orbit.orbit-a {{ inset: 6px 18px; animation: of-orbit-rotate 12s linear infinite; }}
-      .of-logo-orbit.orbit-b {{ inset: 20px 0; border-color: rgba(0,255,163,0.14); transform: rotate(18deg); animation: of-orbit-rotate-reverse 9s linear infinite; }}
-      .of-logo-orbit.orbit-c {{ inset: 30px 26px; border-color: rgba(139,92,246,0.16); transform: rotate(-24deg); animation: of-orbit-pulse 4.2s ease-in-out infinite; }}
+      .of-logo-orbit.orbit-a {{ inset: 6px 18px; border-color: rgba(18,92,125,0.28); animation: of-orbit-rotate 12s linear infinite; }}
+      .of-logo-orbit.orbit-b {{ inset: 20px 0; border-color: rgba(22,132,106,0.24); transform: rotate(18deg); animation: of-orbit-rotate-reverse 9s linear infinite; }}
+      .of-logo-orbit.orbit-c {{ inset: 30px 26px; border-color: rgba(88,63,150,0.24); transform: rotate(-24deg); animation: of-orbit-pulse 4.2s ease-in-out infinite; }}
       .of-logo-scan {{
         position: absolute;
         inset: 22px 30px;
@@ -668,7 +668,6 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
       .of-hero-v2::before,
       .of-feature-card-v2::before,
       .of-proof-v2 .item::before,
-      .of-stat-caption-card::before,
       .of-price-card::before,
       .of-final-cta::before,
       .of-auth-card::before {{
@@ -684,7 +683,6 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
       .of-hero-v2::after,
       .of-feature-card-v2::after,
       .of-proof-v2 .item::after,
-      .of-stat-caption-card::after,
       .of-price-card::after,
       .of-final-cta::after,
       .of-auth-card::after {{

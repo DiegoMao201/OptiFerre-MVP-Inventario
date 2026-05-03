@@ -36,7 +36,7 @@ export function UpgradeLadder({ plans, currentPlan, title, intro, compact = fals
   return (
     <section className="card-glass p-6 space-y-5">
       <div>
-        <div className="text-xs uppercase tracking-widest text-primary font-bold">Escalera de valor</div>
+        <div className="text-xs uppercase tracking-widest text-primary font-bold">Siguiente paso</div>
         <h2 className="text-2xl font-black mt-1">{title}</h2>
         <p className="text-muted-foreground mt-2 max-w-3xl">{intro}</p>
       </div>
@@ -56,11 +56,11 @@ export function UpgradeLadder({ plans, currentPlan, title, intro, compact = fals
             </div>
             <p className="text-sm text-muted-foreground">{plan.sales_pitch}</p>
             <div className="rounded-2xl border border-primary/20 bg-primary/10 px-4 py-3 text-sm text-foreground">
-              <strong className="block mb-1">Qué te desbloquea</strong>
+              <strong className="block mb-1">Qué ganas</strong>
               {plan.summary}
             </div>
             <div className="text-sm text-muted-foreground">
-              <strong className="text-foreground block mb-1">Cuándo tiene sentido subir</strong>
+              <strong className="text-foreground block mb-1">Cuándo te conviene subir</strong>
               {plan.upgrade_trigger}
             </div>
             <Button asChild className="w-full" variant={plan.key === "pro" ? "default" : "outline"}>

@@ -40,7 +40,7 @@ export default function DashboardPage() {
         </div>
         <Button onClick={() => runAnalysis.mutate()} variant="outline" disabled={runAnalysis.isPending}>
           <RefreshCcw className="h-4 w-4" />
-          {runAnalysis.isPending ? "Analizando..." : "Volver a analizar"}
+          {runAnalysis.isPending ? "Actualizando..." : "Actualizar resultados"}
         </Button>
       </header>
 
@@ -122,7 +122,7 @@ export default function DashboardPage() {
                 {subscription?.subscription?.plan ? `Estás en ${subscription.subscription.plan}` : "Prueba guiada activa"}
               </h2>
               <p className="text-muted-foreground mt-2 max-w-2xl">
-                Mantén visibles los planes dentro de la app para que el cliente entienda qué compra, qué desbloquea y por qué vale la pena seguir.
+                Aquí se le debe mostrar claro al cliente qué gana si sigue: primero ordenar, luego recuperar plata quieta y después comprar con menos error.
               </p>
             </div>
             <div className="flex gap-3">
@@ -139,7 +139,7 @@ export default function DashboardPage() {
             plans={plans?.plans || []}
             currentPlan={subscription?.subscription?.plan || "trial"}
             title="Qué sigue después de ver tu inventario en plata"
-            intro="Si el cliente ya entendió el problema, la app debe mostrarle el siguiente paso natural para resolver más y depender menos de la intuición."
+            intro="Si ya vio dónde está perdiendo plata, aquí debe quedar clarísimo cuál es el siguiente paso para recuperar más y comprar mejor."
           />
         </>
       )}

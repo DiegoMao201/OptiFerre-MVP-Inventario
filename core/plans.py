@@ -48,9 +48,9 @@ PLAN_CATALOG: dict[str, dict] = {
             "Base lista para crecer sin volver a empezar",
         ],
         "ai_capabilities": [
-            "Onboarding conversacional",
-            "Resolver dudas sobre cómo usar la plataforma",
-            "Sugerir el siguiente paso del flujo",
+            "Te guía paso a paso al empezar",
+            "Resuelve dudas de uso en palabras simples",
+            "Te dice qué hacer después para avanzar más rápido",
         ],
         "limits": {
             "ai_messages_per_day": 50,
@@ -81,15 +81,15 @@ PLAN_CATALOG: dict[str, dict] = {
         "features": [
             "Todo lo de Starter",
             "Productos muertos, quiebres y compra sugerida con contexto",
-            "Análisis explicado en lenguaje de negocio, no técnico",
-            "Punto de reorden y stock sugerido con justificación",
+            "Explicación clara de qué te está dejando plata quieta",
+            "Cantidad sugerida para comprar sin sobrarte",
             "Historial persistente para seguir afinando decisiones",
         ],
         "ai_capabilities": [
-            "Lee snapshots reales del tenant",
-            "Explica clasificación ABC/XYZ con lenguaje ejecutivo",
-            "Justifica ROP, SS y sugerencia de compra por SKU",
-            "Conversación con memoria por tenant",
+            "Lee tus números reales del negocio",
+            "Te explica por qué un producto está quieto o en riesgo",
+            "Te sugiere cuánto volver a pedir y por qué",
+            "Recuerda el contexto de tu negocio en la conversación",
         ],
         "limits": {
             "ai_messages_per_day": 300,
@@ -100,10 +100,10 @@ PLAN_CATALOG: dict[str, dict] = {
     },
     "enterprise": {
         "name": "Enterprise",
-        "tagline": "Convierte análisis en ejecución real",
+        "tagline": "Pasa de ver el problema a mover la compra",
         "price_monthly_usd": 100,
         "ai_persona": "coo",
-        "ai_persona_label": "COO Autónomo",
+        "ai_persona_label": "Ayuda para operar",
         "summary": (
             "Te ayuda a pasar del diagnóstico a la operación: órdenes listas, comunicación con "
             "proveedores y control para equipos con más volumen."
@@ -125,9 +125,9 @@ PLAN_CATALOG: dict[str, dict] = {
             "Soporte prioritario para equipos que no pueden frenar",
         ],
         "ai_capabilities": [
-            "Function calling: genera órdenes, exporta Excel, redacta correos",
-            "Persistencia tenant-scoped de cada acción",
-            "Audit log con cada decisión ejecutada",
+            "Te deja listas compras y mensajes para proveedores",
+            "Guarda lo que hiciste para que el equipo siga el hilo",
+            "Deja rastro claro de cada paso importante",
         ],
         "limits": {
             "ai_messages_per_day": 1_500,

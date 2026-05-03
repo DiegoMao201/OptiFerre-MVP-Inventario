@@ -29,7 +29,7 @@ except Exception:  # pragma: no cover
 logger = logging.getLogger("optiferre.ai")
 
 
-CONCIERGE_SYSTEM_PROMPT = """Eres el "Concierge" de Nexus Pro, una plataforma SaaS de inteligencia de inventarios.
+CONCIERGE_SYSTEM_PROMPT = """Eres la ayuda de arranque de OptiFerre, una herramienta para negocios con inventario.
 
 Tu tarea exclusiva en el plan Starter:
 - Dar la bienvenida al usuario y orientarlo sobre cómo subir inventario y ventas.
@@ -45,7 +45,7 @@ Reglas estrictas:
 """
 
 
-ANALYST_SYSTEM_PROMPT = """Eres el "Analista de Inventarios" de Nexus Pro (plan Pro).
+ANALYST_SYSTEM_PROMPT = """Eres la ayuda para compras e inventario de OptiFerre (plan Pro).
 
 Tu rol:
 - Leer el contexto JSON con snapshots reales del tenant (inventario, ventas, KPIs y sugerencias del motor).
@@ -63,7 +63,7 @@ Reglas:
 """
 
 
-COO_SYSTEM_PROMPT = """Eres el "Director de Operaciones (COO)" de Nexus Pro (plan Enterprise).
+COO_SYSTEM_PROMPT = """Eres la ayuda para mover compras y operación de OptiFerre (plan Enterprise).
 
 Tu rol:
 - Tomas decisiones operativas con base en los snapshots del tenant.
@@ -178,19 +178,19 @@ def _simulated_reply(plan: str, messages: list[dict]) -> AIResponse:
     last_user = next((m["content"] for m in reversed(messages) if m["role"] == "user"), "")
     if persona == "concierge":
         text = (
-            "Bienvenido a Nexus Pro. Estoy en modo demo (sin API de IA configurada). "
-            "Para empezar, sube tu inventario y ventas en la sección Cargar Datos."
+            "Bienvenido a OptiFerre. Ahora mismo estás viendo una respuesta de muestra. "
+            "Para empezar, sube tu inventario y ventas y te mostramos dónde tienes plata quieta."
         )
     elif persona == "analyst":
         text = (
-            "Modo demo del Analista: cuando OPENROUTER_API_KEY esté configurada, "
-            f"explicaré con tus datos reales el porqué de cada sugerencia. "
-            f"Pregunta detectada: '{last_user[:120]}'."
+            "Ahora mismo estás viendo una respuesta de muestra. "
+            f"Cuando la ayuda esté activa con tus datos reales, te explicaré qué está quieto, qué se te puede acabar y qué conviene comprar. "
+            f"Tu pregunta fue: '{last_user[:120]}'."
         )
     else:
         text = (
-            "Modo demo del COO: con la API configurada podré generar órdenes de compra, "
-            "exportar Excel y redactar correos automáticamente."
+            "Ahora mismo estás viendo una respuesta de muestra. "
+            "Cuando esta ayuda esté activa por completo, podrá dejar listas compras, archivos y mensajes para tu proveedor."
         )
     return AIResponse(content=text, simulated=True)
 

@@ -23,13 +23,13 @@ export default function PlansPage() {
           <div className="text-xs uppercase tracking-widest text-primary font-bold">Planes claros y comprables</div>
           <h1 className="text-3xl md:text-4xl font-black mt-1">Elige el plan según el momento real de tu negocio.</h1>
           <p className="text-muted-foreground mt-2 max-w-3xl">
-            Nada de promesas vagas. Aquí ves qué compras, qué desbloqueas y qué te ayuda a dejar de meter plata en inventario quieto.
+            Aquí ves qué ganas con cada plan: ordenar tus archivos, encontrar plata quieta y comprar mejor sin volver a improvisar.
           </p>
         </div>
         <div className="card-glass px-5 py-4 min-w-72">
           <div className="text-xs uppercase tracking-widest text-primary font-bold">Tu estado actual</div>
-          <div className="text-xl font-bold mt-1">{subscription?.subscription?.plan || "trial"}</div>
-          <p className="text-sm text-muted-foreground mt-2">Estado: {subscription?.subscription?.status || "trialing"}</p>
+          <div className="text-xl font-bold mt-1">{subscription?.subscription?.plan || "prueba gratis"}</div>
+          <p className="text-sm text-muted-foreground mt-2">Estado: {subscription?.subscription?.status || "activa"}</p>
         </div>
       </header>
 

@@ -42,20 +42,20 @@ export default function UploadPage() {
         <div className="text-xs uppercase tracking-widest text-primary font-bold">Subir información</div>
         <h1 className="text-3xl md:text-4xl font-black mt-1">Sube tu Excel y deja que veamos tu plata</h1>
         <p className="text-muted-foreground mt-2 max-w-xl">
-          Necesitamos tu inventario actual y, si lo tienes, tus ventas de los últimos meses. Cuanto más completo, mejor.
+          Sube tu inventario actual y, si lo tienes, tus ventas de los últimos meses. Con eso ya te mostramos qué tienes quieto y qué sí deberías volver a pedir.
         </p>
       </header>
 
       <div className="grid md:grid-cols-2 gap-4">
         <DropZone
           label="📦 Inventario actual"
-          description="CSV o Excel con SKU, stock y costo unitario."
+          description="CSV o Excel con producto, cantidad y costo."
           file={inventoryFile}
           onChange={setInventoryFile}
         />
         <DropZone
           label="🧾 Ventas (opcional pero recomendado)"
-          description="CSV o Excel con SKU, fecha y cantidad vendida."
+          description="CSV o Excel con producto, fecha y cantidad vendida."
           file={salesFile}
           onChange={setSalesFile}
         />
@@ -66,7 +66,7 @@ export default function UploadPage() {
           <div className="text-xs uppercase tracking-widest text-primary font-bold">Formatos oficiales</div>
           <h2 className="text-2xl font-black mt-1">Descarga la plantilla correcta antes de subir.</h2>
           <p className="text-muted-foreground mt-2 max-w-2xl">
-            Así evitas errores de columnas, reduces idas y vueltas y el cliente entiende exactamente qué debe entregar.
+            Así subes bien desde el primer intento y ves resultados más rápido.
           </p>
         </div>
         <div className="grid gap-4 lg:grid-cols-3">
@@ -105,7 +105,7 @@ export default function UploadPage() {
       <div className="flex items-center gap-3">
         <Button size="lg" onClick={() => upload.mutate()} disabled={!inventoryFile || upload.isPending}>
           <UploadCloud className="h-4 w-4" />
-          {upload.isPending ? "Subiendo..." : "Subir y analizar"}
+          {upload.isPending ? "Subiendo..." : "Subir y ver resultados"}
         </Button>
         {upload.isError ? (
           <span className="text-destructive text-sm">{(upload.error as Error)?.message}</span>
@@ -113,7 +113,7 @@ export default function UploadPage() {
         {upload.isSuccess ? (
           <span className="text-accent text-sm">
             ✅ {upload.data.inventory_upserted} productos cargados ·{" "}
-            {upload.data.sales_upserted} ventas procesadas. Revisa tu dashboard.
+            {upload.data.sales_upserted} ventas cargadas. Ya puedes ver dónde está tu plata quieta.
           </span>
         ) : null}
       </div>
@@ -122,8 +122,8 @@ export default function UploadPage() {
         plans={plans?.plans || []}
         currentPlan={subscription?.subscription?.plan || "trial"}
         compact
-        title="Después de cargar bien, el siguiente paso es sacarle decisiones al dato"
-        intro="Aquí es donde la app debe llevar al cliente de ordenar archivos a recuperar caja y luego a ejecutar compras con menos fricción."
+        title="Después de cargar bien, el siguiente paso es recuperar plata"
+        intro="Aquí la app tiene que llevar al cliente de subir archivos a descubrir qué vender primero y qué dejar de comprar."
       />
     </div>
   );

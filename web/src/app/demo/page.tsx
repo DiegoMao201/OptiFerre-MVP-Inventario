@@ -10,8 +10,8 @@ const demoMetrics = [
 ];
 
 const decisions = [
-  "Frenar recompra de 22 referencias lentas hasta mover inventario quieto.",
-  "Priorizar 9 SKUs que ya estaban a punto de quebrarse y sí empujaban ventas.",
+  "Frenar recompra de 22 referencias lentas hasta vender lo que ya estaba quieto.",
+  "Priorizar 9 productos que ya estaban a punto de acabarse y sí empujaban ventas.",
   "Usar 2 semanas de seguimiento para ajustar compras y dejar de inmovilizar caja.",
 ];
 
@@ -25,7 +25,7 @@ export default function DemoPage() {
             Así se ve una ferretería cuando la app le muestra dónde tiene la plata quieta.
           </h1>
           <p className="text-muted-foreground mt-3 text-lg">
-            Caso piloto de referencia en Pereira: inventario cargado, decisiones claras y mejora en compras en dos semanas.
+            Caso piloto de referencia en Pereira: se cargó el inventario, se vio la plata quieta y en dos semanas ya se estaba comprando con más cabeza.
           </p>
         </div>
         <div className="flex gap-3">
@@ -56,12 +56,12 @@ export default function DemoPage() {
 
       <section className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
         <div className="card-glass p-6 md:p-8">
-          <div className="text-xs uppercase tracking-widest text-primary font-bold">Dashboard de ejemplo</div>
-          <h2 className="text-3xl font-black mt-2">Menos datos sueltos, más decisiones accionables.</h2>
+          <div className="text-xs uppercase tracking-widest text-primary font-bold">Ejemplo real</div>
+          <h2 className="text-3xl font-black mt-2">Menos adivinanza, más claridad para comprar y vender.</h2>
           <div className="grid md:grid-cols-2 gap-4 mt-6">
             <DemoPanel title="Lo urgente" tone="danger" items={[
               "22 productos muertos drenando caja",
-              "9 SKUs en riesgo de quiebre",
+              "9 productos a punto de agotarse",
               "$12.000.000 quietos en bodega",
             ]} />
             <DemoPanel title="Lo que harías hoy" tone="primary" items={decisions} />
@@ -73,7 +73,7 @@ export default function DemoPage() {
             <div className="text-xs uppercase tracking-widest text-primary font-bold">Caso piloto</div>
             <h2 className="text-2xl font-black mt-2">Ferretería en Pereira</h2>
             <p className="text-muted-foreground mt-3">
-              En el piloto la app ayudó a separar lo que estaba quieto de lo que sí movía ventas, y eso cambió la conversación de compras en menos de dos semanas.
+              En el piloto la app ayudó a separar lo que estaba quieto de lo que sí se movía, y eso cambió la conversación de compras en menos de dos semanas.
             </p>
           </div>
           <div className="rounded-2xl border border-white/10 bg-white/5 p-5 text-sm text-muted-foreground">

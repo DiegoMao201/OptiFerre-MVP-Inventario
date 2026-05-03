@@ -6,21 +6,21 @@ import { PublicAiFaq } from "@/components/public-ai-faq";
 const salesPhone = process.env.SALES_CONTACT_PHONE || "+57 300 000 0000";
 const whatsappHref = `https://wa.me/${salesPhone.replace(/\D/g, "")}`;
 
-const llmPlanCards = [
+const helpPlanCards = [
   {
     name: "Starter",
-    title: "Tu IA concierge",
-    text: "Te guía para subir bien los archivos, entender la plataforma y arrancar sin enredos.",
+    title: "Te acompaña a arrancar",
+    text: "Te ayuda a subir bien los archivos y empezar sin perder tiempo en errores y enredos.",
   },
   {
     name: "Pro",
-    title: "Tu analista de inventario",
-    text: "Lee tus datos y te explica en simple qué está quieto, qué está por quebrarse y qué deberías comprar.",
+    title: "Te muestra dónde está la plata quieta",
+    text: "Te dice en palabras simples qué está quieto, qué se te puede acabar y qué sí vale la pena volver a pedir.",
   },
   {
     name: "Enterprise",
-    title: "Tu copiloto operativo",
-    text: "Te ayuda a ejecutar órdenes, preparar correos y mover operación con menos fricción.",
+    title: "Te ayuda a mover compras más rápido",
+    text: "Te deja pasar de mirar el problema a dejar listas compras y mensajes para el proveedor.",
   },
 ];
 
@@ -86,7 +86,7 @@ export default function LandingPage() {
 
         <section className="py-20 grid md:grid-cols-3 gap-6">
           <Step number="1" title="Subes tu Excel" text="El mismo archivo que ya manejas. No tienes que cambiar de sistema." />
-          <Step number="2" title="Analizamos en minutos" text="Cruzamos tu inventario con tus ventas y calculamos lo que importa." />
+          <Step number="2" title="Te mostramos el problema" text="Ves rápido qué está quieto, qué se te va a acabar y por dónde se te está yendo la plata." />
           <Step number="3" title="Te damos decisiones claras" text="Qué vender, qué no comprar, qué pedir y cuánta plata recuperas." />
         </section>
 
@@ -95,7 +95,7 @@ export default function LandingPage() {
             <div className="text-xs uppercase tracking-widest text-primary font-bold">Prueba real</div>
             <h2 className="text-3xl md:text-4xl font-black mt-2">Ferretería en Pereira: números que sí mueven una decisión de compra.</h2>
             <p className="text-muted-foreground mt-3 max-w-2xl">
-              Aunque sea un caso piloto, esto baja la incertidumbre y hace tangible el valor del producto en menos de un minuto.
+              Aunque sea un caso piloto, esto ayuda a que el cliente vea rápido si la app le puede ahorrar plata y mejorar sus compras.
             </p>
             <div className="grid md:grid-cols-3 gap-4 mt-6">
               <ProofCard value="$12.000.000" label="quietos en inventario" />
@@ -111,7 +111,7 @@ export default function LandingPage() {
             <div className="text-xs uppercase tracking-widest text-primary font-bold">Quién está detrás</div>
             <h2 className="text-3xl font-black mt-2">Diego Mauricio Garcia</h2>
             <p className="text-muted-foreground mt-3">
-              Creador de OptiFerre. Operando desde Pereira y disponible para acompañar personalmente a los primeros clientes que quieran probar la plataforma con su propio Excel.
+              Creador de OptiFerre. Trabajando desde Pereira y disponible para mostrar personalmente cómo sacar plata atrapada de la bodega usando el mismo Excel de siempre.
             </p>
             <div className="space-y-3 mt-6 text-sm">
               <div className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3">Pereira, Colombia</div>
@@ -125,14 +125,14 @@ export default function LandingPage() {
 
         <section className="grid gap-6 my-16 lg:grid-cols-[0.9fr_1.1fr] items-start">
           <div className="space-y-4">
-            <div className="text-xs uppercase tracking-widest text-primary font-bold">IA explicada fácil</div>
-            <h2 className="text-3xl md:text-4xl font-black">El LLM no es humo: es el nivel de ayuda que recibe el cliente según su plan.</h2>
+            <div className="text-xs uppercase tracking-widest text-primary font-bold">Ayuda según tu plan</div>
+            <h2 className="text-3xl md:text-4xl font-black">No compras palabras raras. Compras ayuda para vender mejor y dejar plata menos tiempo quieta.</h2>
             <p className="text-muted-foreground max-w-2xl">
-              Comercialmente hay que dejarlo simple: en Starter guía, en Pro analiza y en Enterprise ayuda a ejecutar. Eso fortalece confianza y hace lógico el upgrade.
+              El mensaje tiene que ser simple: primero te ayudan a arrancar, luego te muestran dónde estás perdiendo plata y después te ayudan a mover compras más rápido.
             </p>
           </div>
           <div className="grid gap-4 md:grid-cols-3">
-            {llmPlanCards.map((plan) => (
+            {helpPlanCards.map((plan) => (
               <div key={plan.name} className="card-glass p-5">
                 <div className="h-10 w-10 rounded-xl bg-primary/15 text-primary grid place-content-center mb-3">
                   <Bot className="h-5 w-5" />

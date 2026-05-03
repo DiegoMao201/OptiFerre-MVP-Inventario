@@ -83,6 +83,12 @@ export const api = {
       auth: false,
       body: JSON.stringify({ token, password })
     }),
+  publicAssistant: (question: string) =>
+    apiFetch<{ answer: string; simulated: boolean; error?: string | null }>(`/assistant/public`, {
+      method: "POST",
+      auth: false,
+      body: JSON.stringify({ question })
+    }),
   me: () => apiFetch<import("./auth-storage").AuthUser>(`/auth/me`),
   plans: () =>
     apiFetch<{

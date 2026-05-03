@@ -27,7 +27,7 @@ export default function LandingPage() {
               💰 Para ferreterías y depósitos
             </div>
             <h1 className="text-4xl md:text-6xl font-black leading-[1.05]">
-              Tienes <span className="text-primary">plata muerta</span> en tu bodega y todavía no lo sabes.
+              Tienes <span className="shimmer-text">plata muerta</span> en tu bodega y todavía no lo sabes.
             </h1>
             <p className="text-lg text-muted-foreground max-w-xl">
               Sube tu Excel de inventario y de ventas. En minutos te decimos qué productos están quietos, cuáles se te van a acabar y cuánto deberías comprar la próxima vez. Sin instalar nada.
@@ -65,7 +65,7 @@ export default function LandingPage() {
 
         <section className="rounded-3xl border border-primary/20 bg-primary/5 p-10 text-center my-16">
           <h2 className="text-3xl md:text-4xl font-black mb-3">
-            Hoy puedes saber cuánta plata tienes muerta en bodega.
+            Hoy puedes saber cuánta <span className="shimmer-text">plata tienes muerta</span> en bodega.
           </h2>
           <p className="text-muted-foreground max-w-xl mx-auto mb-6">
             14 días gratis, con tu propia data, sin tarjeta y sin compromiso.
@@ -79,7 +79,7 @@ export default function LandingPage() {
       </main>
 
       <footer className="container py-8 text-xs text-muted-foreground border-t border-white/5">
-        © {new Date().getFullYear()} OptiFerre · Diego Mauricio Garcia · diegomao.201@gmail.com
+        © 2026 OptiFerre · Diego Mauricio Garcia · diegomao.201@gmail.com
       </footer>
     </div>
   );

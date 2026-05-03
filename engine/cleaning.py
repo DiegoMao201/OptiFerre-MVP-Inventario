@@ -27,6 +27,15 @@ SALES_COLUMN_ALIASES = {
     "tipo_documento": ["tipo documento", "documento", "tipo", "doc", "tipo_doc"],
 }
 
+CATALOG_COLUMN_ALIASES = {
+    "sku": ["sku", "codigo", "referencia", "item", "producto"],
+    "nombre_comercial": ["nombre", "descripcion", "producto", "nombre_producto"],
+    "marca": ["marca", "brand"],
+    "proveedor": ["proveedor", "supplier", "vendor"],
+    "linea": ["linea", "línea", "familia", "grupo"],
+    "es_quimico": ["es quimico", "es_quimico", "quimico", "chemical"],
+}
+
 
 def _coerce_numeric(series: pd.Series) -> pd.Series:
     return pd.to_numeric(series, errors="coerce").fillna(0)
@@ -69,10 +78,33 @@ def suggest_column_mapping(df: pd.DataFrame, aliases: dict[str, list[str]]) -> d
 
 
 def apply_smart_column_mapping(df: pd.DataFrame, schema: str) -> tuple[pd.DataFrame, dict[str, str]]:
-    aliases = INVENTORY_COLUMN_ALIASES if schema == "inventory" else SALES_COLUMN_ALIASES
+    if schema == "inventory":
+        aliases = INVENTORY_COLUMN_ALIASES
+    elif schema == "sales":
+        aliases = SALES_COLUMN_ALIASES
+    else:
+        aliases = CATALOG_COLUMN_ALIASES
     mapping = suggest_column_mapping(df, aliases)
     renamed = df.rename(columns=mapping)
     return renamed, mapping
+
+
+def clean_catalog(df: pd.DataFrame) -> pd.DataFrame:
+    """Normaliza catálogo maestro para enriquecer la operación comercial."""
+    df, _ = apply_smart_column_mapping(df.copy(), schema="catalog")
+    df.columns = [c.strip().lower() for c in df.columns]
+    df["sku"] = df["sku"].astype(str).str.strip().str.upper()
+    if "nombre_comercial" in df.columns:
+        df["nombre_comercial"] = df["nombre_comercial"].astype(str).str.strip()
+    if "marca" in df.columns:
+        df["marca"] = df["marca"].astype(str).str.strip()
+    if "proveedor" in df.columns:
+        df["proveedor"] = df["proveedor"].astype(str).str.strip()
+    if "linea" in df.columns:
+        df["linea"] = df["linea"].astype(str).str.strip()
+    if "es_quimico" in df.columns:
+        df["es_quimico"] = df["es_quimico"].astype(str).str.strip().str.lower().isin({"1", "true", "si", "sí", "yes", "x"})
+    return df.drop_duplicates(subset=["sku"], keep="last").reset_index(drop=True)
 
 
 def clean_inventory(df: pd.DataFrame) -> pd.DataFrame:

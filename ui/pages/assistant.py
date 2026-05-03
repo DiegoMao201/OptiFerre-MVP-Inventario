@@ -48,6 +48,7 @@ def _build_context_block(user: dict, plan: str) -> Optional[str]:
 
     suggestions = list_suggestions(user["tenant_id"])
     df = st.session_state.get("analysis_result")
+    catalog_df = st.session_state.get("uploaded_catalog")
     summary: dict = {
         "tenant_company": user.get("company_name"),
         "plan": plan,
@@ -64,6 +65,12 @@ def _build_context_block(user: dict, plan: str) -> Optional[str]:
             for s in suggestions[:25]
         ],
     }
+    if isinstance(catalog_df, pd.DataFrame) and not catalog_df.empty:
+        summary["catalog_context"] = {
+            "rows": int(len(catalog_df)),
+            "brands": sorted(catalog_df.get("marca", pd.Series(dtype=str)).dropna().astype(str).unique().tolist())[:15],
+            "suppliers": sorted(catalog_df.get("proveedor", pd.Series(dtype=str)).dropna().astype(str).unique().tolist())[:15],
+        }
     if isinstance(df, pd.DataFrame) and not df.empty:
         summary["kpis"] = {
             "skus": int(df["sku"].nunique()),
@@ -131,6 +138,9 @@ def render() -> None:
     )
 
     st.markdown(_persona_intro(plan))
+    st.info(
+        "Si no sabes qué hacer primero, empieza preguntando: '¿qué me falta cargar?', '¿qué está drenando caja?' o '¿qué debería comprar primero?'."
+    )
 
     # historial en sesión por plan (no se persiste para no acoplar al schema todavía)
     history_key = f"ai_history_{plan}"

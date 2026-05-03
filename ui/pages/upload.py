@@ -6,8 +6,8 @@ import io
 import pandas as pd
 import streamlit as st
 
-from core.templates import ALL_TEMPLATES, INVENTORY_TEMPLATE, SALES_TEMPLATE, validate_columns
-from engine.cleaning import apply_smart_column_mapping
+from core.templates import ALL_TEMPLATES, CATALOG_TEMPLATE, INVENTORY_TEMPLATE, SALES_TEMPLATE, validate_columns
+from engine.cleaning import apply_smart_column_mapping, clean_catalog
 from engine.demo_data import get_demo_dataset
 from ui.components import section_shell
 
@@ -103,7 +103,7 @@ def render() -> None:
                     <p class='of-helper-line'>Esta pantalla debe servirle a un cliente que llega con archivos imperfectos y necesita confiar rápido. Por eso cada bloque explica qué subir, qué valida la app y qué resultado obtiene al final.</p>
                 </div>
                 <div>
-                    <div class='of-stat-line'><strong>1.</strong><span>Subes inventario y ventas en CSV o XLSX.</span></div>
+                    <div class='of-stat-line'><strong>1.</strong><span>Subes inventario, ventas y opcionalmente catálogo maestro.</span></div>
                     <div class='of-stat-line'><strong>2.</strong><span>El sistema valida columnas y corrige aliases comunes.</span></div>
                     <div class='of-stat-line'><strong>3.</strong><span>Obtienes dashboard, análisis y compra sugerida.</span></div>
                 </div>
@@ -185,8 +185,13 @@ def render() -> None:
 
     _render_template_hub()
 
+    st.markdown("### Carga operativa completa")
+    st.info(
+        "Inventario y ventas son obligatorios para analizar. El catálogo maestro ahora también se puede cargar aquí para enriquecer nombres, marcas, proveedores y contexto comercial."
+    )
+
     st.markdown("<div class='of-section-space'></div>", unsafe_allow_html=True)
-    cols = st.columns(2)
+    cols = st.columns(3)
     with cols[0]:
         st.markdown("### 1) Inventario maestro")
         st.caption("Base para saber cuánto stock tienes, cuánto cuesta y cuánto tarda en reponerse.")
@@ -252,10 +257,44 @@ def render() -> None:
                     "No pude procesar ese archivo de ventas. Asegúrate de subir un CSV o XLSX con fechas, SKU, cantidad vendida y tipo de documento."
                 )
 
+    with cols[2]:
+        st.markdown("### 3) Catálogo maestro")
+        st.caption("Opcional, pero recomendado. Agrega marca, proveedor y línea para que la lectura comercial sea más clara.")
+        catalog_file = st.file_uploader(
+            "Catálogo maestro (CSV o XLSX)", type=["csv", "xlsx", "xls"], key="catalog_uploader"
+        )
+        if catalog_file is not None:
+            try:
+                df = _read_any(catalog_file)
+                df, mapping = apply_smart_column_mapping(df, schema="catalog")
+                ok, missing = validate_columns(df, CATALOG_TEMPLATE)
+                if not ok:
+                    st.error(_human_validation_error("catálogo maestro", missing, CATALOG_TEMPLATE.title))
+                else:
+                    cleaned = clean_catalog(df)
+                    st.session_state["uploaded_catalog"] = cleaned
+                    if mapping:
+                        st.info(
+                            "Smart Importer aplicó estas equivalencias: "
+                            + ", ".join(f"{src} → {dst}" for src, dst in mapping.items())
+                        )
+                    st.success(
+                        f"✅ Catálogo maestro cargado: {len(cleaned):,} filas. La app ya tiene más contexto comercial para explicar mejor los resultados."
+                    )
+                    st.dataframe(cleaned.head(10), use_container_width=True, hide_index=True)
+            except Exception:
+                st.error(
+                    "No pude procesar ese catálogo maestro. Revisa que incluya SKU, nombre comercial, marca, proveedor, línea y el indicador de si es químico."
+                )
+
     st.divider()
     inv_ready = "uploaded_inventory" in st.session_state
     sales_ready = "uploaded_sales" in st.session_state
+    catalog_ready = "uploaded_catalog" in st.session_state
     if inv_ready and sales_ready:
-        st.success("🟢 Todo listo. Siguiente paso recomendado: entra a **2. Insights IA** para ver dónde estás perdiendo dinero y luego a **3. Qué Comprar** para ejecutar tu primera orden.")
+        if catalog_ready:
+            st.success("🟢 Todo listo. Inventario, ventas y catálogo maestro ya están cargados. Siguiente paso recomendado: entra a **2. Insights IA** y luego a **3. Qué Comprar**.")
+        else:
+            st.success("🟢 Todo listo. Inventario y ventas ya están cargados. Si quieres una lectura más comercial, añade también catálogo maestro antes de ir a **2. Insights IA**.")
     else:
-        st.info("Para obtener recomendaciones reales necesitas cargar al menos **inventario** y **ventas**. El catálogo maestro es opcional, pero ayuda a enriquecer el contexto comercial.")
+        st.info("Para obtener recomendaciones reales necesitas cargar al menos **inventario** y **ventas**. El **catálogo maestro** ya se puede cargar aquí y ayuda a enriquecer el contexto comercial.")

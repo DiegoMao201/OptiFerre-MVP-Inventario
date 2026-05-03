@@ -23,6 +23,12 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
       bg2 = "rgba(255, 255, 255, 0.86)"
       text = "#17324D"
       muted = "#617C98"
+      helper_text = "#466681"
+      label_text = "#284764"
+      contrast_panel_bg = "linear-gradient(180deg, rgba(255,255,255,0.98), rgba(242,247,255,0.94))"
+      contrast_panel_text = "#17324D"
+      contrast_panel_muted = "#617C98"
+      dropzone_text = "#17324D"
       card_border = "rgba(23, 50, 77, 0.12)"
       app_background = """
           radial-gradient(circle at 14% 12%, rgba(0, 224, 255, 0.10), transparent 16%),
@@ -62,6 +68,12 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
       bg2 = "rgba(9, 19, 37, 0.78)"
       text = "#ECF7FF"
       muted = "#9BB6D2"
+      helper_text = "#9BB6D2"
+      label_text = "#A8C4DE"
+      contrast_panel_bg = "linear-gradient(180deg, rgba(11,24,44,0.92), rgba(7,15,29,0.90))"
+      contrast_panel_text = "#F3FBFF"
+      contrast_panel_muted = "#9BB6D2"
+      dropzone_text = "#DDF7FF"
       card_border = "rgba(78, 224, 255, 0.24)"
       app_background = """
           radial-gradient(circle at 14% 12%, rgba(0, 224, 255, 0.18), transparent 16%),
@@ -205,21 +217,21 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
         gap:12px;
         padding:10px 0;
         border-bottom:1px solid rgba(0,224,255,0.1);
-        color:#D6ECFB;
+        color:{contrast_panel_text};
       }}
       .of-stat-line:last-child {{ border-bottom:0; padding-bottom:0; }}
-      .of-stat-line span {{ color:#8FADCA; }}
+      .of-stat-line span {{ color:{contrast_panel_muted}; }}
       .of-section-space {{ margin-top: 10px; margin-bottom: 22px; }}
 
       [data-testid="stMetric"] {{
-        background: linear-gradient(180deg, rgba(11,24,44,0.92), rgba(7,15,29,0.9));
+        background: {contrast_panel_bg};
         border: 1px solid rgba(0,224,255,0.16);
         border-radius: 18px;
         padding: 14px 16px;
         box-shadow: 0 16px 30px rgba(2,8,19,0.24);
       }}
-      [data-testid="stMetricLabel"] p {{ color: #9BB6D2 !important; font-weight: 700 !important; }}
-      [data-testid="stMetricValue"] {{ color: #F3FBFF !important; }}
+      [data-testid="stMetricLabel"] p {{ color: {contrast_panel_muted} !important; font-weight: 700 !important; }}
+      [data-testid="stMetricValue"] {{ color: {contrast_panel_text} !important; }}
       [data-testid="stMetricDelta"] {{ color: #7EF9D0 !important; }}
 
       [data-testid="stPlotlyChart"] {{
@@ -301,7 +313,7 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
         box-shadow: {panel_shadow};
       }}
       .of-helper-line {{
-        color: #9BB6D2;
+        color: {helper_text};
         font-size: .9rem;
         line-height: 1.6;
         margin: 8px 0 0 0;
@@ -312,7 +324,7 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
         border-radius: 14px;
         background: linear-gradient(135deg, rgba(0,224,255,0.12), rgba(124,58,237,0.14));
         border: 1px solid rgba(0,224,255,0.22);
-        color: #D8F4FF;
+        color: {contrast_panel_text};
         font-size: .88rem;
         line-height: 1.55;
       }}
@@ -1284,31 +1296,34 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
       }}
 
       /* Inputs */
-      .stTextInput input, .stNumberInput input, .stTextArea textarea, .stSelectbox div[data-baseweb="select"] {{
+      .stTextInput input, .stNumberInput input, .stTextArea textarea, .stSelectbox div[data-baseweb="select"], .stMultiSelect div[data-baseweb="select"], .stDateInput input {{
         border-radius: 14px !important;
         background: {field_bg} !important;
         border: 1px solid rgba(0,224,255,0.18) !important;
         color: {field_text} !important;
         box-shadow: 0 14px 28px rgba(2, 8, 19, 0.24) !important;
       }}
-      .stTextInput input:focus, .stNumberInput input:focus, .stTextArea textarea:focus {{
+      .stTextInput input:focus, .stNumberInput input:focus, .stTextArea textarea:focus, .stDateInput input:focus {{
         border-color: rgba(0,224,255,0.72) !important;
         box-shadow: 0 0 0 1px rgba(0,224,255,0.32), 0 0 24px rgba(0,224,255,0.14) !important;
       }}
-      .stTextInput label p, .stNumberInput label p, .stTextArea label p, .stSelectbox label p, .stCheckbox label p {{
-        color: #A8C4DE !important;
+      .stTextInput label p, .stNumberInput label p, .stTextArea label p, .stSelectbox label p, .stCheckbox label p, .stMultiSelect label p, .stDateInput label p, .stRadio label p, .stSlider label p {{
+        color: {label_text} !important;
         font-weight: 700 !important;
         letter-spacing: .01em;
       }}
-      .stCaption {{ color: #8FADCA !important; }}
+      .stCaption {{ color: {muted} !important; }}
       .stTextInput input::placeholder, .stNumberInput input::placeholder, .stTextArea textarea::placeholder {{
         color: {field_placeholder} !important;
       }}
       .stCheckbox label span, .stCheckbox p {{
-        color: #A8C4DE !important;
+        color: {label_text} !important;
       }}
       .stTextArea textarea {{ min-height: 128px !important; line-height: 1.6 !important; }}
-      .stSelectbox div[data-baseweb="select"] * {{ color: {field_text} !important; }}
+      .stSelectbox div[data-baseweb="select"] *, .stMultiSelect div[data-baseweb="select"] * {{ color: {field_text} !important; }}
+      .stRadio [role="radiogroup"] label, .stRadio [role="radiogroup"] p {{ color: {field_text} !important; }}
+      .stSlider * {{ color: {field_text} !important; }}
+      .stAlert, [data-testid="stAlertContainer"] * {{ color: {contrast_panel_text} !important; }}
       div[data-baseweb="popover"] ul, div[role="listbox"] {{
         background: {field_bg} !important;
         border: 1px solid rgba(0,224,255,0.16) !important;
@@ -1334,7 +1349,7 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
         box-shadow: 0 16px 30px rgba(2,8,19,0.26) !important;
       }}
       .stFileUploader [data-testid="stFileUploaderDropzone"] * {{
-        color: #DDF7FF !important;
+        color: {dropzone_text} !important;
       }}
       .stFileUploader section button {{
         border-radius: 14px !important;
@@ -1356,6 +1371,11 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
         border: 1px solid rgba(0,224,255,0.14) !important;
       }}
       [data-testid="stDataFrame"] * {{ color: {field_text} !important; }}
+      [data-testid="stDataEditor"] * {{ color: {field_text} !important; }}
+      [data-testid="stDataEditor"] input {{ color: {field_text} !important; background: rgba(255,255,255,0.82) !important; }}
+      .stExpander summary, .stExpander summary * {{ color: {contrast_panel_text} !important; }}
+      .stPopover button * {{ color: {field_text} !important; }}
+      .stMarkdown, .stMarkdown p, .stMarkdown li, .stMarkdown span {{ color: var(--text); }}
 
       /* DataFrame */
       .stDataFrame {{ border-radius: 10px; overflow: hidden; }}

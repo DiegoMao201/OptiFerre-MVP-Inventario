@@ -34,8 +34,8 @@ st.set_page_config(
 # Inicializar DB al arrancar
 init_db()
 
-# Tema base inicial
-inject_brand_css("#10B7C4", "light")
+# Tema base inicial para la experiencia pública
+inject_brand_css("#10B7C4", "dark")
 
 
 PUBLIC_ROUTES = {
@@ -99,6 +99,7 @@ def main() -> None:
 
         PRIVATE_ROUTES[choice]()
     else:
+        inject_brand_css("#10B7C4", "dark")
         st.markdown(
             """
             <style>

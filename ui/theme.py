@@ -19,17 +19,83 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
     primary_soft = f"rgba({r},{g},{b},0.18)"
 
     if theme_mode == "light":
-      bg = "#07111F"
-      bg2 = "rgba(9, 19, 37, 0.78)"
-      text = "#ECF7FF"
-      muted = "#9BB6D2"
-      card_border = "rgba(78, 224, 255, 0.24)"
+      bg = "#F4F8FF"
+      bg2 = "rgba(255, 255, 255, 0.86)"
+      text = "#17324D"
+      muted = "#617C98"
+      card_border = "rgba(23, 50, 77, 0.12)"
+      app_background = """
+          radial-gradient(circle at 14% 12%, rgba(0, 224, 255, 0.10), transparent 16%),
+          radial-gradient(circle at 84% 8%, rgba(124, 58, 237, 0.08), transparent 18%),
+          radial-gradient(circle at 50% 86%, rgba(0, 255, 163, 0.06), transparent 22%),
+          linear-gradient(135deg, #F7FBFF 0%, #EEF5FF 28%, #F5FAFF 52%, #ECF8F5 100%)
+      """
+      sidebar_background = "linear-gradient(180deg, rgba(252,254,255,0.98), rgba(238,246,255,0.98))"
+      sidebar_border = "rgba(23, 50, 77, 0.08)"
+      button_background = "linear-gradient(135deg, rgba(0,224,255,0.96), rgba(0,255,163,0.92))"
+      button_text = "#04101F"
+      panel_bg = "linear-gradient(180deg, rgba(255,255,255,0.96), rgba(241,247,255,0.92))"
+      panel_shadow = "0 18px 34px rgba(88, 116, 148, 0.10)"
+      lead_panel_bg = "linear-gradient(135deg, rgba(255,255,255,0.98), rgba(238,246,255,0.92))"
+      field_bg = "linear-gradient(180deg, rgba(255,255,255,0.99), rgba(243,247,252,0.98))"
+      field_text = "#17324D"
+      field_placeholder = "rgba(70, 101, 132, 0.58)"
+      tab_bg = "rgba(255,255,255,0.78)"
+      tab_btn_bg = "rgba(255,255,255,0.64)"
+      tab_btn_text = "#5D7793"
+      tab_btn_hover = "rgba(0,224,255,0.08)"
+      tab_btn_hover_text = "#17324D"
+      tab_btn_active = "linear-gradient(135deg, rgba(0,224,255,0.14), rgba(124,58,237,0.10))"
+      tab_btn_active_text = "#17324D"
+      expander_bg = "linear-gradient(180deg, rgba(255,255,255,0.96), rgba(241,247,255,0.92))"
+      expander_text = "#17324D"
+      code_bg = "linear-gradient(135deg, rgba(0,224,255,0.10), rgba(124,58,237,0.10))"
+      code_text = "#17324D"
+      logo_panel_bg = "radial-gradient(circle at top, rgba(255,255,255,0.94), rgba(233,242,252,0.88) 46%, rgba(210,226,242,0.38) 100%), rgba(255,255,255,0.82)"
+      logo_caption = "#486786"
+      public_title = "#F3FBFF"
+      public_lead = "#A8C4DE"
+      public_card_bg = "linear-gradient(180deg, rgba(11,24,44,0.90), rgba(7,15,29,0.88))"
+      public_card_border = "rgba(0,224,255,0.18)"
     else:
       bg = "#07111F"
       bg2 = "rgba(9, 19, 37, 0.78)"
       text = "#ECF7FF"
       muted = "#9BB6D2"
       card_border = "rgba(78, 224, 255, 0.24)"
+      app_background = """
+          radial-gradient(circle at 14% 12%, rgba(0, 224, 255, 0.18), transparent 16%),
+          radial-gradient(circle at 84% 8%, rgba(124, 58, 237, 0.18), transparent 18%),
+          radial-gradient(circle at 50% 86%, rgba(0, 255, 163, 0.12), transparent 22%),
+          linear-gradient(135deg, #07111F 0%, #0D1630 24%, #111C3E 52%, #091120 100%)
+      """
+      sidebar_background = "linear-gradient(180deg, rgba(8,18,34,0.96), rgba(7,14,28,0.98))"
+      sidebar_border = "rgba(78, 224, 255, 0.12)"
+      button_background = "linear-gradient(135deg, rgba(0,224,255,0.96), rgba(0,255,163,0.92))"
+      button_text = "#04101F"
+      panel_bg = "linear-gradient(180deg, rgba(11,24,44,0.92), rgba(7,15,29,0.90))"
+      panel_shadow = "0 18px 34px rgba(2, 8, 19, 0.34)"
+      lead_panel_bg = "linear-gradient(135deg, rgba(10,22,41,0.96), rgba(7,15,29,0.94))"
+      field_bg = "linear-gradient(180deg, rgba(11,24,44,0.92), rgba(8,18,34,0.88))"
+      field_text = "#F3FBFF"
+      field_placeholder = "rgba(191,224,246,0.48)"
+      tab_bg = "rgba(255,255,255,0.06)"
+      tab_btn_bg = "rgba(255,255,255,0.04)"
+      tab_btn_text = "#9BB6D2"
+      tab_btn_hover = "rgba(0,224,255,0.10)"
+      tab_btn_hover_text = "#F3FBFF"
+      tab_btn_active = "linear-gradient(135deg, rgba(0,224,255,0.16), rgba(124,58,237,0.18))"
+      tab_btn_active_text = "#F5FBFF"
+      expander_bg = "linear-gradient(180deg, rgba(11,24,44,0.92), rgba(7,15,29,0.90))"
+      expander_text = "#F3FBFF"
+      code_bg = "linear-gradient(135deg, rgba(0,224,255,0.18), rgba(124,58,237,0.22))"
+      code_text = "#EFFFFF"
+      logo_panel_bg = "linear-gradient(180deg, rgba(8,20,38,0.68), rgba(11,17,32,0.30))"
+      logo_caption = "#D6F1FF"
+      public_title = "#F3FBFF"
+      public_lead = "#A8C4DE"
+      public_card_bg = "linear-gradient(180deg, rgba(11,24,44,0.90), rgba(7,15,29,0.88))"
+      public_card_border = "rgba(0,224,255,0.18)"
 
     css = f"""
     <style>
@@ -43,16 +109,12 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
         --card-border: {card_border};
       }}
       .stApp {{
-        background:
-          radial-gradient(circle at 14% 12%, rgba(0, 224, 255, 0.18), transparent 16%),
-          radial-gradient(circle at 84% 8%, rgba(124, 58, 237, 0.18), transparent 18%),
-          radial-gradient(circle at 50% 86%, rgba(0, 255, 163, 0.12), transparent 22%),
-          linear-gradient(135deg, #07111F 0%, #0D1630 24%, #111C3E 52%, #091120 100%);
+        background: {app_background};
         color: var(--text);
       }}
       section[data-testid="stSidebar"] {{
-        background: linear-gradient(180deg, rgba(8,18,34,0.96), rgba(7,14,28,0.98));
-        border-right: 1px solid rgba(78, 224, 255, 0.12);
+        background: {sidebar_background};
+        border-right: 1px solid {sidebar_border};
       }}
       .block-container {{ max-width: 1360px; padding-top: 2.35rem; padding-bottom: 3.4rem; }}
       h1, h2, h3, h4 {{ color: var(--text); letter-spacing: -0.01em; }}
@@ -60,8 +122,8 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
 
       /* Botones */
       .stButton>button, .stDownloadButton>button, .stLinkButton>a {{
-        background: linear-gradient(135deg, rgba(0,224,255,0.96), rgba(0,255,163,0.92)) !important;
-        color: #04101F !important;
+        background: {button_background} !important;
+        color: {button_text} !important;
         border: 1px solid rgba(157,255,240,0.4) !important;
         border-radius: 16px !important;
         font-weight: 800 !important;
@@ -77,18 +139,18 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
 
       /* KPI cards */
       .of-kpi {{
-        background: linear-gradient(180deg, rgba(11,24,44,0.92), rgba(7,15,29,0.9));
+        background: {panel_bg};
         border: 1px solid var(--card-border);
         border-radius: 18px;
         padding: 18px 20px;
         height: 100%;
-        box-shadow: 0 0 0 1px rgba(0,224,255,0.08) inset, 0 18px 34px rgba(2, 8, 19, 0.34);
+        box-shadow: {panel_shadow};
       }}
       .of-kpi .label {{ color: var(--muted); font-size: 0.82rem; text-transform: uppercase; letter-spacing: .08em; }}
       .of-kpi .value {{ color: var(--text); font-size: 1.85rem; font-weight: 700; margin-top: 6px; }}
       .of-kpi .delta {{ color: var(--primary); font-size: 0.85rem; margin-top: 4px; }}
       .of-lead-panel {{
-        background: linear-gradient(135deg, rgba(10,22,41,0.96), rgba(7,15,29,0.94));
+        background: {lead_panel_bg};
         border: 1px solid rgba(0,224,255,0.18);
         border-radius: 24px;
         padding: 22px 24px;
@@ -137,23 +199,23 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
 
       /* Banner */
       .of-banner {{
-        background: linear-gradient(135deg, rgba(14,30,53,0.94), rgba(12,22,46,0.92));
+        background: {panel_bg};
         border: 1px solid rgba(0,224,255,0.22);
         border-radius: 18px;
         padding: 16px 20px;
         margin: 8px 0 18px 0;
-        box-shadow: 0 18px 34px rgba(2, 8, 19, 0.28);
+        box-shadow: {panel_shadow};
       }}
       .of-banner h4 {{ margin: 0 0 4px 0; color: var(--primary); }}
       .of-banner p {{ margin: 0; color: var(--text); opacity: 0.92; }}
       .of-section-shell {{ margin: 0 0 14px 0; }}
       .of-page-block {{ margin: 0 0 24px 0; }}
       .of-soft-panel {{
-        background: linear-gradient(180deg, rgba(11,24,44,0.92), rgba(8,18,34,0.88));
+        background: {panel_bg};
         border: 1px solid rgba(0,224,255,0.18);
         border-radius: 22px;
         padding: 22px 24px;
-        box-shadow: 0 18px 34px rgba(2, 8, 19, 0.3);
+        box-shadow: {panel_shadow};
       }}
       .of-helper-line {{
         color: #9BB6D2;
@@ -245,7 +307,7 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
         box-shadow: 0 16px 30px rgba(8, 17, 31, 0.12);
       }}
       .of-upload-promo {{
-        background: linear-gradient(135deg, rgba(12,31,57,0.96), rgba(14,24,52,0.92));
+        background: {lead_panel_bg};
         border: 1px solid var(--card-border);
         border-radius: 24px;
         padding: 18px 20px;
@@ -254,7 +316,7 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
       }}
       .of-upload-promo-grid {{ display:grid; grid-template-columns: 1.1fr .9fr; gap: 14px; }}
       .of-upload-stat {{
-        background: linear-gradient(180deg, rgba(16,35,64,0.94), rgba(11,25,47,0.9));
+        background: {panel_bg};
         border: 1px solid var(--card-border);
         border-radius: 18px;
         padding: 14px 16px;
@@ -414,13 +476,13 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
         align-items:center;
         justify-content:center;
         gap: 14px;
-        border-radius: 28px;
-        border: 1px solid rgba(16,33,59,0.14);
-        background:
-          radial-gradient(circle at top, rgba(255,255,255,0.92), rgba(219,234,248,0.78) 46%, rgba(191,214,236,0.28) 100%),
-          rgba(255,255,255,0.72);
-        box-shadow: 0 28px 60px rgba(8, 17, 31, 0.16);
+        border-radius: 32px;
+        border: 1px solid rgba(0,224,255,0.18);
+        background: {logo_panel_bg};
+        backdrop-filter: blur(14px);
+        box-shadow: 0 0 0 1px rgba(0,224,255,0.08) inset, 0 26px 56px rgba(8, 17, 31, 0.22);
         padding: 24px 22px;
+        animation: of-logo-float 7s ease-in-out infinite;
       }}
       .of-brand-logo,
       .of-logo-panel img {{
@@ -428,12 +490,21 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
         margin: 0 auto;
         width: min(100%, 240px);
         height: auto;
-        filter: drop-shadow(0 16px 32px rgba(10, 25, 47, 0.16));
+        filter: drop-shadow(0 16px 32px rgba(10, 25, 47, 0.22));
+        animation: of-logo-pulse 5.5s ease-in-out infinite;
       }}
       .of-logo-caption {{
         max-width: 250px;
         text-align: center;
-        color: #D6F1FF;
+        color: {logo_caption};
+              @keyframes of-logo-float {{
+                0%, 100% {{ transform: translateY(0px) scale(1); }}
+                50% {{ transform: translateY(-8px) scale(1.012); }}
+              }}
+              @keyframes of-logo-pulse {{
+                0%, 100% {{ transform: scale(1); filter: drop-shadow(0 16px 32px rgba(10, 25, 47, 0.22)); }}
+                50% {{ transform: scale(1.025); filter: drop-shadow(0 22px 36px rgba(0, 224, 255, 0.18)); }}
+              }}
         font-size: .88rem;
         line-height: 1.5;
         font-weight: 600;
@@ -457,7 +528,7 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
         line-height: .96;
         margin: 10px 0 0 0;
         letter-spacing: -0.04em;
-        color: #F3FBFF;
+        color: {public_title};
         text-shadow: 0 0 22px rgba(0,224,255,0.08);
       }}
       .of-shimmer-text {{
@@ -471,7 +542,7 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
       .of-stage-lead {{
         margin: 14px 0 0 0;
         max-width: 560px;
-        color: #A8C4DE;
+        color: {public_lead};
         font-size: .98rem;
         line-height: 1.64;
         font-weight: 500;
@@ -482,8 +553,8 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
         background:
           radial-gradient(circle at top right, rgba(0,224,255,0.18), transparent 30%),
           radial-gradient(circle at left bottom, rgba(124,58,237,0.16), transparent 34%),
-          linear-gradient(180deg, rgba(10,22,41,0.98), rgba(6,14,26,0.96));
-        border: 1px solid rgba(0,224,255,0.22);
+          {public_card_bg};
+        border: 1px solid {public_card_border};
         border-radius: 30px;
         padding: 32px 28px 26px 28px;
         margin-bottom: 34px;
@@ -495,10 +566,10 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
         margin: 12px 0 14px 0;
         max-width: 760px;
         letter-spacing: -0.04em;
-        color: #F5FBFF;
+        color: {public_title};
         text-shadow: 0 0 18px rgba(0,224,255,0.08);
       }}
-      .of-hero-v2 p {{ color: #A8C4DE; line-height: 1.78; max-width: 860px; margin: 0; }}
+      .of-hero-v2 p {{ color: {public_lead}; line-height: 1.78; max-width: 860px; margin: 0; }}
       .of-proof-v2 {{
         display: grid;
         grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -506,13 +577,13 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
         margin-top: 22px;
       }}
       .of-proof-v2 .item {{
-        background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));
-        border: 1px solid rgba(0,224,255,0.16);
+        background: rgba(255,255,255,0.08);
+        border: 1px solid {public_card_border};
         border-radius: 16px;
         padding: 16px;
       }}
       .of-proof-v2 .number {{ font-size: 1.7rem; font-weight: 800; letter-spacing: -0.03em; }}
-      .of-proof-v2 .caption {{ color: #A8C4DE; font-size: .9rem; margin-top: 6px; line-height: 1.5; }}
+      .of-proof-v2 .caption {{ color: {public_lead}; font-size: .9rem; margin-top: 6px; line-height: 1.5; }}
       .of-actionable-intro {{
         color: #A8C4DE;
         font-size: .9rem;
@@ -918,35 +989,35 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
       /* Tabs */
       .stTabs [data-baseweb="tab-list"] {{
         gap: 10px;
-        background: rgba(255,255,255,0.06);
+        background: {tab_bg};
         border: 1px solid rgba(0,224,255,0.14);
         border-radius: 18px;
         padding: 8px;
         margin-bottom: 14px;
       }}
       .stTabs [data-baseweb="tab-list"] button {{
-        background: rgba(255,255,255,0.04) !important;
+        background: {tab_btn_bg} !important;
         border-radius: 12px !important;
-        color: #9BB6D2 !important;
+        color: {tab_btn_text} !important;
         font-weight: 800 !important;
         min-height: 44px !important;
       }}
       .stTabs [data-baseweb="tab-list"] button:hover {{
-        background: rgba(0,224,255,0.1) !important;
-        color: #F3FBFF !important;
+        background: {tab_btn_hover} !important;
+        color: {tab_btn_hover_text} !important;
       }}
       .stTabs [data-baseweb="tab-list"] button[aria-selected="true"] {{
-        background: linear-gradient(135deg, rgba(0,224,255,0.16), rgba(124,58,237,0.18)) !important;
-        color: #F5FBFF !important;
+        background: {tab_btn_active} !important;
+        color: {tab_btn_active_text} !important;
         border-bottom-color: transparent !important;
       }}
 
       /* Inputs */
       .stTextInput input, .stNumberInput input, .stTextArea textarea, .stSelectbox div[data-baseweb="select"] {{
         border-radius: 14px !important;
-        background: linear-gradient(180deg, rgba(11,24,44,0.92), rgba(8,18,34,0.88)) !important;
+        background: {field_bg} !important;
         border: 1px solid rgba(0,224,255,0.18) !important;
-        color: #123154 !important;
+        color: {field_text} !important;
         box-shadow: 0 14px 28px rgba(2, 8, 19, 0.24) !important;
       }}
       .stTextInput input:focus, .stNumberInput input:focus, .stTextArea textarea:focus {{
@@ -960,19 +1031,19 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
       }}
       .stCaption {{ color: #8FADCA !important; }}
       .stTextInput input::placeholder, .stNumberInput input::placeholder, .stTextArea textarea::placeholder {{
-        color: rgba(191,224,246,0.48) !important;
+        color: {field_placeholder} !important;
       }}
       .stCheckbox label span, .stCheckbox p {{
         color: #A8C4DE !important;
       }}
       .stTextArea textarea {{ min-height: 128px !important; line-height: 1.6 !important; }}
-      .stSelectbox div[data-baseweb="select"] * {{ color: #F3FBFF !important; }}
+      .stSelectbox div[data-baseweb="select"] * {{ color: {field_text} !important; }}
       div[data-baseweb="popover"] ul, div[role="listbox"] {{
-        background: linear-gradient(180deg, rgba(11,24,44,0.98), rgba(8,18,34,0.96)) !important;
+        background: {field_bg} !important;
         border: 1px solid rgba(0,224,255,0.16) !important;
         border-radius: 16px !important;
       }}
-      div[data-baseweb="popover"] li, div[role="option"] {{ color: #F3FBFF !important; }}
+      div[data-baseweb="popover"] li, div[role="option"] {{ color: {field_text} !important; }}
       .stForm {{
         background: transparent !important;
       }}
@@ -980,14 +1051,14 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
         border: 1px solid rgba(0,224,255,0.14);
         border-radius: 22px;
         padding: 20px 20px 14px 20px;
-        background: linear-gradient(180deg, rgba(10,22,41,0.9), rgba(7,15,29,0.86));
+        background: {panel_bg};
         box-shadow: 0 18px 34px rgba(2,8,19,0.28);
       }}
 
       .stFileUploader [data-testid="stFileUploaderDropzone"] {{
         border: 1px dashed rgba(0,224,255,0.28) !important;
         border-radius: 20px !important;
-        background: linear-gradient(180deg, rgba(10,22,41,0.92), rgba(7,15,29,0.88)) !important;
+        background: {panel_bg} !important;
         padding: 18px !important;
         box-shadow: 0 16px 30px rgba(2,8,19,0.26) !important;
       }}
@@ -1000,8 +1071,8 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
       }}
 
       .stMarkdown code, .stCode, code {{
-        background: linear-gradient(135deg, rgba(0,224,255,0.18), rgba(124,58,237,0.22)) !important;
-        color: #EFFFFF !important;
+        background: {code_bg} !important;
+        color: {code_text} !important;
         border: 1px solid rgba(0,224,255,0.18) !important;
         border-radius: 10px !important;
         padding: 0.22rem 0.46rem !important;
@@ -1010,10 +1081,10 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
 
       .stDataFrame, [data-testid="stDataFrame"] {{ border-radius: 16px; overflow: hidden; }}
       [data-testid="stDataFrame"] div[role="table"] {{
-        background: linear-gradient(180deg, rgba(10,22,41,0.96), rgba(7,15,29,0.94)) !important;
+        background: {panel_bg} !important;
         border: 1px solid rgba(0,224,255,0.14) !important;
       }}
-      [data-testid="stDataFrame"] * {{ color: #EAF8FF !important; }}
+      [data-testid="stDataFrame"] * {{ color: {field_text} !important; }}
 
       /* DataFrame */
       .stDataFrame {{ border-radius: 10px; overflow: hidden; }}

@@ -83,7 +83,18 @@ def _build_logo_markup() -> str:
                 if not logo_path.exists():
                                 return ""
                 encoded = base64.b64encode(logo_path.read_bytes()).decode("ascii")
-                return f"<img class='of-brand-logo' src='data:image/png;base64,{encoded}' alt='Nexus Pro'>"
+                return dedent(
+                                f"""
+                                <div class='of-logo-tech-shell'>
+                                        <div class='of-logo-orbit orbit-a'></div>
+                                        <div class='of-logo-orbit orbit-b'></div>
+                                        <div class='of-logo-orbit orbit-c'></div>
+                                        <div class='of-logo-scan'></div>
+                                        <div class='of-logo-core-glow'></div>
+                                        <img class='of-brand-logo' src='data:image/png;base64,{encoded}' alt='Nexus Pro'>
+                                </div>
+                                """
+                ).strip()
 
 
 def _render_top_stage() -> None:
@@ -100,7 +111,7 @@ def _render_top_stage() -> None:
                                                                 """
                                                                 <div class="of-stage-title-wrap">
                                                                         <div class="of-eyebrow">OptiFerre</div>
-                                                                        <h1 class="of-stage-title">Diagnóstico <span class="of-shimmer-text">ejecutivo</span> de inventarios para empresas que gestionan stock</h1>
+                                                                        <h1 class="of-stage-title of-shimmer-title">Diagnóstico ejecutivo de inventarios para empresas que gestionan stock</h1>
                                                                         <p class="of-stage-lead">Sube inventario y movimientos, obtén lectura ejecutiva de caja atrapada, riesgo de quiebre y compra sugerida con una experiencia más clara, visible y tecnológica.</p>
                                                                         <div class="of-chip-row">
                                                                                 <span class="of-chip">14 días gratis</span>
@@ -120,7 +131,7 @@ def _render_value_stage() -> None:
                                                 """
                                                 <div class="of-hero-v2 card-hover">
                                                         <div class="of-eyebrow">Optimización B2B para cualquier operación con inventario</div>
-                                                        <h2>Reduce capital inmovilizado y repone con <span class="of-shimmer-text">criterio</span>.</h2>
+                                                        <h2 class="of-shimmer-title">Reduce capital inmovilizado y repone con criterio.</h2>
                                                         <p>
                                                                 OptiFerre convierte archivos de inventario y movimientos en una lectura ejecutiva de riesgo,
                                                                 rotación y abastecimiento. En pocos minutos sabes dónde tienes dinero atrapado,
@@ -178,7 +189,7 @@ def _render_stats_bar() -> None:
 
 
 def _render_feature_grid() -> None:
-                st.markdown("### ¿Por qué <span class='of-shimmer-text'>OptiFerre</span>?", unsafe_allow_html=True)
+                st.markdown("### <span class='of-shimmer-title'>¿Por qué OptiFerre?</span>", unsafe_allow_html=True)
                 st.markdown(
                                 "<p class='of-mini-note' style='margin-bottom:18px'>Todo lo necesario para pasar de archivos desordenados a decisiones concretas de abastecimiento.</p>",
                                 unsafe_allow_html=True,
@@ -240,7 +251,7 @@ def _render_form_shell() -> None:
 
 
 def _render_trust_and_proof() -> None:
-                st.markdown("### Confianza y <span class='of-shimmer-text'>claridad</span>", unsafe_allow_html=True)
+                st.markdown("### <span class='of-shimmer-title'>Confianza y claridad</span>", unsafe_allow_html=True)
                 st.markdown(
                                 dedent(
                                                 """
@@ -282,7 +293,7 @@ def _render_plan_strip() -> None:
                         ).strip()
                 )
 
-        st.markdown("### Planes <span class='of-shimmer-text'>claros</span>, sin letra pequeña", unsafe_allow_html=True)
+        st.markdown("### <span class='of-shimmer-title'>Planes claros, sin letra pequeña</span>", unsafe_allow_html=True)
         st.markdown(
                 "<p class='of-mini-note' style='margin-bottom:18px'>Empieza con trial, comprueba valor y escala a servicios avanzados solo cuando tenga sentido.</p>",
                 unsafe_allow_html=True,
@@ -294,7 +305,7 @@ def _render_plan_strip() -> None:
 
 
 def _render_faq() -> None:
-                st.markdown("### Preguntas <span class='of-shimmer-text'>frecuentes</span>", unsafe_allow_html=True)
+                st.markdown("### <span class='of-shimmer-title'>Preguntas frecuentes</span>", unsafe_allow_html=True)
                 st.markdown(
                                 "<div class='of-faq-shell'><p class='of-mini-note'>Abre cada respuesta y entiende qué hace la app, cómo procesa la información y cómo evolucionas a suscripción sin sorpresas.</p></div>",
                                 unsafe_allow_html=True,
@@ -359,7 +370,7 @@ def _render_final_cta() -> None:
                                                 """
                                                 <div class="of-final-cta">
                                                         <div class="of-eyebrow">OptiFerre</div>
-                                                        <h3>Empieza con <span class="of-shimmer-text">archivos</span>. Escala a plataforma.</h3>
+                                                        <h3 class="of-shimmer-title">Empieza con archivos. Escala a plataforma.</h3>
                                                         <p class="of-mini-note">Primero validas valor con la prueba y el dashboard. Luego decides si activas suscripción, integración ERP o automatización avanzada.</p>
                                                 </div>
                                                 """
@@ -386,7 +397,7 @@ def _render_contact_section() -> None:
 
 
 def _render_public_support_form() -> None:
-                st.markdown("### Soporte <span class='of-shimmer-text'>directo</span>", unsafe_allow_html=True)
+                st.markdown("### <span class='of-shimmer-title'>Soporte directo</span>", unsafe_allow_html=True)
                 st.markdown(
                                 "<p class='of-mini-note' style='margin-bottom:16px'>Si necesitas ayuda antes de entrar o quieres dejarnos una solicitud desde esta página, crea el ticket aquí y lo enviaremos al canal operativo de soporte.</p>",
                                 unsafe_allow_html=True,
@@ -454,7 +465,7 @@ def render() -> None:
                                 _render_form_shell()
                                 if reset_token:
                                                 token_data = validate_password_reset_token(reset_token)
-                                                st.markdown("### Recupera tu <span class='of-shimmer-text'>acceso</span>", unsafe_allow_html=True)
+                                                st.markdown("### <span class='of-shimmer-title'>Recupera tu acceso</span>", unsafe_allow_html=True)
                                                 if not token_data:
                                                                 st.error("El enlace de recuperación ya no es válido o expiró.")
                                                 else:

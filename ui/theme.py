@@ -281,6 +281,8 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
         align-items: stretch;
       }}
       .of-chip {{
+        position: relative;
+        overflow: hidden;
         display:inline-flex;
         align-items:center;
         justify-content:center;
@@ -298,8 +300,20 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
         white-space: normal;
         text-align: center;
         text-wrap: balance;
+        isolation: isolate;
         transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease, background .25s ease;
       }}
+      .of-chip::before {{
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(115deg, transparent 10%, rgba(255,255,255,0.12) 34%, rgba(0,224,255,0.24) 50%, rgba(0,255,163,0.18) 62%, transparent 84%);
+        transform: translateX(-115%);
+        animation: of-chip-sweep 5.8s ease-in-out infinite;
+        pointer-events: none;
+      }}
+      .of-chip:nth-child(2)::before {{ animation-delay: 1.1s; }}
+      .of-chip:nth-child(3)::before {{ animation-delay: 2.1s; }}
       .of-chip:hover {{
         transform: translateY(-2px);
         border-color: rgba(16,183,196,0.42);
@@ -469,6 +483,8 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
       .testimonial-card {{ backdrop-filter: blur(12px); }}
       .of-stage-logo-wrap {{ min-height: 260px; display:flex; align-items:center; justify-content:center; }}
       .of-logo-panel {{
+        position: relative;
+        overflow: hidden;
         width: min(100%, 360px);
         min-height: 260px;
         display:flex;
@@ -484,8 +500,65 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
         padding: 24px 22px;
         animation: of-logo-float 7s ease-in-out infinite;
       }}
+      .of-logo-panel::before {{
+        content: "";
+        position: absolute;
+        inset: -30% 48% -30% -10%;
+        background: linear-gradient(90deg, transparent 0%, rgba(0,224,255,0.10) 36%, rgba(255,255,255,0.26) 50%, rgba(0,255,163,0.12) 68%, transparent 100%);
+        transform: skewX(-18deg);
+        animation: of-scan-sweep 7.6s linear infinite;
+        pointer-events: none;
+      }}
+      .of-logo-panel::after {{
+        content: "";
+        position: absolute;
+        inset: 14px;
+        border-radius: 26px;
+        border: 1px solid rgba(255,255,255,0.06);
+        pointer-events: none;
+      }}
+      .of-logo-tech-shell {{
+        position: relative;
+        width: min(100%, 250px);
+        min-height: 156px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        isolation: isolate;
+      }}
+      .of-logo-orbit {{
+        position: absolute;
+        border-radius: 999px;
+        border: 1px solid rgba(0,224,255,0.16);
+        box-shadow: 0 0 22px rgba(0,224,255,0.10);
+        pointer-events: none;
+      }}
+      .of-logo-orbit.orbit-a {{ inset: 6px 18px; animation: of-orbit-rotate 12s linear infinite; }}
+      .of-logo-orbit.orbit-b {{ inset: 20px 0; border-color: rgba(0,255,163,0.14); transform: rotate(18deg); animation: of-orbit-rotate-reverse 9s linear infinite; }}
+      .of-logo-orbit.orbit-c {{ inset: 30px 26px; border-color: rgba(139,92,246,0.16); transform: rotate(-24deg); animation: of-orbit-pulse 4.2s ease-in-out infinite; }}
+      .of-logo-scan {{
+        position: absolute;
+        inset: 22px 30px;
+        border-radius: 22px;
+        background: linear-gradient(180deg, transparent 0%, rgba(0,224,255,0.08) 40%, rgba(255,255,255,0.28) 50%, rgba(0,255,163,0.08) 60%, transparent 100%);
+        mix-blend-mode: screen;
+        animation: of-logo-scan 4.8s ease-in-out infinite;
+        pointer-events: none;
+      }}
+      .of-logo-core-glow {{
+        position: absolute;
+        width: 120px;
+        height: 120px;
+        border-radius: 999px;
+        background: radial-gradient(circle, rgba(0,224,255,0.20), rgba(139,92,246,0.12) 46%, transparent 74%);
+        filter: blur(10px);
+        animation: of-logo-core 4.6s ease-in-out infinite;
+        pointer-events: none;
+      }}
       .of-brand-logo,
       .of-logo-panel img {{
+        position: relative;
+        z-index: 2;
         display:block;
         margin: 0 auto;
         width: min(100%, 240px);
@@ -497,17 +570,40 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
         max-width: 250px;
         text-align: center;
         color: {logo_caption};
-              @keyframes of-logo-float {{
-                0%, 100% {{ transform: translateY(0px) scale(1); }}
-                50% {{ transform: translateY(-8px) scale(1.012); }}
-              }}
-              @keyframes of-logo-pulse {{
-                0%, 100% {{ transform: scale(1); filter: drop-shadow(0 16px 32px rgba(10, 25, 47, 0.22)); }}
-                50% {{ transform: scale(1.025); filter: drop-shadow(0 22px 36px rgba(0, 224, 255, 0.18)); }}
-              }}
         font-size: .88rem;
         line-height: 1.5;
         font-weight: 600;
+      }}
+      @keyframes of-logo-float {{
+        0%, 100% {{ transform: translateY(0px) scale(1); }}
+        50% {{ transform: translateY(-8px) scale(1.012); }}
+      }}
+      @keyframes of-logo-pulse {{
+        0%, 100% {{ transform: scale(1); filter: drop-shadow(0 16px 32px rgba(10, 25, 47, 0.22)); }}
+        50% {{ transform: scale(1.025); filter: drop-shadow(0 22px 36px rgba(0, 224, 255, 0.18)); }}
+      }}
+      @keyframes of-scan-sweep {{
+        0% {{ transform: translateX(-170%) skewX(-18deg); opacity: 0; }}
+        14% {{ opacity: 1; }}
+        50% {{ opacity: .9; }}
+        100% {{ transform: translateX(210%) skewX(-18deg); opacity: 0; }}
+      }}
+      @keyframes of-logo-scan {{
+        0%, 100% {{ transform: translateY(-28px); opacity: 0; }}
+        18% {{ opacity: 0; }}
+        40% {{ opacity: .95; }}
+        58% {{ opacity: .55; }}
+        78% {{ transform: translateY(34px); opacity: 0; }}
+      }}
+      @keyframes of-logo-core {{
+        0%, 100% {{ transform: scale(.92); opacity: .72; }}
+        50% {{ transform: scale(1.18); opacity: 1; }}
+      }}
+      @keyframes of-orbit-rotate {{ from {{ transform: rotate(0deg); }} to {{ transform: rotate(360deg); }} }}
+      @keyframes of-orbit-rotate-reverse {{ from {{ transform: rotate(18deg); }} to {{ transform: rotate(-342deg); }} }}
+      @keyframes of-orbit-pulse {{
+        0%, 100% {{ opacity: .55; transform: rotate(-24deg) scale(1); }}
+        50% {{ opacity: 1; transform: rotate(-18deg) scale(1.04); }}
       }}
       .of-stage-title-wrap {{
         padding-top: 18px;
@@ -531,6 +627,14 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
         color: {public_title};
         text-shadow: 0 0 22px rgba(0,224,255,0.08);
       }}
+      .of-shimmer-title {{
+        background: linear-gradient(90deg, #F7FDFF 0%, #00E0FF 22%, #00FFA3 46%, #8B5CF6 70%, #F7FDFF 100%);
+        background-size: 220% auto;
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent !important;
+        animation: of-shimmer 5.2s linear infinite;
+      }}
       .of-shimmer-text {{
         background: linear-gradient(90deg, #F7FDFF 0%, #00E0FF 24%, #00FFA3 52%, #8B5CF6 74%, #F7FDFF 100%);
         background-size: 220% auto;
@@ -550,6 +654,7 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
       }}
       .of-hero-v2 {{
         position: relative;
+        overflow: hidden;
         background:
           radial-gradient(circle at top right, rgba(0,224,255,0.18), transparent 30%),
           radial-gradient(circle at left bottom, rgba(124,58,237,0.16), transparent 34%),
@@ -559,6 +664,40 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
         padding: 32px 28px 26px 28px;
         margin-bottom: 34px;
         box-shadow: 0 0 0 1px rgba(0,224,255,0.08) inset, 0 24px 48px rgba(2, 8, 19, 0.36);
+      }}
+      .of-hero-v2::before,
+      .of-feature-card-v2::before,
+      .of-proof-v2 .item::before,
+      .of-stat-caption-card::before,
+      .of-price-card::before,
+      .of-final-cta::before,
+      .of-auth-card::before {{
+        content: "";
+        position: absolute;
+        inset: auto -18% -30% -18%;
+        height: 74%;
+        background: radial-gradient(circle at center, rgba(0,224,255,0.16), rgba(139,92,246,0.12) 36%, transparent 68%);
+        filter: blur(22px);
+        animation: of-panel-glow 6.8s ease-in-out infinite;
+        pointer-events: none;
+      }}
+      .of-hero-v2::after,
+      .of-feature-card-v2::after,
+      .of-proof-v2 .item::after,
+      .of-stat-caption-card::after,
+      .of-price-card::after,
+      .of-final-cta::after,
+      .of-auth-card::after {{
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -45%;
+        width: 36%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.04) 30%, rgba(0,224,255,0.14) 52%, rgba(255,255,255,0.06) 70%, transparent 100%);
+        transform: skewX(-18deg);
+        animation: of-panel-sweep 9.4s linear infinite;
+        pointer-events: none;
       }}
       .of-hero-v2 h2 {{
         font-size: clamp(2rem, 3.45vw, 3.7rem);
@@ -577,6 +716,8 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
         margin-top: 22px;
       }}
       .of-proof-v2 .item {{
+        position: relative;
+        overflow: hidden;
         background: rgba(255,255,255,0.08);
         border: 1px solid {public_card_border};
         border-radius: 16px;
@@ -617,6 +758,8 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
       }}
       .of-stat-card .caption {{ color: rgba(18,49,84,0.92); font-size: .82rem; line-height: 1.45; margin-top: 6px; font-weight: 600; }}
       .of-stat-caption-card {{
+        position: relative;
+        overflow: hidden;
         margin-top: 10px;
         min-height: 94px;
         padding: 14px 14px;
@@ -650,6 +793,8 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
         gap: 16px;
       }}
       .of-feature-card-v2 {{
+        position: relative;
+        overflow: hidden;
         background: linear-gradient(180deg, rgba(11,24,44,0.9), rgba(7,15,29,0.88));
         border: 1px solid rgba(0,224,255,0.16);
         border-radius: 18px;
@@ -679,6 +824,8 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
         box-shadow: 0 0 18px rgba(0,224,255,0.14);
       }}
       .of-auth-card {{
+        position: relative;
+        overflow: hidden;
         background:
           radial-gradient(circle at top right, rgba(16,183,196,0.14), transparent 34%),
           linear-gradient(180deg, rgba(10,22,41,0.96), rgba(7,15,29,0.94));
@@ -727,6 +874,7 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
       }}
       .of-price-card {{
         position: relative;
+        overflow: hidden;
         background: linear-gradient(180deg, rgba(250,253,255,0.96), rgba(228,238,249,0.9));
         border: 1px solid rgba(16,33,59,0.22);
         border-radius: 22px;
@@ -784,6 +932,8 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
       .of-price-card:focus .of-price-list li,
       .of-price-card:focus-visible .of-price-list li {{ color: #102C49; }}
       .of-final-cta {{
+        position: relative;
+        overflow: hidden;
         margin-top: 22px;
         padding: 28px 26px;
         border-radius: 28px;
@@ -800,6 +950,22 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
       }}
       .of-final-cta .of-eyebrow {{ color: #10B7C4; }}
       .of-final-cta p {{ color: #55718B; }}
+      @keyframes of-chip-sweep {{
+        0%, 100% {{ transform: translateX(-115%); opacity: 0; }}
+        16% {{ opacity: 1; }}
+        52% {{ opacity: .9; }}
+        100% {{ transform: translateX(125%); opacity: 0; }}
+      }}
+      @keyframes of-panel-glow {{
+        0%, 100% {{ transform: translateX(-3%) scale(.96); opacity: .55; }}
+        50% {{ transform: translateX(5%) scale(1.08); opacity: 1; }}
+      }}
+      @keyframes of-panel-sweep {{
+        0% {{ transform: translateX(-135%) skewX(-18deg); opacity: 0; }}
+        10% {{ opacity: .65; }}
+        50% {{ opacity: .85; }}
+        100% {{ transform: translateX(335%) skewX(-18deg); opacity: 0; }}
+      }}
       .of-contact-panel {{
         margin-top: 16px;
         padding: 24px 26px;

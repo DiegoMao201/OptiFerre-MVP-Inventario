@@ -138,15 +138,42 @@ def render() -> None:
     )
 
     st.markdown(_persona_intro(plan))
-    st.info(
-        "Si no sabes qué hacer primero, empieza preguntando: '¿qué me falta cargar?', '¿qué está drenando caja?' o '¿qué debería comprar primero?'."
-    )
+
+    inv_loaded = st.session_state.get("uploaded_inventory") is not None
+    sales_loaded = st.session_state.get("uploaded_sales") is not None
+    has_data = inv_loaded and sales_loaded
+
+    if not has_data:
+        st.info("💡 Aún puedo guiarte sin datos. Cuando subas inventario y ventas en **1. Carga de Datos**, mis respuestas serán específicas a tu negocio.")
+    else:
+        st.caption("Contexto activo: leo tus snapshots, sugerencias y catálogo para responderte con tus datos.")
 
     # historial en sesión por plan (no se persiste para no acoplar al schema todavía)
     history_key = f"ai_history_{plan}"
     if history_key not in st.session_state:
         st.session_state[history_key] = []
     history: list[dict] = st.session_state[history_key]
+
+    suggested_questions = (
+        [
+            "¿Qué archivos me faltan para arrancar?",
+            "¿Cómo descargo la plantilla de inventario?",
+            "¿Qué hace el plan Pro que no hace el Starter?",
+        ]
+        if not has_data
+        else [
+            "¿Qué está drenando mi caja hoy?",
+            "¿Qué SKUs debería comprar primero?",
+            "¿Cuáles productos tengo en sobrestock?",
+        ]
+    )
+    st.markdown("**Preguntas sugeridas:**")
+    sq_cols = st.columns(len(suggested_questions))
+    queued = st.session_state.pop("_assistant_quick_q", None)
+    for i, q in enumerate(suggested_questions):
+        if sq_cols[i].button(q, key=f"sq_{plan}_{i}", use_container_width=True):
+            st.session_state["_assistant_quick_q"] = q
+            st.rerun()
 
     cols = st.columns([1, 1, 6])
     with cols[0]:
@@ -156,7 +183,7 @@ def render() -> None:
 
     _render_history(history)
 
-    user_input = st.chat_input("Escribe tu mensaje al asistente…")
+    user_input = queued or st.chat_input("Escribe tu mensaje al asistente…")
     if not user_input:
         return
 

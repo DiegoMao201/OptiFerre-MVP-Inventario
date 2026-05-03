@@ -122,52 +122,37 @@ def render() -> None:
         return
 
     section_shell(
-        "Bienvenido a OptiFerre",
-        "El sistema que convierte inventario en decisiones: menos pérdidas, menos caja atrapada y compras más claras.",
-        eyebrow="Golpe de valor",
+        "¿Cuánto dinero estás perdiendo hoy?",
+        "Este tablero traduce tu inventario en una sola respuesta: dónde está la caja atrapada, qué SKUs están en riesgo y qué hacer ya.",
+        eyebrow="Inicio · Diagnóstico ejecutivo",
     )
-    st.markdown(
-        """
-        <div class='of-lead-panel'>
-            <div class='of-lead-grid'>
-                <div>
-                    <div class='of-eyebrow'>Lo que deberías sentir en 5 segundos</div>
-                    <h3>Este sistema existe para reducir pérdidas, proteger ventas y ayudarte a comprar mejor.</h3>
-                    <p class='of-helper-line'>Si hoy tienes sobrestock, capital inmovilizado o compras hechas por intuición, aquí debería quedar claro qué está pasando y cuál es la siguiente acción.</p>
-                </div>
-                <div>
-                    <div class='of-stat-line'><strong>Impacto esperado</strong><span>Menos dinero atrapado en productos lentos y menos quiebres en SKUs críticos.</span></div>
-                    <div class='of-stat-line'><strong>Primer logro</strong><span>Detectar rápido el riesgo y bajar a una compra sugerida sin perderte en menús.</span></div>
-                    <div class='of-stat-line'><strong>Prueba social honesta</strong><span>Equipos que usan herramientas similares suelen mejorar visibilidad de inventario desde el primer ciclo de revisión.</span></div>
-                </div>
+
+    inv_loaded = st.session_state.get("uploaded_inventory") is not None
+    sales_loaded = st.session_state.get("uploaded_sales") is not None
+    catalog_loaded = st.session_state.get("uploaded_catalog") is not None
+
+    if not (inv_loaded and sales_loaded):
+        missing = []
+        if not inv_loaded:
+            missing.append("inventario")
+        if not sales_loaded:
+            missing.append("ventas")
+        st.markdown(
+            f"""
+            <div class='of-empty-state'>
+                <div class='of-eyebrow'>Falta un paso para ver tu dinero en riesgo</div>
+                <h3>Aún no puedo calcular tu diagnóstico</h3>
+                <p>Sube {' y '.join(missing)} en <b>1. Carga de Datos</b>. En segundos verás capital atrapado, SKUs en riesgo y la primera compra recomendada.</p>
+                <p class='of-empty-tip'>¿Quieres ver cómo se ve la app con datos? Activa la <b>demo guiada</b> desde Carga de Datos.</p>
             </div>
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
-    st.info("Flujo recomendado: 1. Carga de Datos  2. Insights IA  3. Qué Comprar. Si ya cargaste archivos, este tablero debería mostrarte el problema y la oportunidad de inmediato.")
-    st.markdown(
-        """
-        <div class='of-lead-panel'>
-            <div class='of-lead-grid'>
-                <div>
-                    <div class='of-eyebrow'>Qué debe pasar aquí</div>
-                    <h3>Un gerente debe entender en menos de dos minutos dónde está el riesgo y qué acción sigue</h3>
-                    <p class='of-helper-line'>Este dashboard no es un tablero decorativo. Debe traducir inventario en caja, urgencia, foco comercial y decisiones concretas que una empresa pueda ejecutar hoy.</p>
-                </div>
-                <div>
-                    <div class='of-stat-line'><strong>Riesgo</strong><span>Quiebres, presión sobre clase A y riesgo de agotamiento.</span></div>
-                    <div class='of-stat-line'><strong>Caja</strong><span>Capital atrapado y costo de oportunidad mensual.</span></div>
-                    <div class='of-stat-line'><strong>Prioridad</strong><span>Tareas para proteger ventas y liberar capital.</span></div>
-                </div>
-            </div>
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
+            """,
+            unsafe_allow_html=True,
+        )
+        return
+
     df = _ensure_analysis()
     if df is None or df.empty:
-        st.warning("Aún no has cargado datos. Empieza por **1. Carga de Datos** para desbloquear insights, IA y compra sugerida.")
+        st.warning("No pude calcular el análisis con los archivos actuales. Revisa que inventario y ventas tengan datos válidos en **1. Carga de Datos**.")
         return
 
     sales_rows = int(len(st.session_state.get("uploaded_sales", pd.DataFrame())))
@@ -183,15 +168,12 @@ def render() -> None:
     summary_title, summary_text, chips, risk_score = _build_exec_summary(df)
 
     action_cols = st.columns(3)
-    action_cols[0].metric("Dinero atrapado en stock", format_currency(inmov))
-    action_cols[1].metric("Productos en riesgo de quiebre", f"{quiebres:,}")
-    action_cols[2].metric("SKUs a revisar hoy", f"{int((df['estado'] != 'OK').sum()):,}")
+    action_cols[0].metric("💸 Dinero atrapado", format_currency(inmov), f"-{format_currency(monthly_opp)} / mes")
+    action_cols[1].metric("⚠️ SKUs en riesgo de quiebre", f"{quiebres:,}", "Ventas en peligro")
+    action_cols[2].metric("🎯 SKUs a revisar hoy", f"{int((df['estado'] != 'OK').sum()):,}", "Acción inmediata")
 
-    st.markdown("### Pasos para el éxito")
-    step_cols = st.columns(3)
-    step_cols[0].info("1. Datos cargados. Si no confías en el resultado, vuelve a revisar la calidad de inventario y ventas.")
-    step_cols[1].info("2. Deja que la IA analice. Este tablero resume el riesgo real de caja y disponibilidad.")
-    step_cols[2].info("3. Ejecuta la compra sugerida. Lleva las prioridades a 3. Qué Comprar y genera la orden.")
+    if not catalog_loaded:
+        st.caption("💡 Sube tu **catálogo maestro** en Carga de Datos para ver proveedor, marca y línea en cada decisión.")
 
     st.markdown(
         f"""

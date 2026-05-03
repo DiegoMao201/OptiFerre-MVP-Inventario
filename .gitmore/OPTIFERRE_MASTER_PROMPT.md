@@ -416,6 +416,19 @@ Cada plan se diseña como una **progresión lógica de necesidad**, nunca como u
 - `Soporte` más guiado para clientes sin contexto técnico,
 - `Marca` más alineada con valor y confianza comercial.
 
+### Pase de auditoría UX (consolidación CRO)
+
+Se hizo un pase completo sobre la app autenticada con foco en claridad, conversión y robustez:
+
+- **Sin paneles duplicados**: cada página tiene un único `of-lead-panel` introductorio + métricas + cuerpo. Se eliminaron los segundos y terceros paneles que repetían la misma idea en `dashboard`, `upload`, `analysis`, `billing` y `settings`.
+- **Empty states reales**: `dashboard`, `analysis` y `purchase_orders` ahora tienen un `of-empty-state` claro cuando faltan archivos, con instrucción exacta de qué subir y dónde. Ya no se rompen ni muestran tablas vacías cuando el cliente sube solo 1 o 2 archivos.
+- **Catálogo opcional sin romper**: cuando no hay catálogo, `analysis.py` y `purchase_orders.py` muestran caption sugerente ("sube tu catálogo maestro para ver proveedor, marca y línea") y la tabla se filtra dinámicamente para no exigir columnas inexistentes.
+- **Métricas con dinero al frente**: `dashboard` muestra "💸 Dinero atrapado", "⚠️ SKUs en riesgo", "🎯 SKUs a revisar hoy" como hero metrics con delta de costo de oportunidad mensual.
+- **Plan cards nativas en `billing_page`**: se reescribieron como `st.container(border=True)` con headline de venta ("Deja de adivinar" / "Libera tu caja" / "Tu operación en piloto automático"), `for_who`, `you_get`, `you_dont`. Mucho mejor contraste y conversión.
+- **Asistente IA con preguntas sugeridas**: 3 botones contextuales que pre-cargan la pregunta según haya o no datos cargados; el asistente sigue funcionando aunque el cliente no haya subido nada.
+- **Soporte y Marca**: paneles intro consolidados, sin redundancias.
+- **Theme**: se añadió `.of-empty-state` con contraste correcto en light y dark; `[data-testid="stPlotlyChart"]` ahora usa `panel_bg` mode-aware (antes era siempre dark gradient incluso en light mode → bug visual corregido).
+
 ### IA y operación accionable
 
 - capas por persona y plan,
@@ -430,12 +443,11 @@ Cada plan se diseña como una **progresión lógica de necesidad**, nunca como u
 
 1. El webhook Stripe aún necesita un endpoint HTTP público y productivo fuera de Streamlit.
 2. Los recordatorios automáticos de billing y trial requieren ejecución programada real en Coolify o cron.
-3. El catálogo maestro aún no alimenta todas las pantallas ni todo el motor; hoy enriquece contexto, pero no domina la experiencia completa.
-4. La guía dentro de `2. Insights IA` y `🤖 Asistente IA` mejoró, pero aún puede volverse más conversacional e interactiva.
-5. Falta una experiencia más madura de helpdesk / bandeja operativa.
-6. No existe verificación de correo al alta.
-7. La autenticación sigue basada en sesión de Streamlit, no en backend desacoplado.
-8. No hay workers asíncronos dedicados.
+3. El catálogo maestro ya enriquece visualmente Insights IA y Qué Comprar; pendiente que también alimente el motor analítico para priorización de compra por proveedor/marca consolidados.
+4. Falta una experiencia más madura de helpdesk / bandeja operativa (filtros avanzados, SLA visible, asignación).
+5. No existe verificación de correo al alta.
+6. La autenticación sigue basada en sesión de Streamlit, no en backend desacoplado.
+7. No hay workers asíncronos dedicados.
 
 ### Pendientes de producto / UX
 

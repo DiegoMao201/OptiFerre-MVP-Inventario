@@ -235,11 +235,32 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
       [data-testid="stMetricDelta"] {{ color: #7EF9D0 !important; }}
 
       [data-testid="stPlotlyChart"] {{
-        border: 1px solid rgba(0,224,255,0.14);
+        border: 1px solid var(--card-border);
         border-radius: 22px;
-        background: linear-gradient(180deg, rgba(11,24,44,0.9), rgba(7,15,29,0.88));
+        background: {panel_bg};
         padding: 8px;
-        box-shadow: 0 16px 30px rgba(2,8,19,0.24);
+        box-shadow: {panel_shadow};
+      }}
+
+      .of-empty-state {{
+        background: {panel_bg};
+        border: 1px dashed rgba(0,224,255,0.32);
+        border-radius: 22px;
+        padding: 28px 26px;
+        margin: 12px 0 18px 0;
+        box-shadow: {panel_shadow};
+      }}
+      .of-empty-state h3 {{ margin: 8px 0 12px 0; color: {contrast_panel_text}; }}
+      .of-empty-state p {{
+        color: {contrast_panel_text};
+        font-size: 1rem;
+        line-height: 1.65;
+        margin: 0 0 8px 0;
+      }}
+      .of-empty-state .of-empty-tip {{
+        color: {contrast_panel_muted};
+        font-size: .9rem;
+        margin-top: 12px;
       }}
 
       /* Banner */

@@ -43,12 +43,24 @@ def render() -> None:
 
     section_shell(
         "Qué Comprar",
-        "Este es el centro de decisión: aquí conviertes análisis en una compra clara, editable y lista para ejecutar.",
-        eyebrow="Paso 3 · Compra sugerida",
+        "Convierte el análisis en una compra clara, editable y lista para ejecutar.",
+        eyebrow="Paso 3 · Decisión de compra",
     )
-    st.info(
-        "Tu objetivo aquí no es revisar una tabla eterna. Es salir con una lista priorizada de compra que proteja ventas y libere caja donde hoy estás sobredimensionado."
-    )
+
+    inv = st.session_state.get("uploaded_inventory")
+    sales = st.session_state.get("uploaded_sales")
+    if inv is None or sales is None:
+        st.markdown(
+            """
+            <div class='of-empty-state'>
+                <div class='of-eyebrow'>Aún no tengo qué sugerirte comprar</div>
+                <h3>Faltan datos para calcular la compra</h3>
+                <p>Sube <b>inventario y ventas</b> en <b>1. Carga de Datos</b>. Después regresa aquí: te mostraré qué pedir, en qué cantidad y por qué.</p>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+        return
 
     if not list_suggestions(user["tenant_id"]) and st.session_state.get("analysis_result") is not None:
         _refresh_from_analysis(user)
@@ -61,7 +73,7 @@ def render() -> None:
     suggestions = list_suggestions(user["tenant_id"])
     if not suggestions:
         st.info(
-            "Aún no hay sugerencias persistidas. Primero carga datos y genera el diagnóstico en Inicio o Insights IA. Después vuelve aquí para decidir qué comprar."
+            "Aún no hay sugerencias persistidas. Entra a **🏠 Inicio** o **2. Insights IA** para generar el diagnóstico, y luego vuelve aquí."
         )
         return
 
@@ -116,21 +128,11 @@ def render() -> None:
             summary_cols[2].metric("Línea dominante", top_line.mode().iloc[0] if not top_line.empty else "Sin dato")
 
     edited = st.data_editor(
-        df[
-            [
-                "sku",
-                "name",
-                "proveedor",
-                "marca",
-                "linea",
-                "qty_ai",
-                "qty_user",
-                "unit_cost",
-                "valor_linea",
-                "included",
-                "notes",
-            ]
-        ],
+        df[[c for c in [
+            "sku", "name", "proveedor", "marca", "linea",
+            "qty_ai", "qty_user", "unit_cost", "valor_linea",
+            "included", "notes",
+        ] if c in df.columns]],
         use_container_width=True,
         hide_index=True,
         column_config={

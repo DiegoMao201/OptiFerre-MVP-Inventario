@@ -34,41 +34,10 @@ def _human_validation_error(file_label: str, missing: list[str], template_key: s
     )
 
 
-def _render_template_hub() -> None:
-    st.markdown("### Plantillas oficiales en el mismo flujo")
-    st.info(
-        "Todo empieza aquí. Descarga la plantilla correcta, completa tus datos y súbelos en esta misma pantalla. "
-        "No necesitas salir a otra página para entender qué archivo usar."
-    )
-    for tpl in ALL_TEMPLATES.values():
-        with st.expander(f"{tpl.title} · {tpl.description}", expanded=False):
-            required_columns = ", ".join(tpl.required_columns)
-            st.caption(f"Columnas obligatorias: {required_columns}")
-            preview = tpl.to_dataframe().head(3)
-            st.dataframe(preview, use_container_width=True, hide_index=True)
-            dl_cols = st.columns(2)
-            dl_cols[0].download_button(
-                f"Descargar {tpl.title} CSV",
-                tpl.to_csv_bytes(),
-                file_name=f"plantilla_{tpl.key}.csv",
-                mime="text/csv",
-                use_container_width=True,
-                key=f"dl_inline_csv_{tpl.key}",
-            )
-            dl_cols[1].download_button(
-                f"Descargar {tpl.title} XLSX",
-                tpl.to_xlsx_bytes(),
-                file_name=f"plantilla_{tpl.key}.xlsx",
-                mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                use_container_width=True,
-                key=f"dl_inline_xlsx_{tpl.key}",
-            )
-
-
 def render() -> None:
     section_shell(
-        "Paso 1 · Carga de datos",
-        "Esta es la puerta de entrada: aquí entiendes qué archivos usar, cómo corregirlos y qué resultado obtendrás después.",
+        "Paso 1 · Sube tus datos",
+        "Sube inventario y ventas. En segundos verás cuánto dinero está atrapado y qué deberías comprar primero.",
         eyebrow="Onboarding guiado",
     )
     st.markdown(
@@ -76,61 +45,14 @@ def render() -> None:
         <div class='of-lead-panel'>
             <div class='of-lead-grid'>
                 <div>
-                    <div class='of-eyebrow'>Pasos para el éxito</div>
-                    <h3>1. Carga tus datos. 2. Deja que la IA analice. 3. Ejecuta tu primera compra optimizada.</h3>
-                    <p class='of-helper-line'>OptiFerre existe para reducir pérdidas por sobrestock y quiebres antes de que se conviertan en caja atrapada. Si hoy solo haces una cosa, empieza por subir inventario y ventas aquí.</p>
+                    <div class='of-eyebrow'>Cómo funciona</div>
+                    <h3>1. Sube tu archivo. 2. La IA analiza. 3. Decides qué comprar.</h3>
+                    <p class='of-helper-line'>El Smart Importer reconoce los nombres de columnas más comunes de ERP. Si algo falta, te lo decimos en lenguaje claro y te damos la plantilla oficial para corregirlo.</p>
                 </div>
                 <div>
-                    <div class='of-stat-line'><strong>Qué resuelve</strong><span>Te dice qué comprar, qué está drenando caja y qué puede dejarte sin ventas.</span></div>
-                    <div class='of-stat-line'><strong>Para quién</strong><span>Dueños, compradores y gerentes de ferretería o distribución industrial.</span></div>
-                    <div class='of-stat-line'><strong>Qué sigue</strong><span>Después de cargar, la app te lleva a insights y luego a compra sugerida.</span></div>
-                </div>
-            </div>
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
-    st.info(
-        "Beneficio inmediato: en menos de unos minutos deberías ver dinero atrapado en stock, SKUs en riesgo y una compra sugerida priorizada."
-    )
-    st.markdown(
-        """
-        <div class='of-lead-panel'>
-            <div class='of-lead-grid'>
-                <div>
-                    <div class='of-eyebrow'>Carga sin fricción</div>
-                    <h3>De Excel a diagnóstico accionable con una experiencia guiada y clara</h3>
-                    <p class='of-helper-line'>Esta pantalla debe servirle a un cliente que llega con archivos imperfectos y necesita confiar rápido. Por eso cada bloque explica qué subir, qué valida la app y qué resultado obtiene al final.</p>
-                </div>
-                <div>
-                    <div class='of-stat-line'><strong>1.</strong><span>Subes inventario, ventas y opcionalmente catálogo maestro.</span></div>
-                    <div class='of-stat-line'><strong>2.</strong><span>El sistema valida columnas y corrige aliases comunes.</span></div>
-                    <div class='of-stat-line'><strong>3.</strong><span>Obtienes dashboard, análisis y compra sugerida.</span></div>
-                </div>
-            </div>
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
-    st.markdown(
-        """
-        <div class='of-upload-promo'>
-            <div class='of-upload-promo-grid'>
-                <div>
-                    <h3 style='margin:0 0 8px 0'>Menos fricción, más tiempo a valor</h3>
-                    <p class='of-mini-note' style='margin:0'>El Smart Importer reconoce aliases comunes de ERP y la demo guiada te deja mostrar valor comercial sin esperar la data del cliente.</p>
-                    <div class='of-chip-row'>
-                        <span class='of-chip'>Reconoce columnas ERP</span>
-                        <span class='of-chip'>Corrige estructura antes del análisis</span>
-                        <span class='of-chip'>Demo lista para vender</span>
-                    </div>
-                </div>
-                <div>
-                    <div class='of-upload-stat'>
-                        <div class='of-eyebrow'>Resultado esperado</div>
-                        <div style='font-size:1.2rem; font-weight:700; margin-top:6px'>Dashboard + ABC/XYZ + ROP + compra sugerida</div>
-                        <p class='of-mini-note' style='margin:8px 0 0 0'>Puedes empezar con Excel y escalar a integración ERP después.</p>
-                    </div>
+                    <div class='of-stat-line'><strong>Obligatorio</strong><span>Inventario maestro y ventas históricas.</span></div>
+                    <div class='of-stat-line'><strong>Recomendado</strong><span>Catálogo maestro para ver proveedor, marca y línea.</span></div>
+                    <div class='of-stat-line'><strong>Resultado</strong><span>Dashboard, ABC/XYZ, ROP y compra sugerida exportable.</span></div>
                 </div>
             </div>
         </div>
@@ -138,56 +60,38 @@ def render() -> None:
         unsafe_allow_html=True,
     )
 
-    help_cols = st.columns(4)
-    with help_cols[0]:
-        with st.popover("¿Qué pasa con mis archivos?"):
-            st.write(
-                "Tus archivos se usan para validar estructura, limpiar datos y ejecutar el análisis de tu tenant actual."
-            )
-            st.write(
-                "La idea del flujo es ayudarte a obtener recomendaciones sin obligarte a integrar ERP desde el primer día."
-            )
-    with help_cols[1]:
-        with st.popover("¿Cómo sé qué columnas necesito?"):
-            st.write(
-                "La app valida columnas obligatorias contra las plantillas oficiales. Si algo falta, te lo indica antes del análisis."
-            )
-    with help_cols[2]:
-        with st.popover("¿Se comparten mis datos?"):
-            st.write(
-                "No. El modelo es multitenant y cada empresa trabaja sobre su propia cuenta y su propia sesión de análisis."
-            )
-    with help_cols[3]:
-        with st.popover("¿Qué obtengo después de subir?"):
-            st.write(
-                "Dashboard ejecutivo, clasificación ABC/XYZ, capital inmovilizado, stock de seguridad, ROP y sugerencia de compra exportable."
-            )
-
-    with st.expander("Ver guía rápida de carga y transparencia", expanded=False):
-        st.markdown(
-            """
-            **Cómo funciona el proceso**
-
-            1. Descargas o replicas la estructura de las plantillas oficiales.
-            2. Subes inventario y ventas en CSV o Excel.
-            3. El sistema revisa columnas mínimas, tipos y consistencia básica.
-            4. Luego normaliza ventas, notas crédito y unidades para analizar mejor.
-            5. El resultado se presenta en dashboard y tabla analítica exportable.
-
-            **Transparencia sobre tus datos**
-
-            - La información se usa para generar el análisis del tenant actual.
-            - Las credenciales y configuración viven en la base de datos de la aplicación.
-            - Los archivos deben cargarse con las columnas definidas para evitar ambigüedad.
-            - Si deseas automatización ERP o integraciones continuas, eso se implementa como servicio adicional.
-            """
+    with st.expander("📥 Descargar plantillas oficiales y guía de columnas", expanded=False):
+        st.caption(
+            "Si tu ERP usa nombres distintos, el Smart Importer intentará mapearlos. Si falla, ajusta los encabezados a estas plantillas."
         )
+        for tpl in ALL_TEMPLATES.values():
+            st.markdown(f"**{tpl.title}** · {tpl.description}")
+            required_columns = ", ".join(tpl.required_columns)
+            st.caption(f"Columnas obligatorias: {required_columns}")
+            preview = tpl.to_dataframe().head(3)
+            st.dataframe(preview, use_container_width=True, hide_index=True)
+            dl_cols = st.columns(2)
+            dl_cols[0].download_button(
+                f"⬇️ {tpl.title} · CSV",
+                tpl.to_csv_bytes(),
+                file_name=f"plantilla_{tpl.key}.csv",
+                mime="text/csv",
+                use_container_width=True,
+                key=f"dl_inline_csv_{tpl.key}",
+            )
+            dl_cols[1].download_button(
+                f"⬇️ {tpl.title} · XLSX",
+                tpl.to_xlsx_bytes(),
+                file_name=f"plantilla_{tpl.key}.xlsx",
+                mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                use_container_width=True,
+                key=f"dl_inline_xlsx_{tpl.key}",
+            )
+            st.divider()
 
-    _render_template_hub()
-
-    st.markdown("### Carga operativa completa")
-    st.info(
-        "Inventario y ventas son obligatorios para analizar. El catálogo maestro ahora también se puede cargar aquí para enriquecer nombres, marcas, proveedores y contexto comercial."
+    st.markdown("### Carga tus archivos")
+    st.caption(
+        "Inventario y ventas son obligatorios. El catálogo maestro es opcional pero recomendado: agrega proveedor, marca y línea a cada decisión."
     )
 
     st.markdown("<div class='of-section-space'></div>", unsafe_allow_html=True)

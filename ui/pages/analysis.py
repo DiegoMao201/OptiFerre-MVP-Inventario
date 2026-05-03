@@ -33,14 +33,28 @@ def render() -> None:
 
     section_shell(
         "Insights IA",
-        "Aquí conviertes datos en explicación clara: qué está pasando, por qué pasa y qué deberías hacer después.",
+        "Convierte tus datos en una explicación clara: qué está mal, por qué pasa y qué deberías hacer ya.",
         eyebrow="Paso 2 · Entender antes de comprar",
     )
     inv = st.session_state.get("uploaded_inventory")
     sales = st.session_state.get("uploaded_sales")
     catalog = st.session_state.get("uploaded_catalog")
     if inv is None or sales is None:
-        st.warning("Carga tu inventario y ventas en **1. Carga de Datos** para desbloquear insights reales.")
+        missing = []
+        if inv is None:
+            missing.append("inventario")
+        if sales is None:
+            missing.append("ventas")
+        st.markdown(
+            f"""
+            <div class='of-empty-state'>
+                <div class='of-eyebrow'>Aún no tengo datos para analizar</div>
+                <h3>Faltan archivos para correr el diagnóstico</h3>
+                <p>Sube {' y '.join(missing)} en <b>1. Carga de Datos</b> y vuelve aquí. La IA necesita ambos para detectar quiebres, sobrestock y caja atrapada.</p>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
         return
 
     st.markdown(
@@ -48,23 +62,22 @@ def render() -> None:
         <div class='of-lead-panel'>
             <div class='of-lead-grid'>
                 <div>
-                    <div class='of-eyebrow'>Lectura de decisión</div>
-                    <h3>Entiende primero el problema antes de tocar una orden de compra</h3>
-                    <p class='of-helper-line'>Esta pantalla existe para un usuario que no quiere pelear con columnas. Aquí debe quedar claro qué SKU está en quiebre, qué productos drenan caja y cómo cambia la compra recomendada cuando ajustas el nivel de servicio.</p>
+                    <div class='of-eyebrow'>Cómo leer esta pantalla</div>
+                    <h3>Mira primero los quiebres, luego el capital atrapado, después la compra sugerida.</h3>
+                    <p class='of-helper-line'>No tienes que pelear con la tabla. Esta vista te dice qué SKU está en peligro, qué productos drenan caja y cómo cambia tu compra cuando ajustas el nivel de servicio.</p>
                 </div>
                 <div>
-                    <div class='of-stat-line'><strong>Qué debes leer</strong><span>Quiebres, sobrestock, presión sobre SKUs críticos y compra sugerida.</span></div>
-                    <div class='of-stat-line'><strong>Qué puedes ajustar</strong><span>Nivel de servicio, horizonte y filtros por criticidad.</span></div>
-                    <div class='of-stat-line'><strong>Qué sigue</strong><span>Cuando entiendas la prioridad, baja a 3. Qué Comprar.</span></div>
+                    <div class='of-stat-line'><strong>1. Quiebre</strong><span>Ventas que estás perdiendo HOY.</span></div>
+                    <div class='of-stat-line'><strong>2. Caja atrapada</strong><span>Plata muerta en sobrestock.</span></div>
+                    <div class='of-stat-line'><strong>3. Compra sugerida</strong><span>Lo que deberías pedir esta semana.</span></div>
                 </div>
             </div>
         </div>
         """,
         unsafe_allow_html=True,
     )
-    st.info("Si no sabes por dónde empezar, mira primero los quiebres, luego el capital inmovilizado y finalmente la compra sugerida. Esa es la secuencia correcta.")
 
-    with st.expander("⚙️ Parámetros del modelo", expanded=False):
+    with st.expander("⚙️ Parámetros del modelo (nivel de servicio y horizonte)", expanded=False):
         cols = st.columns(3)
         sl = cols[0].select_slider(
             "Nivel de servicio",
@@ -78,6 +91,8 @@ def render() -> None:
         if st.button("Recalcular", use_container_width=False):
             st.session_state.pop("analysis_result", None)
 
+    sl = st.session_state.get("cfg_service_level", 0.95)
+    horizon = st.session_state.get("cfg_horizon_days", 90)
     df = st.session_state.get("analysis_result")
     if df is None:
         df = full_analysis(inv, sales, AnalysisConfig(service_level=sl, horizon_days=horizon))
@@ -87,19 +102,21 @@ def render() -> None:
         catalog_cols = [c for c in ["sku", "marca", "proveedor", "linea"] if c in catalog.columns]
         if len(catalog_cols) > 1:
             df = df.merge(catalog[catalog_cols].drop_duplicates(subset=["sku"]), on="sku", how="left")
+    else:
+        st.caption("💡 Sube tu **catálogo maestro** en Carga de Datos para ver proveedor, marca y línea aquí.")
 
     highlight_cols = st.columns(3)
-    highlight_cols[0].metric("SKUs en quiebre", f"{int((df['estado'] == 'QUIEBRE').sum()):,}")
-    highlight_cols[1].metric("SKUs con sobrestock", f"{int((df['estado'] == 'SOBRESTOCK').sum()):,}")
-    highlight_cols[2].metric("Capital inmovilizado", f"${float(df['capital_inmovilizado'].sum()):,.0f}")
+    highlight_cols[0].metric("⚠️ SKUs en quiebre", f"{int((df['estado'] == 'QUIEBRE').sum()):,}")
+    highlight_cols[1].metric("📦 SKUs en sobrestock", f"{int((df['estado'] == 'SOBRESTOCK').sum()):,}")
+    highlight_cols[2].metric("💸 Capital atrapado", f"${float(df['capital_inmovilizado'].sum()):,.0f}")
 
     top_actions = []
     if int((df["estado"] == "QUIEBRE").sum()) > 0:
-        top_actions.append("Atiende primero los quiebres: son ventas en riesgo inmediato.")
+        top_actions.append("🔴 Atiende primero los quiebres: son ventas en riesgo inmediato.")
     if float(df["capital_inmovilizado"].sum()) > 0:
-        top_actions.append("Luego revisa sobrestock y capital atrapado para liberar caja.")
-    if int((df["sugerencia_compra"] > 0).sum()) > 0:
-        top_actions.append("Después pasa a 3. Qué Comprar para decidir cantidades finales y generar la orden.")
+        top_actions.append("🟠 Luego revisa sobrestock y capital atrapado para liberar caja.")
+    if "sugerencia_compra" in df.columns and int((df["sugerencia_compra"] > 0).sum()) > 0:
+        top_actions.append("🟢 Después pasa a 3. Qué Comprar para decidir cantidades finales.")
     for item in top_actions[:3]:
         st.caption(item)
 

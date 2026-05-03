@@ -199,7 +199,6 @@ def render() -> None:
 
     st.markdown("## 🆘 Soporte y Tickets")
     st.caption("Abre un caso, deja contexto claro y sigue la conversación sin salir de la app.")
-    st.info("Si eres cliente, aquí debes sentir claridad: explica el bloqueo, adjunta el contexto y el equipo tendrá una ruta clara para responderte.")
     _support_intro(operator_mode)
     if operator_mode:
         _render_operator_guidance()
@@ -223,8 +222,7 @@ def render() -> None:
             height=170,
             placeholder="Explica qué intentaste, qué esperabas que pasara y qué ocurrió realmente. Si aplica, menciona el archivo o la sección de la app.",
         )
-        st.caption("Entre más claro quede el contexto, más rápido puede responder el equipo sin pedirte varias aclaraciones.")
-        st.info("Ejemplo útil: 'Subí inventario, pero faltó la columna SKU' o 'No entiendo por qué el sistema me sugiere comprar este producto'.")
+        st.caption("Entre más claro quede el contexto, más rápido puede responder el equipo sin pedirte varias aclaraciones. Ejemplo útil: 'Subí inventario, pero faltó la columna SKU'.")
         submitted = st.form_submit_button("Crear ticket y enviarlo a soporte", use_container_width=True)
     st.markdown("</div>", unsafe_allow_html=True)
 

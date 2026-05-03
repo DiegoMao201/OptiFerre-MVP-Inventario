@@ -87,6 +87,53 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
       .of-kpi .label {{ color: var(--muted); font-size: 0.82rem; text-transform: uppercase; letter-spacing: .08em; }}
       .of-kpi .value {{ color: var(--text); font-size: 1.85rem; font-weight: 700; margin-top: 6px; }}
       .of-kpi .delta {{ color: var(--primary); font-size: 0.85rem; margin-top: 4px; }}
+      .of-lead-panel {{
+        background: linear-gradient(135deg, rgba(10,22,41,0.96), rgba(7,15,29,0.94));
+        border: 1px solid rgba(0,224,255,0.18);
+        border-radius: 24px;
+        padding: 22px 24px;
+        margin: 0 0 24px 0;
+        box-shadow: 0 18px 36px rgba(2, 8, 19, 0.32);
+      }}
+      .of-lead-grid {{
+        display: grid;
+        grid-template-columns: minmax(0, 1.2fr) minmax(280px, .8fr);
+        gap: 18px;
+        align-items: start;
+      }}
+      .of-lead-panel h3 {{ margin: 10px 0 8px 0; font-size: clamp(1.45rem, 2.2vw, 2.2rem); }}
+      .of-guidance-list {{ margin: 0; padding-left: 18px; color: #D6ECFB; line-height: 1.7; }}
+      .of-guidance-list li {{ margin-bottom: 8px; }}
+      .of-stat-line {{
+        display:flex;
+        justify-content:space-between;
+        gap:12px;
+        padding:10px 0;
+        border-bottom:1px solid rgba(0,224,255,0.1);
+        color:#D6ECFB;
+      }}
+      .of-stat-line:last-child {{ border-bottom:0; padding-bottom:0; }}
+      .of-stat-line span {{ color:#8FADCA; }}
+      .of-section-space {{ margin-top: 10px; margin-bottom: 22px; }}
+
+      [data-testid="stMetric"] {{
+        background: linear-gradient(180deg, rgba(11,24,44,0.92), rgba(7,15,29,0.9));
+        border: 1px solid rgba(0,224,255,0.16);
+        border-radius: 18px;
+        padding: 14px 16px;
+        box-shadow: 0 16px 30px rgba(2,8,19,0.24);
+      }}
+      [data-testid="stMetricLabel"] p {{ color: #9BB6D2 !important; font-weight: 700 !important; }}
+      [data-testid="stMetricValue"] {{ color: #F3FBFF !important; }}
+      [data-testid="stMetricDelta"] {{ color: #7EF9D0 !important; }}
+
+      [data-testid="stPlotlyChart"] {{
+        border: 1px solid rgba(0,224,255,0.14);
+        border-radius: 22px;
+        background: linear-gradient(180deg, rgba(11,24,44,0.9), rgba(7,15,29,0.88));
+        padding: 8px;
+        box-shadow: 0 16px 30px rgba(2,8,19,0.24);
+      }}
 
       /* Banner */
       .of-banner {{
@@ -852,6 +899,7 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
         .of-grid, .of-proof, .of-plan-strip, .of-trust-grid {{ grid-template-columns: 1fr; }}
         .of-public-topbar {{ flex-direction: column; align-items: flex-start; }}
         .of-exec-grid, .of-metric-strip, .of-upload-promo-grid {{ grid-template-columns: 1fr; }}
+        .of-lead-grid {{ grid-template-columns: 1fr; }}
         .of-support-hero, .of-support-guide, .of-ticket-meta-grid {{ grid-template-columns: 1fr; }}
         .of-stage-title-wrap {{ margin-left: 0; max-width: 100%; }}
         .of-chip-row {{ grid-template-columns: 1fr; width: 100%; }}

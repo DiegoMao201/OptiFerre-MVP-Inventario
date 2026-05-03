@@ -33,6 +33,25 @@ def render() -> None:
     )
     st.markdown(
         """
+        <div class='of-lead-panel'>
+            <div class='of-lead-grid'>
+                <div>
+                    <div class='of-eyebrow'>Carga sin fricción</div>
+                    <h3>De Excel a diagnóstico accionable con una experiencia guiada y clara</h3>
+                    <p class='of-helper-line'>Esta pantalla debe servirle a un cliente que llega con archivos imperfectos y necesita confiar rápido. Por eso cada bloque explica qué subir, qué valida la app y qué resultado obtiene al final.</p>
+                </div>
+                <div>
+                    <div class='of-stat-line'><strong>1.</strong><span>Subes inventario y ventas en CSV o XLSX.</span></div>
+                    <div class='of-stat-line'><strong>2.</strong><span>El sistema valida columnas y corrige aliases comunes.</span></div>
+                    <div class='of-stat-line'><strong>3.</strong><span>Obtienes dashboard, análisis y compra sugerida.</span></div>
+                </div>
+            </div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+    st.markdown(
+        """
         <div class='of-upload-promo'>
             <div class='of-upload-promo-grid'>
                 <div>
@@ -102,6 +121,7 @@ def render() -> None:
             """
         )
 
+    st.markdown("<div class='of-section-space'></div>", unsafe_allow_html=True)
     cols = st.columns(2)
     with cols[0]:
         st.markdown("### 1) Inventario maestro")

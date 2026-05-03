@@ -6,6 +6,7 @@ import streamlit as st
 from core.auth import require_login
 from core.billing import PLAN_CATALOG, create_checkout_session, get_subscription
 from core.config import get_settings
+from ui.components import integration_banner, section_shell
 
 
 def _plan_card(plan_key: str, info: dict, current_plan: str | None, user: dict) -> None:
@@ -48,7 +49,30 @@ def render() -> None:
     settings = get_settings()
     sub = get_subscription(user["tenant_id"])
 
-    st.markdown("## 💳 Planes y Suscripción")
+    section_shell(
+        "Planes y Suscripción",
+        "Activa el plan correcto para tu operación y deja claro qué obtienes hoy, qué escala después y cuándo conviene evolucionar.",
+        eyebrow="Billing + crecimiento",
+    )
+    st.markdown(
+        """
+        <div class='of-lead-panel'>
+            <div class='of-lead-grid'>
+                <div>
+                    <div class='of-eyebrow'>Compra con claridad</div>
+                    <h3>Precios simples, activación inmediata y evolución por etapas</h3>
+                    <p class='of-helper-line'>La suscripción cubre el uso continuo de la plataforma. Integraciones, multi-bodega avanzado o despliegue especial se cotizan aparte como servicios profesionales.</p>
+                </div>
+                <div>
+                    <div class='of-stat-line'><strong>Trial</strong><span>Permite validar valor antes del primer pago.</span></div>
+                    <div class='of-stat-line'><strong>Checkout</strong><span>La activación se hace por Stripe o demo local si Stripe no está listo.</span></div>
+                    <div class='of-stat-line'><strong>Escalabilidad</strong><span>Puedes crecer de Starter a Enterprise sin rehacer el flujo.</span></div>
+                </div>
+            </div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
     if sub:
         active = "🟢 Activa" if sub["is_active"] else "🔴 Inactiva"
         st.markdown(
@@ -63,14 +87,11 @@ def render() -> None:
             "Los botones activarán suscripciones en **modo demo** local para que puedas probar el flujo."
         )
 
+    st.markdown("<div class='of-section-space'></div>", unsafe_allow_html=True)
     cols = st.columns(3)
     for col, (key, info) in zip(cols, PLAN_CATALOG.items()):
         with col:
             _plan_card(key, info, sub["plan"] if sub else None, user)
 
     st.divider()
-    st.markdown(
-        "### ¿Necesitas algo a la medida?\n"
-        "Integraciones con ERP, multi-bodega avanzado, conexión a tu pasarela local o despliegue "
-        "on-premise: te lo cotizamos como **servicio profesional** independiente de la suscripción."
-    )
+    integration_banner()

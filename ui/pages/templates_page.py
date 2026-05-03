@@ -14,6 +14,25 @@ def render() -> None:
         "y súbelos en la sección **📤 Cargar Datos**. El sistema valida las columnas "
         "automáticamente."
     )
+    st.markdown(
+        """
+        <div class='of-lead-panel'>
+            <div class='of-lead-grid'>
+                <div>
+                    <div class='of-eyebrow'>Estructura oficial</div>
+                    <h3>Plantillas pensadas para evitar ambigüedad desde el primer archivo</h3>
+                    <p class='of-helper-line'>Cada plantilla deja claro qué columnas necesita la app para interpretar inventario, ventas o catálogos sin suposiciones. Esto reduce errores, acelera onboarding y transmite confianza comercial.</p>
+                </div>
+                <div>
+                    <div class='of-stat-line'><strong>CSV</strong><span>Ideal para exportaciones rápidas desde ERP o Excel.</span></div>
+                    <div class='of-stat-line'><strong>XLSX</strong><span>Útil cuando el cliente quiere revisar o completar manualmente.</span></div>
+                    <div class='of-stat-line'><strong>Validación</strong><span>La app confirma columnas antes de permitir el análisis.</span></div>
+                </div>
+            </div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
 
     for tpl in iter_templates():
         with st.container(border=True):

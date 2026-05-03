@@ -104,6 +104,25 @@ def render() -> None:
         "Lectura rápida de riesgo, caja atrapada y acciones de abastecimiento para decidir hoy.",
         eyebrow="Executive Control Tower",
     )
+    st.markdown(
+        """
+        <div class='of-lead-panel'>
+            <div class='of-lead-grid'>
+                <div>
+                    <div class='of-eyebrow'>Qué debe pasar aquí</div>
+                    <h3>Un gerente debe entender en menos de dos minutos dónde está el riesgo y qué acción sigue</h3>
+                    <p class='of-helper-line'>Este dashboard no es un tablero decorativo. Debe traducir inventario en caja, urgencia, foco comercial y decisiones concretas que una empresa pueda ejecutar hoy.</p>
+                </div>
+                <div>
+                    <div class='of-stat-line'><strong>Riesgo</strong><span>Quiebres, presión sobre clase A y riesgo de agotamiento.</span></div>
+                    <div class='of-stat-line'><strong>Caja</strong><span>Capital atrapado y costo de oportunidad mensual.</span></div>
+                    <div class='of-stat-line'><strong>Prioridad</strong><span>Tareas para proteger ventas y liberar capital.</span></div>
+                </div>
+            </div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
     df = _ensure_analysis()
     if df is None or df.empty:
         st.warning("Aún no has cargado datos. Ve a **📤 Cargar Datos**.")

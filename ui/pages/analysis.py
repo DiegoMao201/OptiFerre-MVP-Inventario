@@ -10,7 +10,7 @@ from core.auth import require_login
 from core.billing import has_active_access
 from engine import full_analysis
 from engine.optimization import AnalysisConfig, simulate_service_level_impact
-from ui.components import integration_banner, paywall
+from ui.components import integration_banner, paywall, section_shell
 
 ESTADO_COLORS = {
     "QUIEBRE": "#E53935",
@@ -31,12 +31,36 @@ def render() -> None:
         paywall()
         return
 
-    st.markdown("## 🧠 Análisis detallado")
+    section_shell(
+        "Análisis detallado",
+        "Aquí conviertes el modelo en decisiones revisables: filtras, comparas, exportas y bajas a SKU sin perder claridad.",
+        eyebrow="Motor analítico",
+    )
     inv = st.session_state.get("uploaded_inventory")
     sales = st.session_state.get("uploaded_sales")
     if inv is None or sales is None:
         st.warning("Carga tu inventario y ventas en **📤 Cargar Datos**.")
         return
+
+    st.markdown(
+        """
+        <div class='of-lead-panel'>
+            <div class='of-lead-grid'>
+                <div>
+                    <div class='of-eyebrow'>Lectura de decisión</div>
+                    <h3>Filtra, recalcula y exporta sin perder el hilo ejecutivo</h3>
+                    <p class='of-helper-line'>Esta vista existe para responder preguntas concretas: qué SKU está en quiebre, cuánto comprar, qué referencias tienen caja atrapada y cómo cambia la compra total si mueves el nivel de servicio.</p>
+                </div>
+                <div>
+                    <div class='of-stat-line'><strong>Filtros</strong><span>Estado, ABC, XYZ y búsqueda por SKU o nombre.</span></div>
+                    <div class='of-stat-line'><strong>Parámetros</strong><span>Puedes recalcular con otro service level y horizonte.</span></div>
+                    <div class='of-stat-line'><strong>Exportación</strong><span>CSV o Excel con la tabla ya filtrada.</span></div>
+                </div>
+            </div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
 
     with st.expander("⚙️ Parámetros del modelo", expanded=False):
         cols = st.columns(3)

@@ -290,13 +290,13 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
         border:1px solid rgba(16,33,59,0.14);
         border-radius:999px;
         padding:12px 16px;
-        background: rgba(255,255,255,0.48);
-        color: #123154;
-        font-size: .82rem;
-        font-weight: 700;
+        background: linear-gradient(180deg, rgba(255,255,255,0.68), rgba(229,242,255,0.52));
+        color: #0F3156;
+        font-size: .84rem;
+        font-weight: 800;
         line-height: 1.25;
         min-height: 60px;
-        box-shadow: 0 10px 28px rgba(10, 25, 47, 0.08);
+        box-shadow: 0 16px 34px rgba(10, 25, 47, 0.12), 0 0 0 1px rgba(0,224,255,0.05) inset;
         white-space: normal;
         text-align: center;
         text-wrap: balance;
@@ -315,10 +315,10 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
       .of-chip:nth-child(2)::before {{ animation-delay: 1.1s; }}
       .of-chip:nth-child(3)::before {{ animation-delay: 2.1s; }}
       .of-chip:hover {{
-        transform: translateY(-2px);
-        border-color: rgba(16,183,196,0.42);
-        background: rgba(255,255,255,0.68);
-        box-shadow: 0 16px 30px rgba(8, 17, 31, 0.12);
+        transform: translateY(-4px) scale(1.01);
+        border-color: rgba(16,183,196,0.56);
+        background: linear-gradient(180deg, rgba(255,255,255,0.82), rgba(234,246,255,0.72));
+        box-shadow: 0 24px 42px rgba(8, 17, 31, 0.18), 0 0 0 1px rgba(0,224,255,0.10) inset;
       }}
       .of-upload-promo {{
         background: {lead_panel_bg};
@@ -494,9 +494,9 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
         gap: 14px;
         border-radius: 32px;
         border: 1px solid rgba(0,224,255,0.18);
-        background: {logo_panel_bg};
+        background: radial-gradient(circle at top, rgba(255,255,255,0.98), rgba(245,250,255,0.96) 42%, rgba(226,240,250,0.78) 72%, rgba(205,226,244,0.48) 100%);
         backdrop-filter: blur(14px);
-        box-shadow: 0 0 0 1px rgba(0,224,255,0.08) inset, 0 26px 56px rgba(8, 17, 31, 0.22);
+        box-shadow: 0 0 0 1px rgba(0,224,255,0.08) inset, 0 32px 64px rgba(8, 17, 31, 0.24);
         padding: 24px 22px;
         animation: of-logo-float 7s ease-in-out infinite;
       }}
@@ -569,10 +569,10 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
       .of-logo-caption {{
         max-width: 250px;
         text-align: center;
-        color: {logo_caption};
+        color: #355878;
         font-size: .88rem;
         line-height: 1.5;
-        font-weight: 600;
+        font-weight: 700;
       }}
       @keyframes of-logo-float {{
         0%, 100% {{ transform: translateY(0px) scale(1); }}
@@ -620,7 +620,7 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
         box-shadow: 0 12px 28px rgba(0, 224, 255, 0.1);
       }}
       .of-stage-title {{
-        font-size: clamp(2.05rem, 4.1vw, 4.35rem);
+        font-size: clamp(1.9rem, 3.8vw, 3.95rem);
         line-height: .96;
         margin: 10px 0 0 0;
         letter-spacing: -0.04em;
@@ -700,7 +700,7 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
         pointer-events: none;
       }}
       .of-hero-v2 h2 {{
-        font-size: clamp(2rem, 3.45vw, 3.7rem);
+        font-size: clamp(1.85rem, 3.1vw, 3.2rem);
         line-height: .98;
         margin: 12px 0 14px 0;
         max-width: 760px;
@@ -718,10 +718,11 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
       .of-proof-v2 .item {{
         position: relative;
         overflow: hidden;
-        background: rgba(255,255,255,0.08);
-        border: 1px solid {public_card_border};
-        border-radius: 16px;
-        padding: 16px;
+        background: linear-gradient(180deg, rgba(255,255,255,0.14), rgba(157,209,255,0.08));
+        border: 1px solid rgba(0,224,255,0.22);
+        border-radius: 18px;
+        padding: 18px;
+        box-shadow: 0 16px 32px rgba(4, 10, 26, 0.18), 0 0 0 1px rgba(0,224,255,0.05) inset;
       }}
       .of-proof-v2 .number {{ font-size: 1.7rem; font-weight: 800; letter-spacing: -0.03em; }}
       .of-proof-v2 .caption {{ color: {public_lead}; font-size: .9rem; margin-top: 6px; line-height: 1.5; }}
@@ -764,13 +765,13 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
         min-height: 94px;
         padding: 14px 14px;
         border-radius: 16px;
-        background: linear-gradient(180deg, rgba(248,251,255,0.9), rgba(229,239,249,0.74));
-        border: 1px solid rgba(16,33,59,0.16);
-        color: #163557;
-        font-size: .84rem;
+        background: linear-gradient(180deg, rgba(255,255,255,0.92), rgba(222,238,255,0.82));
+        border: 1px solid rgba(0,224,255,0.18);
+        color: #13385F;
+        font-size: .92rem;
         line-height: 1.45;
-        font-weight: 700;
-        box-shadow: 0 12px 24px rgba(8,17,31,0.08);
+        font-weight: 800;
+        box-shadow: 0 16px 30px rgba(8,17,31,0.12), 0 0 0 1px rgba(255,255,255,0.22) inset;
       }}
       .of-stat-popover-kicker {{
         color: #0A7A89;
@@ -874,11 +875,11 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
       }}
       .of-price-card {{
         position: relative;
-        overflow: hidden;
+        overflow: visible;
         background: linear-gradient(180deg, rgba(250,253,255,0.96), rgba(228,238,249,0.9));
         border: 1px solid rgba(16,33,59,0.22);
         border-radius: 22px;
-        padding: 22px 20px;
+        padding: 34px 20px 22px 20px;
         box-shadow: 0 18px 36px rgba(8, 17, 31, 0.11);
         transition: transform .28s ease, box-shadow .28s ease, border-color .28s ease, background .28s ease;
         cursor: pointer;
@@ -905,7 +906,7 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
       }}
       .of-popular-badge {{
         position: absolute;
-        top: -12px;
+        top: 12px;
         left: 50%;
         transform: translateX(-50%);
         border-radius: 999px;
@@ -916,6 +917,8 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
         font-weight: 800;
         letter-spacing: .12em;
         text-transform: uppercase;
+        z-index: 3;
+        box-shadow: 0 10px 20px rgba(8,17,31,0.14);
       }}
       .of-price-card .of-pill {{ background: rgba(16,183,196,0.18); color: #0E445B; font-weight: 800; }}
       .of-price-main {{ margin: 14px 0 14px 0; font-size: 2.3rem; font-weight: 900; letter-spacing: -0.04em; color: #0E2A48; }}
@@ -938,18 +941,18 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
         padding: 28px 26px;
         border-radius: 28px;
         border: 1px solid rgba(19,62,97,0.14);
-        background: linear-gradient(180deg, rgba(248,252,255,0.96), rgba(219,245,250,0.92));
+        background: linear-gradient(180deg, rgba(255,255,255,0.97), rgba(228,244,255,0.94));
         text-align: center;
         box-shadow: 0 22px 40px rgba(87, 137, 173, 0.1);
       }}
       .of-final-cta h3 {{
-        font-size: clamp(1.8rem, 2.7vw, 3rem);
+        font-size: clamp(1.6rem, 2.4vw, 2.55rem);
         line-height: .98;
         letter-spacing: -0.04em;
         margin: 12px 0;
       }}
       .of-final-cta .of-eyebrow {{ color: #10B7C4; }}
-      .of-final-cta p {{ color: #55718B; }}
+      .of-final-cta p {{ color: #476785; font-weight: 600; }}
       @keyframes of-chip-sweep {{
         0%, 100% {{ transform: translateX(-115%); opacity: 0; }}
         16% {{ opacity: 1; }}
@@ -978,18 +981,20 @@ def inject_brand_css(primary_color: str = "#10B7C4", theme_mode: str = "dark") -
       }}
       .of-contact-name {{
         margin-top: 10px;
-        color: #F3FBFF;
-        font-size: clamp(1.35rem, 2vw, 2rem);
+        color: #F7FBFF;
+        font-size: clamp(1.2rem, 1.7vw, 1.7rem);
         font-weight: 900;
         line-height: 1.05;
         letter-spacing: -0.03em;
+        text-shadow: 0 1px 0 rgba(16,44,73,0.08);
       }}
       .of-contact-meta {{
         margin-top: 6px;
-        color: #A8C4DE;
+        color: #7396B8;
         font-size: .95rem;
-        font-weight: 600;
+        font-weight: 700;
       }}
+      .of-contact-panel .of-mini-note {{ color: #7391AD; font-weight: 600; }}
       .of-contact-link {{
         display: inline-flex;
         margin-top: 12px;
